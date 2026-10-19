@@ -18,15 +18,15 @@ export function ServicesSection({ services, onSelectService }: ServicesSectionPr
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c5a880] mb-3">
-            Menu of Craftsmanship
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#c5a880] mb-3">
+            Menu of Styling & Grooming
           </p>
-          <h2 className="font-serif text-3xl sm:text-5xl font-medium text-white mb-4">
-            Curated Barbering Services
+          <h2 className="font-serif text-3xl sm:text-5xl font-medium text-white mb-4 tracking-tight">
+            Curated Gents Services
           </h2>
           <p className="text-[#94a3b8] text-sm sm:text-base">
-            Every service includes a dedicated consultation, personalized styling advice,
-            and premium artisan finishing products.
+            Every service at New Model Gents Beauty Parlor includes personal consultation,
+            precision scissor tailoring, and premium artisan finishing products.
           </p>
         </div>
 

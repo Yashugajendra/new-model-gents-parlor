@@ -36,6 +36,45 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* Animated Shimmer Text */
+@keyframes goldShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.gold-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #c5a880 0%,
+    #f3ebdd 25%,
+    #ffffff 50%,
+    #f3ebdd 75%,
+    #c5a880 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 7s linear infinite;
+}
+
+/* Subtle Floating Typography */
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.float-subtle {
+  animation: gentleFloat 5s ease-in-out infinite;
+}
+
 .gold-gradient-border {
   border-image: linear-gradient(to bottom, rgba(197, 168, 128, 0.4), rgba(255, 255, 255, 0.05)) 1;
 }
@@ -53,12 +92,34 @@ body {
   background-color: #121215;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.75rem;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .luxury-card:hover {
-  border-color: rgba(197, 168, 128, 0.3);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 20px -5px rgba(197, 168, 128, 0.15);
+  border-color: rgba(197, 168, 128, 0.35);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(197, 168, 128, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Interactive link hover underline animation */
+.hover-gold-line {
+  position: relative;
+}
+.hover-gold-line::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #c5a880;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-gold-line:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 /* Subtle scrollbars */

@@ -23,7 +23,7 @@ import {
   Layers,
 } from "lucide-react";
 import { Appointment, Service, ShopSettings } from "@/types/database.types";
-import { INITIAL_SHOP_SETTINGS, RitualCutData } from "@/lib/data";
+import { INITIAL_SHOP_SETTINGS, NewModelData } from "@/lib/data";
 import { formatDate, formatTime, formatCurrency, generateWhatsAppLink } from "@/lib/utils";
 
 export default function AdminDashboardPage() {
@@ -39,9 +39,9 @@ export default function AdminDashboardPage() {
   );
 
   useEffect(() => {
-    setServices(RitualCutData.getServices());
+    setServices(NewModelData.getServices());
 
-    const savedSettings = RitualCutData.getSettings();
+    const savedSettings = NewModelData.getSettings();
 
     setSettings({
       ...savedSettings,
@@ -69,14 +69,14 @@ export default function AdminDashboardPage() {
   const [toastMessage, setToastMessage] = useState("");
 
   const refreshData = () => {
-    setAppointments(RitualCutData.getAppointments());
-    setServices(RitualCutData.getServices());
-    setSettings(RitualCutData.getSettings());
+    setAppointments(NewModelData.getAppointments());
+    setServices(NewModelData.getServices());
+    setSettings(NewModelData.getSettings());
   };
 
   useEffect(() => {
     // Check if owner session exists in sessionStorage
-    const session = sessionStorage.getItem("ritualcut_admin_auth");
+    const session = sessionStorage.getItem("newmodel_admin_auth");
     if (session === "true") {
       setIsAuthenticated(true);
     }
@@ -90,10 +90,10 @@ export default function AdminDashboardPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Default demo passcode: 1234 or ritualcut
-    if (pinInput === "1234" || pinInput.toLowerCase() === "ritualcut") {
+    // Default demo passcode: 1234 or newmodel
+    if (pinInput === "1234" || pinInput.toLowerCase() === "newmodel" || pinInput.toLowerCase() === "ritualcut") {
       setIsAuthenticated(true);
-      sessionStorage.setItem("ritualcut_admin_auth", "true");
+      sessionStorage.setItem("newmodel_admin_auth", "true");
       setLoginError("");
     } else {
       setLoginError("Invalid passcode. Use demo passcode: 1234");
@@ -102,12 +102,12 @@ export default function AdminDashboardPage() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    sessionStorage.removeItem("ritualcut_admin_auth");
+    sessionStorage.removeItem("newmodel_admin_auth");
   };
 
   // Concurrency-Safe Approval Handler
   const handleApprove = (appointment: Appointment) => {
-    const result = RitualCutData.approveAppointment(appointment.id);
+    const result = NewModelData.approveAppointment(appointment.id);
     if (!result.success) {
       if (result.code === "CONFLICT_OVERLAPPING_CONFIRMED" && result.conflictingAppointment) {
         setConflictModalData({
@@ -126,14 +126,14 @@ export default function AdminDashboardPage() {
   // Rejection Handler
   const handleRejectConfirm = () => {
     if (!rejectModalData) return;
-    RitualCutData.rejectAppointment(rejectModalData.appointment.id, rejectModalData.reason);
+    NewModelData.rejectAppointment(rejectModalData.appointment.id, rejectModalData.reason);
     refreshData();
     setRejectModalData(null);
     showToast(`Rejected request ${rejectModalData.appointment.booking_reference}.`);
   };
 
   const handleUpdateStatus = (id: string, status: Appointment["status"]) => {
-    RitualCutData.updateAppointmentStatus(id, status);
+    NewModelData.updateAppointmentStatus(id, status);
     refreshData();
     showToast(`Updated status to ${status}.`);
   };
@@ -142,7 +142,7 @@ export default function AdminDashboardPage() {
   const handleSaveService = (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingService) return;
-    RitualCutData.saveService(editingService);
+    NewModelData.saveService(editingService);
     refreshData();
     setIsServiceModalOpen(false);
     setEditingService(null);
@@ -151,7 +151,7 @@ export default function AdminDashboardPage() {
 
   const handleDeleteService = (id: string) => {
     if (confirm("Are you sure you want to delete this service?")) {
-      RitualCutData.deleteService(id);
+      NewModelData.deleteService(id);
       refreshData();
       showToast("Service deleted.");
     }
@@ -160,7 +160,7 @@ export default function AdminDashboardPage() {
   // Settings Save
   const handleSaveSettings = (e: React.FormEvent) => {
     e.preventDefault();
-    RitualCutData.updateSettings(settings);
+    NewModelData.updateSettings(settings);
     refreshData();
     showToast("Shop settings updated.");
   };
@@ -237,12 +237,12 @@ export default function AdminDashboardPage() {
       <header className="border-b border-white/[0.08] bg-[#0d0d10] py-4 px-6 sticky top-0 z-30">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#141417] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880]">
-              <Scissors className="w-4 h-4 -rotate-45" />
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1a1a20] to-[#121215] border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880]">
+              <span className="font-serif font-bold text-xs text-[#c5a880]">NM</span>
             </div>
             <div>
               <span className="font-serif text-lg font-bold tracking-wider text-white">
-                RITUAL<span className="text-[#c5a880]">CUT</span>
+                NEW MODEL <span className="text-[#c5a880]">GENTS PARLOR</span>
               </span>
               <span className="ml-2 text-[10px] px-2 py-0.5 rounded bg-[#c5a880]/20 text-[#c5a880] font-semibold uppercase tracking-wider">
                 Owner Portal
@@ -463,7 +463,7 @@ export default function AdminDashboardPage() {
                       <a
                         href={generateWhatsAppLink(
                           apt.customer_phone,
-                          `Hello ${apt.customer_name}, this is the Master Barber from RITUALCUT regarding your appointment request (Ref: ${apt.booking_reference}).`
+                          `Hello ${apt.customer_name}, this is the Master Barber from ${settings.shop_name || "New Model Gents Beauty Parlor"} regarding your appointment request (Ref: ${apt.booking_reference}).`
                         )}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -765,7 +765,7 @@ export default function AdminDashboardPage() {
               <a
                 href={generateWhatsAppLink(
                   conflictModalData.target.customer_phone,
-                  `Hello ${conflictModalData.target.customer_name}, I am following up on your RITUALCUT request (Ref: ${conflictModalData.target.booking_reference}). The requested time has already been booked. Would you like to reschedule for another time today?`
+                  `Hello ${conflictModalData.target.customer_name}, I am following up on your ${settings.shop_name || "New Model Gents Beauty Parlor"} request (Ref: ${conflictModalData.target.booking_reference}). The requested time has already been booked. Would you like to reschedule for another time today?`
                 )}
                 target="_blank"
                 rel="noopener noreferrer"

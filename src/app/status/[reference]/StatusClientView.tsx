@@ -15,7 +15,7 @@ import {
   Share2,
 } from "lucide-react";
 import { Appointment } from "@/types/database.types";
-import { RitualCutData } from "@/lib/data";
+import { NewModelData } from "@/lib/data";
 import { formatDate, formatTime, formatCurrency, generateWhatsAppLink } from "@/lib/utils";
 
 interface StatusClientViewProps {
@@ -27,7 +27,7 @@ export default function StatusClientView({ reference }: StatusClientViewProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const list = RitualCutData.getAppointments();
+    const list = NewModelData.getAppointments();
     const found = list.find(
       (a) => a.booking_reference.toUpperCase() === reference.toUpperCase()
     );
@@ -35,7 +35,7 @@ export default function StatusClientView({ reference }: StatusClientViewProps) {
     setIsLoaded(true);
   }, [reference]);
 
-  const shopSettings = RitualCutData.getSettings();
+  const shopSettings = NewModelData.getSettings();
 
   const getStatusBadge = (status: Appointment["status"]) => {
     switch (status) {
@@ -76,12 +76,12 @@ export default function StatusClientView({ reference }: StatusClientViewProps) {
     <div className="min-h-screen bg-[#09090b] text-[#f8fafc] flex flex-col">
       <header className="border-b border-white/[0.08] bg-[#0d0d10] py-4 px-6">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-[#141417] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880]">
-              <Scissors className="w-4 h-4 -rotate-45" />
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1a1a20] to-[#121215] border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880]">
+              <span className="font-serif font-bold text-xs text-[#c5a880]">NM</span>
             </div>
             <span className="font-serif text-lg font-bold tracking-wider text-white">
-              RITUAL<span className="text-[#c5a880]">CUT</span>
+              NEW MODEL <span className="text-[#c5a880]">GENTS PARLOR</span>
             </span>
           </Link>
           <Link
@@ -185,7 +185,7 @@ export default function StatusClientView({ reference }: StatusClientViewProps) {
               <a
                 href={generateWhatsAppLink(
                   shopSettings.whatsapp_number,
-                  `Hello RITUALCUT, checking on my booking Ref: ${appointment.booking_reference} for ${appointment.service_name_snapshot} on ${formatDate(appointment.start_time)}.`
+                  `Hello ${shopSettings.shop_name || "New Model Gents Beauty Parlor"}, checking on my booking Ref: ${appointment.booking_reference} for ${appointment.service_name_snapshot} on ${formatDate(appointment.start_time)}.`
                 )}
                 target="_blank"
                 rel="noopener noreferrer"

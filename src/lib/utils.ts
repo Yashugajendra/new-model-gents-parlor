@@ -42,7 +42,7 @@ export function generateBookingReference(): string {
   for (let i = 0; i < 5; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length));
   }
-  return `RC-${code}`;
+  return `NM-${code}`;
 }
 
 /**

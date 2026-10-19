@@ -122,7 +122,7 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                   </p>
                   <a
                     href={`https://wa.me/${cleanWhatsapp}?text=Hello%20${encodeURIComponent(
-                      settings.shop_name || "RITUALCUT"
+                      settings.shop_name || "New Model Gents Beauty Parlor"
                     )}%2C%20I%20have%20an%20enquiry.`}
                     target="_blank"
                     rel="noopener noreferrer"

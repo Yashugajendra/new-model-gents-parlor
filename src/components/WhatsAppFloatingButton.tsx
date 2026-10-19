@@ -9,8 +9,8 @@ interface WhatsAppFloatingButtonProps {
 }
 
 export function WhatsAppFloatingButton({ settings }: WhatsAppFloatingButtonProps) {
-  const cleanPhone = (settings?.whatsapp_number || "919876543210").replace(/\D/g, "");
-  const shopName = settings?.shop_name || "RITUALCUT";
+  const cleanPhone = (settings?.whatsapp_number || "917338076977").replace(/\D/g, "");
+  const shopName = settings?.shop_name || "New Model Gents Beauty Parlor";
 
   return (
     <aside aria-label="Support and Enquiries" className="fixed bottom-6 right-6 z-40">

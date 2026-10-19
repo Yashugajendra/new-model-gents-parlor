@@ -10,10 +10,10 @@ import { generateBookingReference } from "./utils";
 
 export const INITIAL_SHOP_SETTINGS: ShopSettings = {
   id: "shop-default-01",
-  shop_name: "RITUALCUT",
-  tagline: "Your Style. Your Time. Your Ritual.",
+  shop_name: "New Model Gents Beauty Parlor",
+  tagline: "Your Style. Your Time. Your Signature Look.",
   phone_number: "+91 733 807 6977",
-  whatsapp_number: "+91 733 807 6977",
+  whatsapp_number: "917338076977",
   address: "Kate Complex, Thirthahalli, Shivamogga",
   google_maps_url: "https://www.google.com/maps/search/?api=1&query=Kate+Complex%2C+Thirthahalli%2C+Shivamogga",
   currency_code: "INR",
@@ -86,10 +86,10 @@ export const INITIAL_SERVICES: Service[] = [
 ];
 
 // In-memory / LocalStorage persistent store for demo/development mode
-const STORAGE_KEY_APPOINTMENTS = "ritualcut_appointments_v1";
-const STORAGE_KEY_SERVICES = "ritualcut_services_v1";
-const STORAGE_KEY_SETTINGS = "ritualcut_settings_v1";
-const STORAGE_KEY_BLOCKED = "ritualcut_blocked_v1";
+const STORAGE_KEY_APPOINTMENTS = "newmodel_appointments_v1";
+const STORAGE_KEY_SERVICES = "newmodel_services_v1";
+const STORAGE_KEY_SETTINGS = "newmodel_settings_v1";
+const STORAGE_KEY_BLOCKED = "newmodel_blocked_v1";
 
 // Helper to determine if we are in browser
 const isClient = typeof window !== "undefined";
@@ -108,6 +108,7 @@ function setStored<T>(key: string, data: T): void {
   if (!isClient) return;
   try {
     localStorage.setItem(key, JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent("newmodel-data-updated", { detail: { key } }));
     window.dispatchEvent(new CustomEvent("ritualcut-data-updated", { detail: { key } }));
   } catch (e) {
     console.error("Storage error:", e);
@@ -118,7 +119,7 @@ function setStored<T>(key: string, data: T): void {
 const DEMO_APPOINTMENTS: Appointment[] = [
   {
     id: "apt-demo-01",
-    booking_reference: "RC-84920",
+    booking_reference: "NM-84920",
     service_id: "srv-01",
     service_name_snapshot: "The Master Ritual",
     service_price_snapshot: 1200,
@@ -134,7 +135,7 @@ const DEMO_APPOINTMENTS: Appointment[] = [
   },
   {
     id: "apt-demo-02",
-    booking_reference: "RC-3K9M2",
+    booking_reference: "NM-3K9M2",
     service_id: "srv-02",
     service_name_snapshot: "Classic Scissor & Fade",
     service_price_snapshot: 750,
@@ -150,7 +151,7 @@ const DEMO_APPOINTMENTS: Appointment[] = [
   },
   {
     id: "apt-demo-03",
-    booking_reference: "RC-9A711",
+    booking_reference: "NM-9A711",
     service_id: "srv-03",
     service_name_snapshot: "Royal Hot Towel Shave",
     service_price_snapshot: 650,
@@ -166,7 +167,7 @@ const DEMO_APPOINTMENTS: Appointment[] = [
   },
 ];
 
-export const RitualCutData = {
+export const NewModelData = {
   getSettings(): ShopSettings {
     const stored = getStored<ShopSettings>(STORAGE_KEY_SETTINGS, INITIAL_SHOP_SETTINGS);
 
@@ -458,3 +459,5 @@ export const RitualCutData = {
     return slots;
   },
 };
+
+export const RitualCutData = NewModelData;

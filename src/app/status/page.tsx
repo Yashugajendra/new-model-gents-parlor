@@ -16,7 +16,7 @@ import {
   Share2,
 } from "lucide-react";
 import { Appointment } from "@/types/database.types";
-import { RitualCutData } from "@/lib/data";
+import { NewModelData } from "@/lib/data";
 import { formatDate, formatTime, formatCurrency, generateWhatsAppLink } from "@/lib/utils";
 
 export default function StatusLookupPage() {
@@ -35,12 +35,12 @@ export default function StatusLookupPage() {
       return;
     }
 
-    const found = RitualCutData.lookupAppointment(reference, phone);
+    const found = NewModelData.lookupAppointment(reference, phone);
     setAppointment(found);
     setHasSearched(true);
   };
 
-  const shopSettings = RitualCutData.getSettings();
+  const shopSettings = NewModelData.getSettings();
 
   const getStatusBadge = (status: Appointment["status"]) => {
     switch (status) {
@@ -86,12 +86,12 @@ export default function StatusLookupPage() {
       {/* Header */}
       <header className="border-b border-white/[0.08] bg-[#0d0d10] py-4 px-6">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-[#141417] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880]">
-              <Scissors className="w-4 h-4 -rotate-45" />
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1a1a20] to-[#121215] border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880]">
+              <span className="font-serif font-bold text-xs text-[#c5a880]">NM</span>
             </div>
             <span className="font-serif text-lg font-bold tracking-wider text-white">
-              RITUAL<span className="text-[#c5a880]">CUT</span>
+              NEW MODEL <span className="text-[#c5a880]">GENTS PARLOR</span>
             </span>
           </Link>
           <Link
@@ -114,7 +114,7 @@ export default function StatusLookupPage() {
             Check Booking Status
           </h1>
           <p className="text-xs sm:text-sm text-[#94a3b8] mt-2">
-            Enter your booking reference code (e.g. <span className="font-mono text-gray-300">RC-84920</span>)
+            Enter your booking reference code (e.g. <span className="font-mono text-gray-300">NM-84920</span>)
             and phone number to view live appointment status.
           </p>
         </div>
@@ -138,7 +138,7 @@ export default function StatusLookupPage() {
             <input
               type="text"
               required
-              placeholder="e.g. RC-84920"
+              placeholder="e.g. NM-84920"
               value={reference}
               onChange={(e) => setReference(e.target.value.toUpperCase())}
               className="w-full px-3.5 py-2.5 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-sm focus:outline-none focus:border-[#c5a880] uppercase tracking-wider font-mono placeholder-gray-500"
@@ -257,7 +257,7 @@ export default function StatusLookupPage() {
             <a
               href={generateWhatsAppLink(
                 shopSettings.whatsapp_number,
-                `Hello RITUALCUT, I am checking on my booking Ref: ${appointment.booking_reference} for ${appointment.service_name_snapshot} on ${formatDate(appointment.start_time)}.`
+                `Hello ${shopSettings.shop_name || "New Model Gents Beauty Parlor"}, I am checking on my booking Ref: ${appointment.booking_reference} for ${appointment.service_name_snapshot} on ${formatDate(appointment.start_time)}.`
               )}
               target="_blank"
               rel="noopener noreferrer"

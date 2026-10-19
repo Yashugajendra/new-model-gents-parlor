@@ -12,26 +12,26 @@ interface NavbarProps {
 
 export function Navbar({ onOpenBooking, settings }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const shopName = settings?.shop_name || "RITUALCUT";
-  const cleanWhatsapp = (settings?.whatsapp_number || "919876543210").replace(/\D/g, "");
+  const shopName = settings?.shop_name || "New Model Gents Beauty Parlor";
+  const cleanWhatsapp = (settings?.whatsapp_number || "917338076977").replace(/\D/g, "");
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#09090b]/85 border-b border-white/[0.07] transition-all">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#09090b]/90 border-b border-white/[0.07] transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-lg bg-[#141417] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] group-hover:border-[#c5a880] group-hover:scale-105 transition-all shrink-0">
-            <Scissors className="w-5 h-5 -rotate-45" />
+        {/* Brand Logo with NM Monogram */}
+        <Link href="/" className="flex items-center gap-3.5 group">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1a1a20] to-[#121215] border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880] group-hover:border-[#c5a880] group-hover:shadow-[0_0_15px_rgba(197,168,128,0.25)] group-hover:scale-105 transition-all shrink-0">
+            <span className="font-serif font-bold text-sm tracking-wider text-[#c5a880]">NM</span>
           </div>
           <div>
             <span
-              className="font-serif text-xl sm:text-2xl tracking-wider uppercase font-semibold text-white group-hover:text-[#c5a880] transition-colors block"
+              className="font-serif text-lg sm:text-xl tracking-wider uppercase font-semibold text-white group-hover:text-[#c5a880] transition-colors block leading-tight"
               suppressHydrationWarning
             >
               {shopName}
             </span>
-            <span className="block text-[10px] tracking-[0.25em] text-[#94a3b8] uppercase font-sans -mt-1">
-              Bespoke Barbering
+            <span className="block text-[9px] sm:text-[10px] tracking-[0.25em] text-[#94a3b8] uppercase font-sans">
+              Kate Complex • Thirthahalli
             </span>
           </div>
         </Link>
@@ -40,25 +40,25 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#94a3b8]">
           <a
             href="#services"
-            className="hover:text-white transition-colors py-1 hover:border-b hover:border-[#c5a880]"
+            className="hover:text-white transition-colors py-1 hover-gold-line"
           >
             Services & Pricing
           </a>
           <a
-            href="#ritual"
-            className="hover:text-white transition-colors py-1 hover:border-b hover:border-[#c5a880]"
+            href="#craft"
+            className="hover:text-white transition-colors py-1 hover-gold-line"
           >
-            The Ritual
+            The Craft
           </a>
           <a
             href="#hours"
-            className="hover:text-white transition-colors py-1 hover:border-b hover:border-[#c5a880]"
+            className="hover:text-white transition-colors py-1 hover-gold-line"
           >
             Hours & Location
           </a>
           <Link
             href="/status"
-            className="hover:text-white transition-colors py-1 hover:border-b hover:border-[#c5a880] flex items-center gap-1.5"
+            className="hover:text-white transition-colors py-1 hover-gold-line flex items-center gap-1.5"
           >
             <Calendar className="w-4 h-4 text-[#c5a880]" />
             Check Status
@@ -87,7 +87,7 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
           </a>
           <button
             onClick={onOpenBooking}
-            className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-sm tracking-wide shadow-md hover:brightness-110 active:scale-95 transition-all"
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-sm tracking-wide shadow-md hover:brightness-110 active:scale-95 transition-all"
           >
             Book Appointment
           </button>
@@ -97,7 +97,7 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
         <div className="flex md:hidden items-center gap-2">
           <button
             onClick={onOpenBooking}
-            className="px-3 py-1.5 rounded-md bg-[#c5a880] text-[#09090b] font-semibold text-xs"
+            className="px-3 py-1.5 rounded-lg bg-[#c5a880] text-[#09090b] font-semibold text-xs"
           >
             Book
           </button>
@@ -121,11 +121,11 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
             Services & Pricing
           </a>
           <a
-            href="#ritual"
+            href="#craft"
             onClick={() => setMobileMenuOpen(false)}
             className="block text-sm font-medium text-gray-300 hover:text-[#c5a880]"
           >
-            The Ritual Philosophy
+            The Craft & Technique
           </a>
           <a
             href="#hours"

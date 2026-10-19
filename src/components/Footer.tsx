@@ -8,8 +8,8 @@ interface FooterProps {
 }
 
 export function Footer({ settings }: FooterProps) {
-  const shopName = settings?.shop_name || "RITUALCUT";
-  const tagline = settings?.tagline || "Your Style. Your Time. Your Ritual.";
+  const shopName = settings?.shop_name || "New Model Gents Beauty Parlor";
+  const tagline = settings?.tagline || "Your Style. Your Time. Your Signature Look.";
 
   return (
     <footer className="bg-[#070708] border-t border-white/[0.06] pt-16 pb-12 text-[#94a3b8] text-xs">

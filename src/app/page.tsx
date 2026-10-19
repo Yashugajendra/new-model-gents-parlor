@@ -10,7 +10,7 @@ import { BookingModal } from "@/components/BookingModal";
 import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
 import { Footer } from "@/components/Footer";
 import { Service, ShopSettings } from "@/types/database.types";
-import { RitualCutData, INITIAL_SHOP_SETTINGS, INITIAL_SERVICES } from "@/lib/data";
+import { NewModelData, INITIAL_SHOP_SETTINGS, INITIAL_SERVICES } from "@/lib/data";
 
 export default function HomePage() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -23,17 +23,19 @@ export default function HomePage() {
   useEffect(() => {
     // Read and synchronize latest custom values saved by the owner in localStorage
     const syncData = () => {
-      setServices(RitualCutData.getServices());
-      setSettings(RitualCutData.getSettings());
+      setServices(NewModelData.getServices());
+      setSettings(NewModelData.getSettings());
     };
 
     syncData();
 
     // Listen to real-time events triggered by the Owner Dashboard
+    window.addEventListener("newmodel-data-updated", syncData);
     window.addEventListener("ritualcut-data-updated", syncData);
     window.addEventListener("storage", syncData);
 
     return () => {
+      window.removeEventListener("newmodel-data-updated", syncData);
       window.removeEventListener("ritualcut-data-updated", syncData);
       window.removeEventListener("storage", syncData);
     };
@@ -60,7 +62,11 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="flex-1">
-        <Hero onOpenBooking={() => handleOpenBooking()} />
+        <Hero
+          onOpenBooking={() => handleOpenBooking()}
+          shopName={settings.shop_name}
+          tagline={settings.tagline}
+        />
         <ServicesSection
           services={services}
           onSelectService={(service) => handleOpenBooking(service)}

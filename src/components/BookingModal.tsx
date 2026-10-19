@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { Service, Appointment, SlotAvailability } from "@/types/database.types";
-import { RitualCutData } from "@/lib/data";
+import { NewModelData } from "@/lib/data";
 import { formatCurrency, formatDate, generateWhatsAppLink } from "@/lib/utils";
 
 interface BookingModalProps {
@@ -52,7 +52,7 @@ export function BookingModal({
   // Initialize services and dates
   useEffect(() => {
     if (isOpen) {
-      const activeServices = RitualCutData.getServices().filter((s) => s.is_active);
+      const activeServices = NewModelData.getServices().filter((s) => s.is_active);
       setServices(activeServices);
 
       // Generate next 7 days
@@ -78,7 +78,7 @@ export function BookingModal({
   // Recalculate slots whenever date or selected service changes
   useEffect(() => {
     if (selectedService && selectedDate) {
-      const computedSlots = RitualCutData.getAvailableSlots(
+      const computedSlots = NewModelData.getAvailableSlots(
         selectedDate,
         selectedService.duration_minutes
       );
@@ -113,7 +113,7 @@ export function BookingModal({
     setErrorMessage("");
 
     try {
-      const newApt = RitualCutData.createAppointmentRequest({
+      const newApt = NewModelData.createAppointmentRequest({
         service: selectedService,
         customer_name: customerName,
         customer_phone: customerPhone,
@@ -154,11 +154,11 @@ export function BookingModal({
   };
 
   // WhatsApp share message for customer
-  const shopSettings = RitualCutData.getSettings();
+  const shopSettings = NewModelData.getSettings();
   const whatsAppShareUrl = createdAppointment
     ? generateWhatsAppLink(
         shopSettings.whatsapp_number,
-        `💈 *RITUALCUT Booking Request*\n` +
+        `💈 *${shopSettings.shop_name || "New Model Gents Beauty Parlor"} Booking Request*\n` +
           `Ref: ${createdAppointment.booking_reference}\n` +
           `Name: ${createdAppointment.customer_name}\n` +
           `Service: ${createdAppointment.service_name_snapshot}\n` +
