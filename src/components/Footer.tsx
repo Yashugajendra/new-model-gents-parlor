@@ -1,8 +1,16 @@
 import React from "react";
 import Link from "next/link";
-import { Scissors, ShieldCheck, Heart } from "lucide-react";
+import { Scissors, ShieldCheck } from "lucide-react";
+import { ShopSettings } from "@/types/database.types";
 
-export function Footer() {
+interface FooterProps {
+  settings?: ShopSettings;
+}
+
+export function Footer({ settings }: FooterProps) {
+  const shopName = settings?.shop_name || "RITUALCUT";
+  const tagline = settings?.tagline || "Your Style. Your Time. Your Ritual.";
+
   return (
     <footer className="bg-[#070708] border-t border-white/[0.06] pt-16 pb-12 text-[#94a3b8] text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,16 +21,19 @@ export function Footer() {
               <div className="w-8 h-8 rounded-lg bg-[#141417] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880]">
                 <Scissors className="w-4 h-4 -rotate-45" />
               </div>
-              <span className="font-serif text-xl font-bold tracking-wider text-white uppercase">
-                RITUAL<span className="text-[#c5a880]">CUT</span>
+              <span
+                className="font-serif text-xl font-bold tracking-wider text-white uppercase"
+                suppressHydrationWarning
+              >
+                {shopName}
               </span>
             </div>
             <p className="text-xs text-[#94a3b8] max-w-sm leading-relaxed">
-              An independently operated barbershop sanctuary committed to precision scissor work,
+              An independently operated grooming sanctuary committed to precision scissor work,
               tailored tapers, and authentic hot lather wet shaves.
             </p>
-            <p className="text-[11px] text-[#c5a880] italic">
-              “Your Style. Your Time. Your Ritual.”
+            <p className="text-[11px] text-[#c5a880] italic" suppressHydrationWarning>
+              &ldquo;{tagline}&rdquo;
             </p>
           </div>
 
@@ -74,8 +85,8 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-gray-500">
-          <div>
-            © 2026 RITUALCUT Barbershop. All rights reserved.
+          <div suppressHydrationWarning>
+            © 2026 {shopName}. All rights reserved.
           </div>
           <div className="flex items-center gap-1">
             Crafted with precision & care

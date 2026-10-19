@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Clock, MapPin, Phone, MessageSquare, ExternalLink } from "lucide-react";
 import { ShopSettings } from "@/types/database.types";
 
@@ -8,24 +8,50 @@ interface LocationHoursSectionProps {
   settings: ShopSettings;
 }
 
+function formatTimeString(timeStr?: string): string {
+  if (!timeStr) return "09:00 AM";
+  const [hStr, mStr] = timeStr.split(":");
+  const h = parseInt(hStr, 10);
+  const m = parseInt(mStr || "0", 10);
+  if (isNaN(h)) return timeStr;
+  const period = h >= 12 ? "PM" : "AM";
+  const displayH = h % 12 || 12;
+  const displayM = m.toString().padStart(2, "0");
+  return `${displayH.toString().padStart(2, "0")}:${displayM} ${period}`;
+}
+
 export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
-  const daysOfWeek = [
-    { day: "Monday", time: "09:00 AM – 08:00 PM" },
-    { day: "Tuesday", time: "09:00 AM – 08:00 PM" },
-    { day: "Wednesday", time: "09:00 AM – 08:00 PM" },
-    { day: "Thursday", time: "09:00 AM – 08:00 PM" },
-    { day: "Friday", time: "09:00 AM – 09:00 PM" },
-    { day: "Saturday", time: "08:30 AM – 09:00 PM" },
-    { day: "Sunday", time: "09:00 AM – 07:00 PM" },
-  ];
+  const [todayName, setTodayName] = useState("");
 
-  const [todayName, setTodayName] = React.useState("");
-
-  React.useEffect(() => {
+  useEffect(() => {
     const currentDayIndex = new Date().getDay();
-    const names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const names = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
     setTodayName(names[currentDayIndex]);
   }, []);
+
+  const formattedHours = `${formatTimeString(settings.opening_time)} – ${formatTimeString(
+    settings.closing_time
+  )}`;
+
+  const daysOfWeek = [
+    { day: "Monday", time: formattedHours },
+    { day: "Tuesday", time: formattedHours },
+    { day: "Wednesday", time: formattedHours },
+    { day: "Thursday", time: formattedHours },
+    { day: "Friday", time: formattedHours },
+    { day: "Saturday", time: formattedHours },
+    { day: "Sunday", time: formattedHours },
+  ];
+
+  const cleanWhatsapp = (settings.whatsapp_number || "919876543210").replace(/\D/g, "");
 
   return (
     <section id="hours" className="py-24 bg-[#09090b] relative scroll-mt-12">
@@ -39,9 +65,11 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
             <h2 className="font-serif text-3xl sm:text-5xl font-medium text-white">
               Location & Enquiries
             </h2>
-            <p className="text-[#94a3b8] text-sm sm:text-base leading-relaxed">
-              Situated in the quiet heart of Jubilee Enclave, with private dedicated parking and
-              a dedicated espresso bar for patrons.
+            <p
+              className="text-[#94a3b8] text-sm sm:text-base leading-relaxed"
+              suppressHydrationWarning
+            >
+              Visit us at {settings.address || "our studio"}, for your next tailored grooming experience.
             </p>
 
             <div className="space-y-4 pt-4">
@@ -49,9 +77,19 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                 <MapPin className="w-5 h-5 text-[#c5a880] shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-white text-sm font-semibold">Address</h4>
-                  <p className="text-xs sm:text-sm text-[#94a3b8] mt-0.5">{settings.address}</p>
+                  <p
+                    className="text-xs sm:text-sm text-[#94a3b8] mt-0.5"
+                    suppressHydrationWarning
+                  >
+                    {settings.address}
+                  </p>
                   <a
-                    href={settings.google_maps_url}
+                    href={
+                      settings.google_maps_url ||
+                      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                        settings.address || "Barbershop"
+                      )}`
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs text-[#c5a880] hover:underline mt-2"
@@ -66,7 +104,12 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                 <Phone className="w-5 h-5 text-[#c5a880] shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-white text-sm font-semibold">Telephone Consultation</h4>
-                  <p className="text-xs sm:text-sm text-[#94a3b8] mt-0.5">{settings.phone_number}</p>
+                  <p
+                    className="text-xs sm:text-sm text-[#94a3b8] mt-0.5"
+                    suppressHydrationWarning
+                  >
+                    {settings.phone_number}
+                  </p>
                 </div>
               </div>
 
@@ -78,7 +121,9 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                     Fast responses for special requests, rescheduling, and private events.
                   </p>
                   <a
-                    href={`https://wa.me/${settings.whatsapp_number}?text=Hello%20RITUALCUT%2C%20I%20have%20an%20enquiry.`}
+                    href={`https://wa.me/${cleanWhatsapp}?text=Hello%20${encodeURIComponent(
+                      settings.shop_name || "RITUALCUT"
+                    )}%2C%20I%20have%20an%20enquiry.`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs text-[#25D366] hover:underline mt-2 font-medium"
@@ -121,7 +166,12 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                         </span>
                       )}
                     </div>
-                    <span className={isToday ? "text-white" : "text-gray-300"}>{time}</span>
+                    <span
+                      className={isToday ? "text-white" : "text-gray-300"}
+                      suppressHydrationWarning
+                    >
+                      {time}
+                    </span>
                   </div>
                 );
               })}

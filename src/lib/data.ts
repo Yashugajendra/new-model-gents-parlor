@@ -12,16 +12,16 @@ export const INITIAL_SHOP_SETTINGS: ShopSettings = {
   id: "shop-default-01",
   shop_name: "RITUALCUT",
   tagline: "Your Style. Your Time. Your Ritual.",
-  phone_number: "+91 98765 43210",
-  whatsapp_number: "919876543210",
-  address: "42 Artisan Lane, Jubilee Enclave, Hyderabad",
-  google_maps_url: "https://maps.google.com/?q=Artisan+Barbershop",
+  phone_number: "+91 733 807 6977",
+  whatsapp_number: "+91 733 807 6977",
+  address: "Kate Complex, Thirthahalli, Shivamogga",
+  google_maps_url: "https://www.google.com/maps/search/?api=1&query=Kate+Complex%2C+Thirthahalli%2C+Shivamogga",
   currency_code: "INR",
   currency_symbol: "₹",
   slot_interval_minutes: 30,
   buffer_minutes: 5,
-  opening_time: "09:00",
-  closing_time: "20:00",
+  opening_time: "06:30",
+  closing_time: "11:00",
   operating_days: [1, 2, 3, 4, 5, 6, 7], // 7 days a week
 };
 
@@ -108,6 +108,7 @@ function setStored<T>(key: string, data: T): void {
   if (!isClient) return;
   try {
     localStorage.setItem(key, JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent("ritualcut-data-updated", { detail: { key } }));
   } catch (e) {
     console.error("Storage error:", e);
   }
@@ -167,7 +168,34 @@ const DEMO_APPOINTMENTS: Appointment[] = [
 
 export const RitualCutData = {
   getSettings(): ShopSettings {
-    return getStored<ShopSettings>(STORAGE_KEY_SETTINGS, INITIAL_SHOP_SETTINGS);
+    const stored = getStored<ShopSettings>(STORAGE_KEY_SETTINGS, INITIAL_SHOP_SETTINGS);
+
+    // Migrate the previous demo address in localStorage to the real shop address.
+    // This preserves other saved settings such as phone number and opening hours.
+    const previousAddress = "42 Artisan Lane, Jubilee Enclave, Hyderabad";
+    const shouldUpdateAddress =
+      !stored.address?.trim() ||
+      stored.address.trim().toLowerCase() === previousAddress.toLowerCase();
+
+    const updated: ShopSettings = {
+      ...stored,
+      address: shouldUpdateAddress ? "Kate Complex, Thirthahalli, Shivamogga" : stored.address,
+      google_maps_url:
+        shouldUpdateAddress ||
+        !stored.google_maps_url ||
+        stored.google_maps_url.includes("Artisan+Barbershop")
+          ? "https://www.google.com/maps/search/?api=1&query=Kate+Complex%2C+Thirthahalli%2C+Shivamogga"
+          : stored.google_maps_url,
+    };
+
+    if (
+      updated.address !== stored.address ||
+      updated.google_maps_url !== stored.google_maps_url
+    ) {
+      setStored(STORAGE_KEY_SETTINGS, updated);
+    }
+
+    return updated;
   },
 
   updateSettings(settings: Partial<ShopSettings>): ShopSettings {

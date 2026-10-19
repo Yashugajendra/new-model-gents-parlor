@@ -23,7 +23,7 @@ import {
   Layers,
 } from "lucide-react";
 import { Appointment, Service, ShopSettings } from "@/types/database.types";
-import { RitualCutData } from "@/lib/data";
+import { INITIAL_SHOP_SETTINGS, RitualCutData } from "@/lib/data";
 import { formatDate, formatTime, formatCurrency, generateWhatsAppLink } from "@/lib/utils";
 
 export default function AdminDashboardPage() {
@@ -34,7 +34,22 @@ export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<"pending" | "confirmed" | "services" | "settings">("pending");
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [services, setServices] = useState<Service[]>([]);
-  const [settings, setSettings] = useState<ShopSettings>(RitualCutData.getSettings());
+  const [settings, setSettings] = useState<ShopSettings>(
+    INITIAL_SHOP_SETTINGS
+  );
+
+  useEffect(() => {
+    setServices(RitualCutData.getServices());
+
+    const savedSettings = RitualCutData.getSettings();
+
+    setSettings({
+      ...savedSettings,
+      address: savedSettings.address
+        .replace(/\s*,\s*/g, ", ")
+        .trim(),
+    });
+  }, []);
 
   // Modal states
   const [conflictModalData, setConflictModalData] = useState<{
@@ -308,11 +323,10 @@ export default function AdminDashboardPage() {
         <div className="flex border-b border-white/[0.08] gap-4 overflow-x-auto text-xs sm:text-sm font-medium">
           <button
             onClick={() => setActiveTab("pending")}
-            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${
-              activeTab === "pending"
-                ? "border-[#c5a880] text-[#c5a880] font-semibold"
-                : "border-transparent text-[#94a3b8] hover:text-white"
-            }`}
+            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === "pending"
+              ? "border-[#c5a880] text-[#c5a880] font-semibold"
+              : "border-transparent text-[#94a3b8] hover:text-white"
+              }`}
           >
             <span>Pending Requests</span>
             {pendingAppointments.length > 0 && (
@@ -324,11 +338,10 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab("confirmed")}
-            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${
-              activeTab === "confirmed"
-                ? "border-[#c5a880] text-[#c5a880] font-semibold"
-                : "border-transparent text-[#94a3b8] hover:text-white"
-            }`}
+            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === "confirmed"
+              ? "border-[#c5a880] text-[#c5a880] font-semibold"
+              : "border-transparent text-[#94a3b8] hover:text-white"
+              }`}
           >
             <span>Confirmed Schedule</span>
             <span className="text-xs text-gray-500">
@@ -338,11 +351,10 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab("services")}
-            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${
-              activeTab === "services"
-                ? "border-[#c5a880] text-[#c5a880] font-semibold"
-                : "border-transparent text-[#94a3b8] hover:text-white"
-            }`}
+            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === "services"
+              ? "border-[#c5a880] text-[#c5a880] font-semibold"
+              : "border-transparent text-[#94a3b8] hover:text-white"
+              }`}
           >
             <Scissors className="w-4 h-4" />
             <span>Services & Rates</span>
@@ -350,11 +362,10 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab("settings")}
-            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${
-              activeTab === "settings"
-                ? "border-[#c5a880] text-[#c5a880] font-semibold"
-                : "border-transparent text-[#94a3b8] hover:text-white"
-            }`}
+            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === "settings"
+              ? "border-[#c5a880] text-[#c5a880] font-semibold"
+              : "border-transparent text-[#94a3b8] hover:text-white"
+              }`}
           >
             <Settings className="w-4 h-4" />
             <span>Shop Settings</span>
@@ -505,11 +516,10 @@ export default function AdminDashboardPage() {
                       </td>
                       <td className="py-3.5 px-4">
                         <span
-                          className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
-                            apt.status === "CONFIRMED"
-                              ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
-                              : "bg-blue-500/15 text-blue-400 border border-blue-500/30"
-                          }`}
+                          className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${apt.status === "CONFIRMED"
+                            ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                            : "bg-blue-500/15 text-blue-400 border border-blue-500/30"
+                            }`}
                         >
                           {apt.status}
                         </span>

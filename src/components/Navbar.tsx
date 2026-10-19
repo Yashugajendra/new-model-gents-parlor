@@ -3,25 +3,32 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Scissors, Calendar, ShieldCheck, MessageCircle, Menu, X } from "lucide-react";
+import { ShopSettings } from "@/types/database.types";
 
 interface NavbarProps {
   onOpenBooking: () => void;
+  settings?: ShopSettings;
 }
 
-export function Navbar({ onOpenBooking }: NavbarProps) {
+export function Navbar({ onOpenBooking, settings }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const shopName = settings?.shop_name || "RITUALCUT";
+  const cleanWhatsapp = (settings?.whatsapp_number || "919876543210").replace(/\D/g, "");
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#09090b]/85 border-b border-white/[0.07] transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-lg bg-[#141417] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] group-hover:border-[#c5a880] group-hover:scale-105 transition-all">
+          <div className="w-10 h-10 rounded-lg bg-[#141417] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] group-hover:border-[#c5a880] group-hover:scale-105 transition-all shrink-0">
             <Scissors className="w-5 h-5 -rotate-45" />
           </div>
           <div>
-            <span className="font-serif text-2xl tracking-wider uppercase font-semibold text-white group-hover:text-[#c5a880] transition-colors">
-              RITUAL<span className="text-[#c5a880]">CUT</span>
+            <span
+              className="font-serif text-xl sm:text-2xl tracking-wider uppercase font-semibold text-white group-hover:text-[#c5a880] transition-colors block"
+              suppressHydrationWarning
+            >
+              {shopName}
             </span>
             <span className="block text-[10px] tracking-[0.25em] text-[#94a3b8] uppercase font-sans -mt-1">
               Bespoke Barbering
@@ -68,7 +75,9 @@ export function Navbar({ onOpenBooking }: NavbarProps) {
             <ShieldCheck className="w-5 h-5" />
           </Link>
           <a
-            href="https://wa.me/919876543210?text=Hello%20RITUALCUT%2C%20I%20would%20like%20to%20enquire%20about%20booking%20an%20appointment."
+            href={`https://wa.me/${cleanWhatsapp}?text=Hello%20${encodeURIComponent(
+              shopName
+            )}%2C%20I%20would%20like%20to%20enquire%20about%20booking%20an%20appointment.`}
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 text-[#94a3b8] hover:text-[#25D366] transition-colors rounded-lg hover:bg-white/[0.04]"

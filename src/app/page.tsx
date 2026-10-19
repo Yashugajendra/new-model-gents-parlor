@@ -10,17 +10,33 @@ import { BookingModal } from "@/components/BookingModal";
 import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
 import { Footer } from "@/components/Footer";
 import { Service, ShopSettings } from "@/types/database.types";
-import { RitualCutData } from "@/lib/data";
+import { RitualCutData, INITIAL_SHOP_SETTINGS, INITIAL_SERVICES } from "@/lib/data";
 
 export default function HomePage() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [services, setServices] = useState<Service[]>([]);
-  const [settings, setSettings] = useState<ShopSettings>(RitualCutData.getSettings());
+
+  // Initialize with static default constants to guarantee 100% hydration match between SSR and Client
+  const [services, setServices] = useState<Service[]>(INITIAL_SERVICES);
+  const [settings, setSettings] = useState<ShopSettings>(INITIAL_SHOP_SETTINGS);
 
   useEffect(() => {
-    setServices(RitualCutData.getServices());
-    setSettings(RitualCutData.getSettings());
+    // Read and synchronize latest custom values saved by the owner in localStorage
+    const syncData = () => {
+      setServices(RitualCutData.getServices());
+      setSettings(RitualCutData.getSettings());
+    };
+
+    syncData();
+
+    // Listen to real-time events triggered by the Owner Dashboard
+    window.addEventListener("ritualcut-data-updated", syncData);
+    window.addEventListener("storage", syncData);
+
+    return () => {
+      window.removeEventListener("ritualcut-data-updated", syncData);
+      window.removeEventListener("storage", syncData);
+    };
   }, []);
 
   const handleOpenBooking = (service?: Service) => {
@@ -40,7 +56,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#09090b] flex flex-col selection:bg-[#c5a880] selection:text-[#09090b]">
       {/* Navigation */}
-      <Navbar onOpenBooking={() => handleOpenBooking()} />
+      <Navbar onOpenBooking={() => handleOpenBooking()} settings={settings} />
 
       {/* Main Content */}
       <main className="flex-1">
@@ -54,8 +70,8 @@ export default function HomePage() {
       </main>
 
       {/* Floating Elements & Modals */}
-      <WhatsAppFloatingButton />
-      <Footer />
+      <WhatsAppFloatingButton settings={settings} />
+      <Footer settings={settings} />
 
       <BookingModal
         isOpen={isBookingOpen}
