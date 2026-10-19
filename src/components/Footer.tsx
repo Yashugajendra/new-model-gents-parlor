@@ -44,8 +44,18 @@ export function Footer({ settings }: FooterProps) {
             </h4>
             <ul className="space-y-2">
               <li>
+                <a href="#about" className="hover:text-white transition-colors">
+                  About Our Parlor
+                </a>
+              </li>
+              <li>
+                <a href="#gallery" className="hover:text-white transition-colors">
+                  Lookbook & Hairstyles
+                </a>
+              </li>
+              <li>
                 <a href="#services" className="hover:text-white transition-colors">
-                  Services & Pricing
+                  Services & Rates
                 </a>
               </li>
               <li>

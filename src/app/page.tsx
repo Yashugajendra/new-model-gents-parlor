@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { AboutSection } from "@/components/AboutSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { CraftSection } from "@/components/CraftSection";
 import { LocationHoursSection } from "@/components/LocationHoursSection";
@@ -66,6 +67,11 @@ export default function HomePage() {
           onOpenBooking={() => handleOpenBooking()}
           shopName={settings.shop_name}
           tagline={settings.tagline}
+        />
+        <AboutSection
+          onOpenBooking={() => handleOpenBooking()}
+          shopName={settings.shop_name}
+          address={settings.address}
         />
         <ServicesSection
           services={services}

@@ -37,18 +37,24 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#94a3b8]">
+        <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-[#94a3b8]">
+          <a
+            href="#about"
+            className="hover:text-white transition-colors py-1 hover-gold-line"
+          >
+            About Us
+          </a>
+          <a
+            href="#gallery"
+            className="hover:text-white transition-colors py-1 hover-gold-line"
+          >
+            Lookbook
+          </a>
           <a
             href="#services"
             className="hover:text-white transition-colors py-1 hover-gold-line"
           >
-            Services & Pricing
-          </a>
-          <a
-            href="#craft"
-            className="hover:text-white transition-colors py-1 hover-gold-line"
-          >
-            The Craft
+            Services & Rates
           </a>
           <a
             href="#hours"
@@ -61,7 +67,7 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
             className="hover:text-white transition-colors py-1 hover-gold-line flex items-center gap-1.5"
           >
             <Calendar className="w-4 h-4 text-[#c5a880]" />
-            Check Status
+            Status
           </Link>
         </nav>
 
@@ -114,11 +120,25 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-white/[0.08] bg-[#0d0d10] px-4 pt-3 pb-6 space-y-4">
           <a
+            href="#about"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium text-gray-300 hover:text-[#c5a880]"
+          >
+            About Us
+          </a>
+          <a
+            href="#gallery"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium text-gray-300 hover:text-[#c5a880]"
+          >
+            Lookbook & Gallery
+          </a>
+          <a
             href="#services"
             onClick={() => setMobileMenuOpen(false)}
             className="block text-sm font-medium text-gray-300 hover:text-[#c5a880]"
           >
-            Services & Pricing
+            Services & Rates
           </a>
           <a
             href="#craft"

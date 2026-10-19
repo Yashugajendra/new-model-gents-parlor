@@ -24,7 +24,7 @@ export function WhatsAppFloatingButton({ settings }: WhatsAppFloatingButtonProps
         title={`Chat with ${shopName} on WhatsApp`}
       >
         <MessageCircle className="w-5 h-5 fill-white stroke-none" />
-        <span className="hidden sm:inline">WhatsApp Concierge</span>
+        <span className="hidden sm:inline">Enquires!</span>
       </a>
     </aside>
   );

@@ -20,14 +20,14 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "New Model Gents Beauty Parlor — Precision Grooming & Styling",
   description:
-    "Premier gents styling and grooming sanctuary at Kate Complex, Thirthahalli, Shivamogga. Reserve your appointment for bespoke haircuts, beard sculpting, and luxury grooming.",
+    "Premier gents styling and grooming sanctuary at Katte Complex, Thirthahalli, Shivamogga. Reserve your appointment for bespoke haircuts, beard sculpting, and luxury grooming.",
   keywords: [
     "New Model Gents Beauty Parlor",
     "Gents Parlor Thirthahalli",
     "Barbershop Shivamogga",
     "Haircut",
     "Beard Grooming",
-    "Kate Complex",
+    "Katte Complex",
   ],
 };
 
