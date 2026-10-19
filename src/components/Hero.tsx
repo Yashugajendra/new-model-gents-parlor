@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { Scissors, Clock, Sparkles, MapPin, ArrowRight } from "lucide-react";
 
@@ -12,11 +13,26 @@ interface HeroProps {
 
 export function Hero({ onOpenBooking, shopName = "New Model Gents Beauty Parlor", tagline }: HeroProps) {
   return (
-    <section className="relative overflow-hidden pt-14 pb-24 md:pt-24 md:pb-36 bg-gradient-to-b from-[#0d0d10] via-[#09090b] to-[#09090b]">
-      {/* Background radial gold glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-[#c5a880]/10 rounded-full blur-[150px] pointer-events-none" />
+    <section className="relative overflow-hidden pt-14 pb-24 md:pt-24 md:pb-36 bg-[#09090b]">
+      {/* Background Image: Master Barber Preparing Straight Razor */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0">
+        <Image
+          src="/images/hero-razor-bg.jpg"
+          alt="Master barber preparing straight razor"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center opacity-25 md:opacity-30 scale-105"
+        />
+        {/* Layered luxury dark overlays ensuring perfect text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#09090b]/85 via-[#09090b]/75 to-[#09090b]" />
+        <div className="absolute inset-0 bg-[#09090b]/30" />
+      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Background radial gold glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-[#c5a880]/15 rounded-full blur-[150px] pointer-events-none z-0" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
         {/* Animated Brand Badge */}
         <motion.div
           initial={{ opacity: 0, y: -20, scale: 0.95 }}
