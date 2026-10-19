@@ -51,7 +51,7 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
     { day: "Sunday", time: formattedHours },
   ];
 
-  const cleanWhatsapp = (settings.whatsapp_number || "919876543210").replace(/\D/g, "");
+  const cleanWhatsapp = (settings.whatsapp_number || "+91 7338076977").replace(/\D/g, "");
 
   return (
     <section id="hours" className="py-24 bg-[#09090b] relative scroll-mt-12">
@@ -118,7 +118,7 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                 <div>
                   <h4 className="text-white text-sm font-semibold">WhatsApp Shop Concierge</h4>
                   <p className="text-xs sm:text-sm text-[#94a3b8] mt-0.5">
-                    Fast responses for special requests, rescheduling, and private events.
+                    Fast responses for special requests, rescheduling & private events.
                   </p>
                   <a
                     href={`https://wa.me/${cleanWhatsapp}?text=Hello%20${encodeURIComponent(

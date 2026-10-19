@@ -33,15 +33,42 @@ interface GalleryItem {
 const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: "gallery-01",
-    title: "Modern Textured Taper Crop",
+    title: "Executive Side-Part & Precision Taper Fade",
     category: "hairstyles",
     categoryLabel: "Hairstyles",
-    description: "Layered crown texture with precision temple taper and natural wave flow.",
-    imageSrc: "/images/gallery/hairstyle-textured-taper.jpg",
+    description: "Sleek combed contour with a high-definition razor side parting and seamless low taper fade.",
+    imageSrc: "/images/gallery/hairstyle-slick-sidepart-fade.png",
     aspect: "portrait",
   },
   {
     id: "gallery-02",
+    title: "Master Shear Scissoring & Full Beard Sculpt",
+    category: "hairstyles",
+    categoryLabel: "Hairstyles",
+    description: "Freehand Japanese shear craftsmanship shaping crown volume paired with full textured beard shaping.",
+    imageSrc: "/images/gallery/hairstyle-shear-beard-styling.jpg",
+    aspect: "portrait",
+  },
+  {
+    id: "gallery-03",
+    title: "Master Artisan Barber Tool Station",
+    category: "studio",
+    categoryLabel: "Chairs & Tools",
+    description: "Wahl Senior cordless clippers, Andis foil shavers, Japanese steel texturizing shears, and sanitize-treated combs.",
+    imageSrc: "/images/gallery/barber-workstation-tools.jpg",
+    aspect: "landscape",
+  },
+  {
+    id: "gallery-04",
+    title: "Hydraulic Reclining Leather Chair Stations",
+    category: "studio",
+    categoryLabel: "Chairs & Tools",
+    description: "Heavy-duty ergonomic vintage leather barber chairs with illuminated vanity stations.",
+    imageSrc: "/images/gallery/luxury-barber-chair-station.jpg",
+    aspect: "portrait",
+  },
+  {
+    id: "gallery-05",
     title: "Royal Straight Razor Hot Lather Shave",
     category: "craft",
     categoryLabel: "The Craft",
@@ -50,16 +77,25 @@ const GALLERY_ITEMS: GalleryItem[] = [
     aspect: "landscape",
   },
   {
-    id: "gallery-03",
-    title: "Hydraulic Reclining Leather Chair Stations",
-    category: "studio",
-    categoryLabel: "Studio & Chairs",
-    description: "Heavy-duty ergonomic vintage leather barber chairs with illuminated vanity stations.",
-    imageSrc: "/images/gallery/luxury-barber-chair-station.jpg",
+    id: "gallery-06",
+    title: "Master Barber Craftsmanship & Discipline",
+    category: "craft",
+    categoryLabel: "The Craft",
+    description: "Tailored grooming discipline in an exclusive, private appointment atmosphere.",
+    imageSrc: "/images/gallery/master-barber-craftsman.jpg",
+    aspect: "tall",
+  },
+  {
+    id: "gallery-07",
+    title: "Modern Textured Taper Crop",
+    category: "hairstyles",
+    categoryLabel: "Hairstyles",
+    description: "Layered crown texture with precision temple taper and natural wave flow.",
+    imageSrc: "/images/gallery/hairstyle-textured-taper.jpg",
     aspect: "portrait",
   },
   {
-    id: "gallery-04",
+    id: "gallery-08",
     title: "Executive Low Skin Fade & Sculpted Beard",
     category: "hairstyles",
     categoryLabel: "Hairstyles",
@@ -67,21 +103,12 @@ const GALLERY_ITEMS: GalleryItem[] = [
     imageSrc: "/images/gallery/hairstyle-classic-fade.jpg",
     aspect: "portrait",
   },
-  {
-    id: "gallery-05",
-    title: "Master Barber Craftsmanship",
-    category: "craft",
-    categoryLabel: "The Craft",
-    description: "Tailored grooming discipline in an exclusive, private appointment atmosphere.",
-    imageSrc: "/images/gallery/master-barber-craftsman.jpg",
-    aspect: "tall",
-  },
 ];
 
 export function AboutSection({
   onOpenBooking,
   shopName = "New Model Gents Beauty Parlor",
-  address = "Kate Complex, Thirthahalli, Shivamogga",
+  address = "Katte Complex, Thirthahalli, Shivamogga",
 }: AboutSectionProps) {
   const [activeTab, setActiveTab] = useState<"all" | "hairstyles" | "craft" | "studio">("all");
   const [previewImage, setPreviewImage] = useState<GalleryItem | null>(null);
@@ -147,7 +174,7 @@ export function AboutSection({
                   NM
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg text-white font-semibold">The New Model Standard</h3>
+                  <h3 className="font-serif text-lg text-white font-semibold">New Model Gents Beauty Parlor</h3>
                   <p className="text-xs text-[#94a3b8]" suppressHydrationWarning>{address}</p>
                 </div>
               </div>
@@ -168,7 +195,7 @@ export function AboutSection({
                 <div className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 text-[#c5a880] shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-white">Central Location:</strong> Prime spot in Kate Complex with convenient access and parking.
+                    <strong className="text-white">Central Location:</strong> Prime spot in Katte Complex with convenient access and parking.
                   </span>
                 </div>
               </div>
@@ -197,7 +224,7 @@ export function AboutSection({
                 Our Work, Tools & Atmosphere
               </h3>
               <p className="text-xs sm:text-sm text-[#94a3b8] mt-1">
-                Explore real photographs from our parlor — haircuts, straight-razor sessions, and chairs.
+                Explore real photographs from our parlor — haircuts, straight-razor sessions & chairs.
               </p>
             </div>
 
@@ -212,11 +239,10 @@ export function AboutSection({
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                  className={`px-3.5 py-2 rounded-lg font-medium transition-all ${
-                    activeTab === tab.id
+                  className={`px-3.5 py-2 rounded-lg font-medium transition-all ${activeTab === tab.id
                       ? "bg-[#c5a880] text-[#09090b] font-semibold shadow-md"
                       : "bg-[#141417] text-[#94a3b8] hover:text-white border border-white/[0.06] hover:border-[#c5a880]/30"
-                  }`}
+                    }`}
                 >
                   {tab.label}
                 </button>

@@ -136,7 +136,7 @@ export function Hero({ onOpenBooking, shopName = "New Model Gents Beauty Parlor"
           </div>
           <div className="p-4 rounded-xl bg-[#121215]/80 border border-white/[0.05] text-left hover:border-[#c5a880]/30 transition-all group">
             <MapPin className="w-5 h-5 text-[#c5a880] mb-2 group-hover:scale-110 transition-transform" />
-            <h4 className="text-white text-sm font-semibold">Kate Complex</h4>
+            <h4 className="text-white text-sm font-semibold">Katte Complex</h4>
             <p className="text-xs text-[#94a3b8] mt-1">Thirthahalli, Shivamogga</p>
           </div>
         </motion.div>

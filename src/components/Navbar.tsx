@@ -31,7 +31,7 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
               {shopName}
             </span>
             <span className="block text-[9px] sm:text-[10px] tracking-[0.25em] text-[#94a3b8] uppercase font-sans">
-              Kate Complex • Thirthahalli
+               Thirthahalli • Shivamogga
             </span>
           </div>
         </Link>
@@ -42,7 +42,7 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
             href="#about"
             className="hover:text-white transition-colors py-1 hover-gold-line"
           >
-            About Us
+            About
           </a>
           <a
             href="#gallery"
