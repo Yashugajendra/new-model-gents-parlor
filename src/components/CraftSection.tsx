@@ -56,7 +56,7 @@ export function CraftSection() {
                   }`}
                 >
                   <Image
-                    src="/brand/tools-dark.jpg"
+                    src="/brand/tools-darkk.jpg"
                     alt="Artisan Barbering Shears and Straight Razor"
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
@@ -64,7 +64,7 @@ export function CraftSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end p-4">
                     <span className="text-xs font-serif text-[#c5a880] tracking-wider uppercase font-semibold">
-                      Forged Steel & Leather
+                      PRECISION IN EVERY DETAIL
                     </span>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export function CraftSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end p-4">
                     <span className="text-xs font-serif text-[#c5a880] tracking-wider uppercase font-semibold">
-                      Professional Styling
+                     Style With Purpose 
                     </span>
                   </div>
                 </div>

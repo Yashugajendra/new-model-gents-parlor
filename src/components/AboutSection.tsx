@@ -39,89 +39,89 @@ const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: "gallery-01",
     title: "Executive Side-Part & Low Taper Fade",
-    title_kn: "à²¸à³ˆà²¡à³-à²ªà²¾à²°à³à²Ÿà³ à²®à²¤à³à²¤à³ à²²à³‹ à²Ÿà³‡à²ªà²°à³ à²«à³‡à²¡à³",
+    title_kn: "ಸೈಡ್-ಪಾರ್ಟ್ ಮತ್ತು ಲೋ ಟೇಪರ್ ಫೇಡ್",
     categories: ["classic", "fade"],
     categoryLabel: "Classic / Fade",
-    categoryLabel_kn: "à²•à³à²²à²¾à²¸à²¿à²•à³ / à²«à³‡à²¡à³",
+    categoryLabel_kn: "ಕ್ಲಾಸಿಕ್ / ಫೇಡ್",
     description: "Sleek combed contour with a clean side parting and seamless low skin taper fade.",
-    description_kn: "à²¨à³€à²Ÿà²¾à²¦ à²¬à²¾à²šà²¿à²¦ à²¹à³‡à²°à³à²¸à³à²Ÿà³ˆà²²à³ à²®à²¤à³à²¤à³ à²…à²šà³à²šà³à²•à²Ÿà³à²Ÿà²¾à²¦ à²²à³‹ à²¸à³à²•à²¿à²¨à³ à²Ÿà³‡à²ªà²°à³ à²«à³‡à²¡à³.",
+    description_kn: "ನೀಟಾದ ಬಾಚಿದ ಹೇರ್ಸ್ಟೈಲ್ ಮತ್ತು ಅಚ್ಚುಕಟ್ಟಾದ ಲೋ ಸ್ಕಿನ್ ಟೇಪರ್ ಫೇಡ್.",
     imageSrc: "/images/gallery/hairstyle-slick-sidepart-fade.png",
   },
   {
     id: "gallery-02",
     title: "Artisan Shear Styling & Beard Sculpt",
-    title_kn: "à²•à²¤à³à²¤à²°à²¿ à²¸à³à²Ÿà³ˆà²²à²¿à²‚à²—à³ à²®à²¤à³à²¤à³ à²—à²¡à³à²¡à²¦ à²†à²•à²¾à²°",
+    title_kn: "ಕತ್ತರಿ ಸ್ಟೈಲಿಂಗ್ ಮತ್ತು ಗಡ್ಡದ ಆಕಾರ",
     categories: ["beard", "trendy"],
     categoryLabel: "Beard Styles",
-    categoryLabel_kn: "à²—à²¡à³à²¡à²¦ à²¸à³à²Ÿà³ˆà²²à³",
+    categoryLabel_kn: "ಗಡ್ಡದ ಸ್ಟೈಲ್",
     description: "Freehand Japanese shear craftsmanship shaping crown volume paired with full textured beard shaping.",
-    description_kn: "à²•à²¤à³à²¤à²°à²¿à²¯à²¿à²‚à²¦ à²¨à²¿à²–à²° à²•à²Ÿà²¿à²‚à²—à³ à²®à²¤à³à²¤à³ à²ªà³‚à²°à³à²£ à²—à²¡à³à²¡à²¦ à²…à²‚à²¦à²µà²¾à²¦ à²Ÿà³à²°à²¿à²®à³à²®à²¿à²‚à²—à³.",
+    description_kn: "ಕತ್ತರಿಯಿಂದ ನಿಖರ ಕಟಿಂಗ್ ಮತ್ತು ಪೂರ್ಣ ಗಡ್ಡದ ಅಂದವಾದ ಟ್ರಿಮ್ಮಿಂಗ್.",
     imageSrc: "/images/gallery/hairstyle-shear-beard-styling.jpg",
   },
   {
     id: "gallery-03",
     title: "Master Artisan Barber Tool Station",
-    title_kn: "à²¬à²¾à²°à³à²¬à²°à³ à²•à²¾à²°à³à²¯à²•à³à²·à³‡à²¤à³à²°à²¦ à²‰à²ªà²•à²°à²£à²—à²³à³",
+    title_kn: "ಬಾರ್ಬರ್ ಕಾರ್ಯಕ್ಷೇತ್ರದ ಉಪಕರಣಗಳು",
     categories: ["tools"],
     categoryLabel: "Chairs & Tools",
-    categoryLabel_kn: "à²•à³à²°à³à²šà²¿ & à²‰à²ªà²•à²°à²£à²—à²³à³",
+    categoryLabel_kn: "ಕುರ್ಚಿ & ಉಪಕರಣಗಳು",
     description: "Wahl Senior cordless clippers, Andis foil shavers, Japanese steel texturizing shears, and sanitized combs.",
-    description_kn: "à²µà²¾à²²à³ à²¸à³€à²¨à²¿à²¯à²°à³ à²•à²¾à²°à³à²¡à³à²²à³†à²¸à³ à²•à³à²²à²¿à²ªà³à²ªà²°à³à²—à²³à³, à²¶à³‡à²µà²°à³à²—à²³à³, à²œà²ªà²¾à²¨à³€à²¸à³ à²•à²¤à³à²¤à²°à²¿à²—à²³à³ à²®à²¤à³à²¤à³ à²¶à³à²¦à³à²§à³€à²•à²°à²¿à²¸à²¿à²¦ à²¬à²¾à²šà²£à²¿à²—à³†à²—à²³à³.",
+    description_kn: "ವಾಲ್ ಸೀನಿಯರ್ ಕಾರ್ಡ್ಲೆಸ್ ಕ್ಲಿಪ್ಪರ್ಗಳು, ಶೇವರ್ಗಳು, ಜಪಾನೀಸ್ ಕತ್ತರಿಗಳು ಮತ್ತು ಶುದ್ಧೀಕರಿಸಿದ ಬಾಚಣಿಗೆಗಳು.",
     imageSrc: "/images/gallery/barber-workstation-tools.jpg",
   },
   {
     id: "gallery-04",
     title: "Hydraulic Reclining Leather Barber Chair",
-    title_kn: "à²¹à³ˆà²¡à³à²°à²¾à²²à²¿à²•à³ à²²à³†à²¦à²°à³ à²¬à²¾à²°à³à²¬à²°à³ à²•à³à²°à³à²šà²¿",
+    title_kn: "ಹೈಡ್ರಾಲಿಕ್ ಲೆದರ್ ಬಾರ್ಬರ್ ಕುರ್ಚಿ",
     categories: ["tools"],
     categoryLabel: "Chairs & Tools",
-    categoryLabel_kn: "à²•à³à²°à³à²šà²¿ & à²‰à²ªà²•à²°à²£à²—à²³à³",
+    categoryLabel_kn: "ಕುರ್ಚಿ & ಉಪಕರಣಗಳು",
     description: "Heavy-duty ergonomic vintage leather barber chairs with illuminated vanity stations.",
-    description_kn: "à²†à²°à²¾à²®à²¦à²¾à²¯à²• à²¹à²¾à²—à³‚ à²¸à³à²¸à²œà³à²œà²¿à²¤ à²¹à³ˆà²¡à³à²°à²¾à²²à²¿à²•à³ à²²à³†à²¦à²°à³ à²•à³à²°à³à²šà²¿à²—à²³à³.",
+    description_kn: "ಆರಾಮದಾಯಕ ಹಾಗೂ ಸುಸಜ್ಜಿತ ಹೈಡ್ರಾಲಿಕ್ ಲೆದರ್ ಕುರ್ಚಿಗಳು.",
     imageSrc: "/images/gallery/luxury-barber-chair-station.jpg",
   },
   {
     id: "gallery-05",
     title: "Royal Straight Razor Hot Lather Shave",
-    title_kn: "à²°à²¾à²¯à²²à³ à²¹à²¾à²Ÿà³ à²Ÿà²µà³†à²²à³ à²¨à³à²£à³à²ªà²¾à²¦ à²¶à³‡à²µà²¿à²‚à²—à³",
+    title_kn: "ರಾಯಲ್ ಹಾಟ್ ಟವೆಲ್ ನುಣುಪಾದ ಶೇವಿಂಗ್",
     categories: ["beard", "classic"],
     categoryLabel: "Beard Styles / Classic",
-    categoryLabel_kn: "à²—à²¡à³à²¡à²¦ à²¸à³à²Ÿà³ˆà²²à³ / à²•à³à²²à²¾à²¸à²¿à²•à³",
+    categoryLabel_kn: "ಗಡ್ಡದ ಸ್ಟೈಲ್ / ಕ್ಲಾಸಿಕ್",
     description: "Traditional steamed eucalyptus towel, pre-shave botanical oils, and razor precision.",
-    description_kn: "à²¸à²¾à²‚à²ªà³à²°à²¦à²¾à²¯à²¿à²• à²¬à²¿à²¸à²¿ à²Ÿà²µà³†à²²à³ à²®à²¤à³à²¤à³ à²¬à³Šà²Ÿà²¾à²¨à²¿à²•à²²à³ à²†à²¯à²¿à²²à³ à²œà³Šà²¤à³† à²¨à³à²£à³à²ªà²¾à²¦ à²¶à³‡à²µà³.",
+    description_kn: "ಸಾಂಪ್ರದಾಯಿಕ ಬಿಸಿ ಟವೆಲ್ ಮತ್ತು ಬೊಟಾನಿಕಲ್ ಆಯಿಲ್ ಜೊತೆ ನುಣುಪಾದ ಶೇವ್.",
     imageSrc: "/images/gallery/royal-straight-razor-shave.jpg",
   },
   {
     id: "gallery-06",
     title: "Master Barber Scissor Artistry",
-    title_kn: "à²®à²¾à²¸à³à²Ÿà²°à³ à²•à²¤à³à²¤à²°à²¿ à²•à²Ÿà²¿à²‚à²—à³ à²®à²¤à³à²¤à³ à²¶à²¿à²¸à³à²¤à³",
+    title_kn: "ಮಾಸ್ಟರ್ ಕತ್ತರಿ ಕಟಿಂಗ್ ಮತ್ತು ಶಿಸ್ತು",
     categories: ["trendy", "classic"],
     categoryLabel: "Trendy / Classic",
-    categoryLabel_kn: "à²Ÿà³à²°à³†à²‚à²¡à²¿ / à²•à³à²²à²¾à²¸à²¿à²•à³",
+    categoryLabel_kn: "ಟ್ರೆಂಡಿ / ಕ್ಲಾಸಿಕ್",
     description: "Tailored grooming discipline in an exclusive, private appointment atmosphere.",
-    description_kn: "à²µà³ˆà²¯à²•à³à²¤à²¿à²• à²•à²¾à²³à²œà²¿ à²®à²¤à³à²¤à³ à²¶à²¿à²¸à³à²¤à²¿à²¨à³Šà²‚à²¦à²¿à²—à³† à²®à²¾à²¡à³à²µ à²•à³‡à²¶ à²µà²¿à²¨à³à²¯à²¾à²¸.",
+    description_kn: "ವೈಯಕ್ತಿಕ ಕಾಳಜಿ ಮತ್ತು ಶಿಸ್ತಿನೊಂದಿಗೆ ಮಾಡುವ ಕೇಶ ವಿನ್ಯಾಸ.",
     imageSrc: "/images/gallery/master-barber-craftsman.jpg",
   },
   {
     id: "gallery-07",
     title: "Modern Textured Crew & Temple Taper",
-    title_kn: "à²®à²¾à²¡à²°à³à²¨à³ à²Ÿà³†à²•à³à²¸à³à²šà²°à³à²¡à³ à²•à³à²°à³‚ à²•à²Ÿà³",
+    title_kn: "ಮಾಡರ್ನ್ ಟೆಕ್ಸ್ಚರ್ಡ್ ಕ್ರೂ ಕಟ್",
     categories: ["crew", "trendy", "fade"],
     categoryLabel: "Crew Cut / Trendy",
-    categoryLabel_kn: "à²•à³à²°à³‚ à²•à²Ÿà³ / à²Ÿà³à²°à³†à²‚à²¡à²¿",
+    categoryLabel_kn: "ಕ್ರೂ ಕಟ್ / ಟ್ರೆಂಡಿ",
     description: "Layered crown texture with precision temple taper and natural wave flow.",
-    description_kn: "à²®à³‡à²²à³à²­à²¾à²—à²¦à²²à³à²²à²¿ à²Ÿà³†à²•à³à²¸à³à²šà²°à³ à²•à²Ÿà³ à²®à²¤à³à²¤à³ à²¬à²¦à²¿à²—à²³à²²à³à²²à²¿ à²¨à³ˆà²¸à²°à³à²—à²¿à²• à²Ÿà³‡à²ªà²°à³.",
+    description_kn: "ಮೇಲ್ಭಾಗದಲ್ಲಿ ಟೆಕ್ಸ್ಚರ್ ಕಟ್ ಮತ್ತು ಬದಿಗಳಲ್ಲಿ ನೈಸರ್ಗಿಕ ಟೇಪರ್.",
     imageSrc: "/images/gallery/hairstyle-textured-taper.jpg",
   },
   {
     id: "gallery-08",
     title: "Executive Low Skin Fade & Sculpted Beard",
-    title_kn: "à²Žà²•à³à²¸à²¿à²•à³à²¯à³‚à²Ÿà²¿à²µà³ à²¸à³à²•à²¿à²¨à³ à²«à³‡à²¡à³ à²®à²¤à³à²¤à³ à²—à²¡à³à²¡",
+    title_kn: "ಎಕ್ಸಿಕ್ಯೂಟಿವ್ ಸ್ಕಿನ್ ಫೇಡ್ ಮತ್ತು ಗಡ್ಡ",
     categories: ["fade", "beard"],
     categoryLabel: "Fade / Beard Styles",
-    categoryLabel_kn: "à²«à³‡à²¡à³ / à²—à²¡à³à²¡à²¦ à²¸à³à²Ÿà³ˆà²²à³",
+    categoryLabel_kn: "ಫೇಡ್ / ಗಡ್ಡದ ಸ್ಟೈಲ್",
     description: "Seamless skin taper transition paired with razor-sharp cheekline beard definition.",
-    description_kn: "à²¸à³à²ªà²·à³à²Ÿ à²¸à³à²•à²¿à²¨à³ à²«à³‡à²¡à³ à²®à²¤à³à²¤à³ à²—à²¡à³à²¡à²¦ à²šà³‚à²ªà²¾à²¦ à²²à³ˆà²¨à³-à²…à²ªà³.",
+    description_kn: "ಸ್ಪಷ್ಟ ಸ್ಕಿನ್ ಫೇಡ್ ಮತ್ತು ಗಡ್ಡದ ಚೂಪಾದ ಲೈನ್-ಅಪ್.",
     imageSrc: "/images/gallery/hairstyle-classic-fade.jpg",
   },
 ];
@@ -136,7 +136,7 @@ export function AboutSection({
   const [previewImage, setPreviewImage] = useState<GalleryItem | null>(null);
 
   // Tabs as specified by user:
-  // Classic Â· Fade Â· Crew Cut Â· Trendy Â· Beard Styles Â· Chairs & Tools Â· All
+  // Classic · Fade · Crew Cut · Trendy · Beard Styles · Chairs & Tools · All
   const filterTabs = [
     { id: "all", label: t.gallery.tabs.all },
     { id: "classic", label: t.gallery.tabs.classic },
@@ -183,7 +183,7 @@ export function AboutSection({
               {t.about.heading}
             </h2>
 
-            {/* Who we are / à²¨à²¾à²µà³ à²¯à²¾à²°à³ */}
+            {/* Who we are / ನಮ್ಮ ಬಗ್ಗೆ */}
             <div
               className={`p-5 rounded-2xl border space-y-2 transition-colors ${theme === "light"
                   ? "bg-white border-black/[0.08] shadow-xs"
@@ -204,7 +204,7 @@ export function AboutSection({
               </p>
             </div>
 
-            {/* What we do / à²¨à²¾à²µà³ à²à²¨à³ à²®à²¾à²¡à³à²¤à³à²¤à³‡à²µà³† */}
+            {/* What we do / ನಾವು ಏನು ಮಾಡುತ್ತೇವೆ */}
             <div
               className={`p-5 rounded-2xl border space-y-2 transition-colors ${theme === "light"
                   ? "bg-white border-black/[0.08] shadow-xs"
@@ -225,7 +225,7 @@ export function AboutSection({
               </p>
             </div>
 
-            {/* Why choose us / à²¨à²®à³à²®à²¨à³à²¨à³ à²à²•à³† à²†à²°à²¿à²¸à²¬à³‡à²•à³ */}
+            {/* Why choose us / ನಮ್ಮನ್ನು ಏಕೆ ಆರಿಸಬೇಕು */}
             <div className="space-y-3 pt-2">
               <h4
                 className={`text-xs uppercase font-bold tracking-widest ${theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
@@ -249,7 +249,7 @@ export function AboutSection({
               </div>
             </div>
 
-            {/* Our promise / à²¨à²®à³à²® à²­à²°à²µà²¸à³† */}
+            {/* Our promise / ನಮ್ಮ ಭರವಸೆ */}
             <div
               className={`p-4 rounded-xl border flex items-center gap-3 ${theme === "light"
                   ? "border-[#c5a880]/50 bg-[#f4efe6] text-[#18181b]"
@@ -311,7 +311,7 @@ export function AboutSection({
                     className={`text-[11px] mt-0.5 ${theme === "light" ? "text-[#71717a]" : "text-[#94a3b8]"
                       }`}
                   >
-                    {t.about.card.subtitle} â€¢ Since 2010
+                    {t.about.card.subtitle} • Since 2010
                   </p>
                 </div>
               </div>
@@ -347,7 +347,7 @@ export function AboutSection({
           </div>
         </div>
 
-        {/* Hairstyle Gallery / à²¹à³‡à²°à³à²¸à³à²Ÿà³ˆà²²à³ à²—à³à²¯à²¾à²²à²°à²¿ */}
+        {/* Hairstyle Gallery / ಹೇರ್ಸ್ಟೈಲ್ ಗ್ಯಾಲರಿ */}
         <div id="gallery" className="pt-10 scroll-mt-12">
           <div
             className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b ${theme === "light" ? "border-black/[0.08]" : "border-white/[0.08]"

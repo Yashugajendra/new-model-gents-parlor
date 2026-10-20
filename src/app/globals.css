@@ -11,8 +11,8 @@
   --color-steel: #e2e8f0;
   --color-muted-text: #94a3b8;
   
-  --font-serif: var(--font-cormorant), "Playfair Display", Georgia, serif;
-  --font-sans: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-cormorant), "Playfair Display", Georgia, 'Noto Sans Kannada', 'Nirmala UI', serif;
+  --font-sans: var(--font-jakarta), 'Noto Sans Kannada', 'Nirmala UI', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 :root {
@@ -23,7 +23,7 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), 'Nirmala UI', 'Noto Sans Kannada', 'Tunga', system-ui, sans-serif;
+  font-family: var(--font-sans), 'Noto Sans Kannada', 'Nirmala UI', system-ui, sans-serif;
   overflow-x: hidden;
   selection-background-color: #c5a880;
   selection-color: #09090b;
@@ -269,3 +269,38 @@ html[data-theme="light"] .gold-shimmer-text {
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
 }
+
+/* ==========================================================================
+   Kannada Typography & Script Refinement (Crisp, balanced rendering)
+   ========================================================================== */
+html[lang="kn"],
+html[data-language="kn"],
+html[lang="kn"] body,
+html[data-language="kn"] body {
+  font-family: 'Noto Sans Kannada', 'Nirmala UI', var(--font-jakarta), system-ui, sans-serif !important;
+}
+
+/* Headings and decorative serif classes: 
+   Use clean Noto Sans Kannada instead of broken latin-only serif fallbacks */
+html[lang="kn"] .font-serif,
+html[data-language="kn"] .font-serif,
+html[lang="kn"] h1,
+html[lang="kn"] h2,
+html[lang="kn"] h3,
+html[lang="kn"] h4,
+html[data-language="kn"] h1,
+html[data-language="kn"] h2,
+html[data-language="kn"] h3,
+html[data-language="kn"] h4 {
+  font-family: 'Noto Sans Kannada', 'Nirmala UI', var(--font-jakarta), system-ui, sans-serif !important;
+  letter-spacing: normal !important;
+  font-style: normal !important; /* Disables faux italic slant that breaks Kannada conjuncts */
+  line-height: 1.35 !important;
+}
+
+/* Disable extreme letter-spacing on Kannada that tears apart vowel signs and conjuncts */
+html[lang="kn"] [class*="tracking-"],
+html[data-language="kn"] [class*="tracking-"] {
+  letter-spacing: 0.01em !important;
+}
+

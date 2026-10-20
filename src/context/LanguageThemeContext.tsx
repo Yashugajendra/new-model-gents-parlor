@@ -35,6 +35,9 @@ export function LanguageThemeProvider({ children }: { children: React.ReactNode 
     const savedLang = localStorage.getItem("newmodel_lang") as Language;
     if (savedLang === "en" || savedLang === "kn") {
       setLanguageState(savedLang);
+      applyLanguage(savedLang);
+    } else {
+      applyLanguage("en");
     }
 
     // Read stored theme
@@ -46,6 +49,14 @@ export function LanguageThemeProvider({ children }: { children: React.ReactNode 
       applyTheme("dark");
     }
   }, []);
+
+  const applyLanguage = (nextLang: Language) => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = nextLang;
+      document.documentElement.setAttribute("data-language", nextLang);
+      document.documentElement.setAttribute("lang", nextLang);
+    }
+  };
 
   const applyTheme = (nextTheme: "dark" | "light") => {
     if (typeof document !== "undefined") {
@@ -68,6 +79,7 @@ export function LanguageThemeProvider({ children }: { children: React.ReactNode 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("newmodel_lang", lang);
+    applyLanguage(lang);
     window.dispatchEvent(new Event("newmodel-lang-changed"));
   };
 
