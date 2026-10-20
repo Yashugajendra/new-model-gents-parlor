@@ -1,5 +1,8 @@
 -- ==============================================================================
--- RITUALCUT: Production PostgreSQL Database Schema & GiST Concurrency Protection
+-- NEW MODEL GENTS PARLOR: Production PostgreSQL Database Schema
+-- Location: Katte Complex, Thirthahalli, Shivamogga
+-- Features: Bilingual English + Kannada Support, GiST Concurrency Protection,
+--           Atomic Slot Reservation RPC, Row Level Security
 -- Run this script in your Supabase SQL Editor
 -- ==============================================================================
 
@@ -10,37 +13,75 @@ CREATE EXTENSION IF NOT EXISTS "btree_gist";
 -- 2. Shop Settings Table
 CREATE TABLE IF NOT EXISTS public.shop_settings (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    shop_name TEXT NOT NULL DEFAULT 'RITUALCUT',
-    tagline TEXT DEFAULT 'Your Style. Your Time. Your Ritual.',
-    phone_number TEXT NOT NULL DEFAULT '+91 98765 43210',
-    whatsapp_number TEXT NOT NULL DEFAULT '919876543210',
-    address TEXT NOT NULL DEFAULT '42 Artisan Lane, Jubilee Enclave, Hyderabad',
-    google_maps_url TEXT DEFAULT 'https://maps.google.com/?q=Artisan+Barbershop',
+    shop_name TEXT NOT NULL DEFAULT 'New Model Gents Parlor',
+    shop_name_kn TEXT DEFAULT 'ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್',
+    tagline TEXT DEFAULT 'Look sharp. Feel confident.',
+    tagline_kn TEXT DEFAULT 'ಸ್ಟೈಲಿಶ್ ಆಗಿರಿ, ಆತ್ಮವಿಶ್ವಾಸದಿಂದಿರಿ.',
+    owner_name TEXT DEFAULT 'Hanumanthu (Chinanna)',
+    owner_name_kn TEXT DEFAULT 'ಹನುಮಂತು (ಚಿನ್ನಣ್ಣ)',
+    since_year TEXT DEFAULT '2010',
+    phone_number TEXT NOT NULL DEFAULT '+91 73380 76977',
+    whatsapp_number TEXT NOT NULL DEFAULT '917338076977',
+    address TEXT NOT NULL DEFAULT 'Katte Complex, Thirthahalli, Shivamogga – 577432',
+    address_kn TEXT DEFAULT 'ಕಟ್ಟೆ ಕಾಂಪ್ಲೆಕ್ಸ್, ತೀರ್ಥಹಳ್ಳಿ, ಶಿವಮೊಗ್ಗ – 577432',
+    google_maps_url TEXT DEFAULT 'https://www.google.com/maps/search/?api=1&query=Katte+Complex%2C+Thirthahalli%2C+Shivamogga',
     currency_code TEXT NOT NULL DEFAULT 'INR',
     currency_symbol TEXT NOT NULL DEFAULT '₹',
     slot_interval_minutes INT NOT NULL DEFAULT 30,
     buffer_minutes INT NOT NULL DEFAULT 5,
-    opening_time TIME NOT NULL DEFAULT '09:00:00',
-    closing_time TIME NOT NULL DEFAULT '20:00:00',
+    opening_time TIME NOT NULL DEFAULT '06:30:00',
+    closing_time TIME NOT NULL DEFAULT '23:00:00',
     operating_days INT[] NOT NULL DEFAULT '{1,2,3,4,5,6,7}',
+    is_closed BOOLEAN NOT NULL DEFAULT false,
+    closure_reason TEXT DEFAULT '',
+    closure_date TEXT DEFAULT '',
+    closure_reopen_date TEXT DEFAULT '',
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Ensure all columns exist if table was previously created with older schema
+DO $$ BEGIN
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS shop_name_kn TEXT DEFAULT 'ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್';
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS tagline_kn TEXT DEFAULT 'ಸ್ಟೈಲಿಶ್ ಆಗಿರಿ, ಆತ್ಮವಿಶ್ವಾಸದಿಂದಿರಿ.';
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS owner_name TEXT DEFAULT 'Hanumanthu (Chinanna)';
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS owner_name_kn TEXT DEFAULT 'ಹನುಮಂತು (ಚಿನ್ನಣ್ಣ)';
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS since_year TEXT DEFAULT '2010';
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS address_kn TEXT DEFAULT 'ಕಟ್ಟೆ ಕಾಂಪ್ಲೆಕ್ಸ್, ತೀರ್ಥಹಳ್ಳಿ, ಶಿವಮೊಗ್ಗ – 577432';
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS is_closed BOOLEAN NOT NULL DEFAULT false;
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS closure_reason TEXT DEFAULT '';
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS closure_date TEXT DEFAULT '';
+    ALTER TABLE public.shop_settings ADD COLUMN IF NOT EXISTS closure_reopen_date TEXT DEFAULT '';
+EXCEPTION WHEN duplicate_column THEN null; END $$;
 
 -- 3. Services Table
 CREATE TABLE IF NOT EXISTS public.services (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name TEXT NOT NULL,
+    name_kn TEXT,
     slug TEXT UNIQUE NOT NULL,
     description TEXT,
+    description_kn TEXT,
     duration_minutes INT NOT NULL CHECK (duration_minutes > 0),
     price INT NOT NULL CHECK (price >= 0),
+    price_display TEXT,
+    price_display_kn TEXT,
     is_active BOOLEAN NOT NULL DEFAULT true,
     display_order INT NOT NULL DEFAULT 0,
     badge TEXT,
+    badge_kn TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Ensure columns exist if table already exists
+DO $$ BEGIN
+    ALTER TABLE public.services ADD COLUMN IF NOT EXISTS name_kn TEXT;
+    ALTER TABLE public.services ADD COLUMN IF NOT EXISTS description_kn TEXT;
+    ALTER TABLE public.services ADD COLUMN IF NOT EXISTS price_display TEXT;
+    ALTER TABLE public.services ADD COLUMN IF NOT EXISTS price_display_kn TEXT;
+    ALTER TABLE public.services ADD COLUMN IF NOT EXISTS badge_kn TEXT;
+EXCEPTION WHEN duplicate_column THEN null; END $$;
 
 -- 4. Blocked Times Table
 CREATE TABLE IF NOT EXISTS public.blocked_times (
@@ -90,7 +131,7 @@ EXCEPTION
     WHEN duplicate_object THEN null;
 END $$;
 
--- 7. Atomic Approval Function (Pessimistic Locking)
+-- 7. Atomic Approval Function (Pessimistic Locking & Conflict Check)
 CREATE OR REPLACE FUNCTION rpc_approve_appointment(target_appointment_id UUID)
 RETURNS JSONB
 LANGUAGE plpgsql
@@ -183,25 +224,146 @@ DO $$ BEGIN
     CREATE POLICY "Admin full access appointments" ON public.appointments TO authenticated USING (true) WITH CHECK (true);
 EXCEPTION WHEN duplicate_object THEN null; END $$;
 
--- 9. Insert Default Services
-INSERT INTO public.services (name, slug, description, duration_minutes, price, display_order, badge)
+-- 9. Insert All 9 Authentic New Model Gents Parlor Services
+INSERT INTO public.services (
+    name, name_kn, slug, description, description_kn,
+    duration_minutes, price, price_display, price_display_kn,
+    display_order, badge, badge_kn
+)
 VALUES
-    ('The Master Ritual', 'the-master-ritual', 'Our definitive grooming experience: bespoke tailored haircut, charcoal detox wash, hot towel facial massage, straight razor neck clean, and styling consultation.', 60, 1200, 1, 'Signature'),
-    ('Classic Scissor & Fade', 'classic-scissor-fade', 'Precision taper or skin fade executed with Japanese shears and fine clippers, followed by styling and organic matte clay finish.', 45, 750, 2, 'Popular'),
-    ('Royal Hot Towel Shave', 'royal-hot-towel-shave', 'Old-school straight razor traditional shave with eucalyptus pre-shave oil, two steamed herbal towels, badger brush lather, and cold compress astringent.', 40, 650, 3, NULL),
-    ('Beard Sculpt & Ozone Hydration', 'beard-sculpt-hydration', 'Meticulous beard reshaping, sharp razor cheek lines, high-frequency ozone steam, and conditioning botanical argan oil infusion.', 35, 550, 4, NULL),
-    ('The Executive Quick Touchup', 'executive-touchup', 'Neckline cleanup, sideburn tapering, eyebrow shaping, and scalp refresh for gentlemen between major appointments.', 25, 450, 5, NULL)
-ON CONFLICT (slug) DO NOTHING;
+    (
+        'Haircut', 'ಹೇರ್ ಕಟಿಂಗ್', 'haircut',
+        'Classic or modern cut with styling', 'ಕ್ಲಾಸಿಕ್ ಅಥವಾ ಮಾಡರ್ನ್ ಕಟ್, ಸ್ಟೈಲಿಂಗ್ ಸಹಿತ',
+        30, 250, '₹250 – ₹300', '₹250 – ₹300',
+        1, 'Essential', 'ಪ್ರಮುಖ'
+    ),
+    (
+        'Shaving', 'ಶೇವಿಂಗ್', 'shaving',
+        'Clean, smooth shave with a hot towel', 'ಬಿಸಿ ಟವೆಲ್ನೊಂದಿಗೆ ನುಣುಪಾದ ಶೇವ್',
+        25, 150, '₹150 – ₹200', '₹150 – ₹200',
+        2, NULL, NULL
+    ),
+    (
+        'Beard Trim & Styling', 'ಗಡ್ಡ ಟ್ರಿಮ್ ಮತ್ತು ಸ್ಟೈಲಿಂಗ್', 'beard-trim-styling',
+        'Shaping, trimming and line-up', 'ಆಕಾರ, ಟ್ರಿಮ್ ಮತ್ತು ಲೈನ್-ಅಪ್',
+        20, 150, '₹150', '₹150',
+        3, NULL, NULL
+    ),
+    (
+        'Haircut + Beard', 'ಕಟಿಂಗ್ + ಗಡ್ಡ', 'haircut-beard-package',
+        'Combined package', 'ಒಟ್ಟಿಗೆ ಪ್ಯಾಕೇಜ್',
+        45, 399, '₹399', '₹399',
+        4, 'Popular', 'ಜನಪ್ರಿಯ'
+    ),
+    (
+        'Head Massage', 'ಹೆಡ್ ಮಸಾಜ್', 'head-massage',
+        'Relaxing oil massage', 'ಆರಾಮದಾಯಕ ಎಣ್ಣೆ ಮಸಾಜ್',
+        25, 200, '₹200', '₹200',
+        5, NULL, NULL
+    ),
+    (
+        'Facial / Cleanup', 'ಫೇಶಿಯಲ್ / ಕ್ಲೀನಪ್', 'facial-cleanup',
+        'Skin cleansing and refresh', 'ಚರ್ಮದ ಶುದ್ಧೀಕರಣ ಮತ್ತು ಹೊಳಪು',
+        35, 250, '₹250', '₹250',
+        6, NULL, NULL
+    ),
+    (
+        'Hair Colour / Mehendi', 'ಹೇರ್ ಕಲರ್ / ಮೆಹೆಂದಿ', 'hair-colour-mehendi',
+        'Black, brown or natural colour', 'ಕಪ್ಪು, ಕಂದು ಅಥವಾ ನೈಸರ್ಗಿಕ ಬಣ್ಣ',
+        40, 200, '₹200', '₹200',
+        7, NULL, NULL
+    ),
+    (
+        'Kids’ Haircut', 'ಮಕ್ಕಳ ಕಟಿಂಗ್', 'kids-haircut',
+        'Gentle, patient service for children', 'ಮಕ್ಕಳಿಗೆ ತಾಳ್ಮೆಯ, ಮೃದುವಾದ ಸೇವೆ',
+        25, 150, '₹150', '₹150',
+        8, NULL, NULL
+    ),
+    (
+        'Groom Package', 'ಗ್ರೂಮ್ ಪ್ಯಾಕೇಜ್', 'groom-package',
+        'Haircut, shave, facial and styling for weddings and functions', 'ಮದುವೆ ಮತ್ತು ಸಮಾರಂಭಗಳಿಗೆ ಕಟಿಂಗ್, ಶೇವ್, ಫೇಶಿಯಲ್ ಮತ್ತು ಸ್ಟೈಲಿಂಗ್',
+        90, 2999, '₹2,999', '₹2,999',
+        9, 'Special', 'ವಿಶೇಷ'
+    )
+ON CONFLICT (slug) DO UPDATE SET
+    name = EXCLUDED.name,
+    name_kn = EXCLUDED.name_kn,
+    description = EXCLUDED.description,
+    description_kn = EXCLUDED.description_kn,
+    duration_minutes = EXCLUDED.duration_minutes,
+    price = EXCLUDED.price,
+    price_display = EXCLUDED.price_display,
+    price_display_kn = EXCLUDED.price_display_kn,
+    display_order = EXCLUDED.display_order,
+    badge = EXCLUDED.badge,
+    badge_kn = EXCLUDED.badge_kn;
 
--- 10. Insert Default Settings
-INSERT INTO public.shop_settings (id, shop_name, tagline, phone_number, whatsapp_number, address, google_maps_url)
+-- 10. Insert Default Shop Settings for New Model Gents Parlor
+INSERT INTO public.shop_settings (
+    id,
+    shop_name,
+    shop_name_kn,
+    tagline,
+    tagline_kn,
+    owner_name,
+    owner_name_kn,
+    since_year,
+    phone_number,
+    whatsapp_number,
+    address,
+    address_kn,
+    google_maps_url,
+    currency_code,
+    currency_symbol,
+    slot_interval_minutes,
+    buffer_minutes,
+    opening_time,
+    closing_time,
+    operating_days,
+    is_closed,
+    closure_reason,
+    closure_date,
+    closure_reopen_date
+)
 VALUES (
     'a0000000-0000-0000-0000-000000000001',
-    'RITUALCUT',
-    'Your Style. Your Time. Your Ritual.',
-    '+91 98765 43210',
-    '919876543210',
-    '42 Artisan Lane, Jubilee Enclave, Hyderabad',
-    'https://maps.google.com/?q=Artisan+Barbershop'
+    'New Model Gents Parlor',
+    'ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್',
+    'Look sharp. Feel confident.',
+    'ಸ್ಟೈಲಿಶ್ ಆಗಿರಿ, ಆತ್ಮವಿಶ್ವಾಸದಿಂದಿರಿ.',
+    'Hanumanthu (Chinanna)',
+    'ಹನುಮಂತು (ಚಿನ್ನಣ್ಣ)',
+    '2010',
+    '+91 73380 76977',
+    '917338076977',
+    'Katte Complex, Thirthahalli, Shivamogga – 577432',
+    'ಕಟ್ಟೆ ಕಾಂಪ್ಲೆಕ್ಸ್, ತೀರ್ಥಹಳ್ಳಿ, ಶಿವಮೊಗ್ಗ – 577432',
+    'https://www.google.com/maps/search/?api=1&query=Katte+Complex%2C+Thirthahalli%2C+Shivamogga',
+    'INR',
+    '₹',
+    30,
+    5,
+    '06:30:00',
+    '23:00:00',
+    '{1,2,3,4,5,6,7}',
+    false,
+    '',
+    '',
+    ''
 )
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id) DO UPDATE SET
+    shop_name = EXCLUDED.shop_name,
+    shop_name_kn = EXCLUDED.shop_name_kn,
+    tagline = EXCLUDED.tagline,
+    tagline_kn = EXCLUDED.tagline_kn,
+    owner_name = EXCLUDED.owner_name,
+    owner_name_kn = EXCLUDED.owner_name_kn,
+    since_year = EXCLUDED.since_year,
+    phone_number = EXCLUDED.phone_number,
+    whatsapp_number = EXCLUDED.whatsapp_number,
+    address = EXCLUDED.address,
+    address_kn = EXCLUDED.address_kn,
+    google_maps_url = EXCLUDED.google_maps_url,
+    opening_time = EXCLUDED.opening_time,
+    closing_time = EXCLUDED.closing_time,
+    operating_days = EXCLUDED.operating_days;
