@@ -136,7 +136,7 @@ export function AboutSection({
   const [previewImage, setPreviewImage] = useState<GalleryItem | null>(null);
 
   // Tabs as specified by user:
-  // Classic · Fade · Crew Cut · Trendy · Beard Styles · Kids · Chairs & Tools · All
+  // Classic · Fade · Crew Cut · Trendy · Beard Styles · Chairs & Tools · All
   const filterTabs = [
     { id: "all", label: t.gallery.tabs.all },
     { id: "classic", label: t.gallery.tabs.classic },
@@ -144,7 +144,6 @@ export function AboutSection({
     { id: "crew", label: t.gallery.tabs.crew },
     { id: "trendy", label: t.gallery.tabs.trendy },
     { id: "beard", label: t.gallery.tabs.beard },
-    { id: "kids", label: t.gallery.tabs.kids },
     { id: "tools", label: t.gallery.tabs.tools },
   ];
 

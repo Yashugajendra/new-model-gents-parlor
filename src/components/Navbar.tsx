@@ -5,7 +5,6 @@ import Link from "next/link";
 import {
   Scissors,
   Calendar,
-  ShieldCheck,
   MessageCircle,
   Menu,
   X,
@@ -221,19 +220,6 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
             </button>
           </div>
 
-          {/* Owner Dashboard link */}
-          <Link
-            href="/admin"
-            title={t.nav.ownerDashboard}
-            className={`p-2 transition-colors rounded-lg ${
-              theme === "light"
-                ? "text-[#52525b] hover:text-[#9e7946] hover:bg-black/[0.04]"
-                : "text-[#94a3b8] hover:text-[#c5a880] hover:bg-white/[0.04]"
-            }`}
-          >
-            <ShieldCheck className="w-5 h-5" />
-          </Link>
-
           {/* WhatsApp Direct Chat */}
           <a
             href={`https://wa.me/${cleanWhatsapp}?text=Hello%20${encodeURIComponent(
@@ -442,17 +428,6 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
             className="block text-sm font-medium text-[#c5a880]"
           >
             {t.nav.status}
-          </Link>
-          <Link
-            href="/admin"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`block text-sm font-medium ${
-              theme === "light"
-                ? "text-[#71717a] hover:text-[#18181b]"
-                : "text-gray-400 hover:text-white"
-            }`}
-          >
-            {t.nav.ownerDashboard}
           </Link>
         </div>
       )}

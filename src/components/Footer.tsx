@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Scissors, ShieldCheck, Heart } from "lucide-react";
+import { Scissors } from "lucide-react";
 import { ShopSettings } from "@/types/database.types";
 import { useLanguageTheme } from "@/context/LanguageThemeContext";
 
@@ -161,23 +161,6 @@ export function Footer({ settings }: FooterProps) {
               {t.footer.contactTitle}
             </h4>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/admin"
-                  className={`inline-flex items-center gap-1.5 transition-colors ${
-                    theme === "light"
-                      ? "text-[#9e7946] hover:text-[#18181b]"
-                      : "hover:text-[#c5a880]"
-                  }`}
-                >
-                  <ShieldCheck
-                    className={`w-3.5 h-3.5 ${
-                      theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
-                    }`}
-                  />
-                  <span>{t.nav.ownerDashboard}</span>
-                </Link>
-              </li>
               <li className={theme === "light" ? "text-[#52525b]" : "text-gray-400"}>
                 Katte Complex, Thirthahalli
               </li>
