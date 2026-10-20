@@ -62,8 +62,8 @@ export function Footer({ settings }: FooterProps) {
               }`}
             >
               {language === "kn"
-                ? "ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲೆಯ ತೀರ್ಥಹಳ್ಳಿಯಲ್ಲಿ 2000ನೇ ಇಸವಿಯಿಂದ ಸ್ವಚ್ಛತೆ, ಶಿಸ್ತು ಮತ್ತು ಕೈಗೆಟುಕುವ ದರದ ಸೇವೆ ನೀಡುತ್ತಿರುವ ಪ್ರಮುಖ ಪುರುಷರ ಗ್ರೂಮಿಂಗ್ ಸಲೂನ್."
-                : "A trusted gents grooming salon in Thirthahalli since 2000. Focused on clean tools, disciplined scissor craft, and personal attention."}
+                ? "ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲೆಯ ತೀರ್ಥಹಳ್ಳಿಯಲ್ಲಿ 2010ನೇ ಇಸವಿಯಿಂದ ಸ್ವಚ್ಛತೆ, ಶಿಸ್ತು ಮತ್ತು ಕೈಗೆಟುಕುವ ದರದ ಸೇವೆ ನೀಡುತ್ತಿರುವ ಪ್ರಮುಖ ಪುರುಷರ ಗ್ರೂಮಿಂಗ್ ಸಲೂನ್."
+                : "A trusted gents grooming salon in Thirthahalli since 2010. Focused on clean tools, disciplined scissor craft, and personal attention."}
             </p>
             <div
               className={`flex items-center gap-2 text-xs font-medium ${
@@ -72,7 +72,7 @@ export function Footer({ settings }: FooterProps) {
             >
               <span>{ownerText}</span>
               <span className={theme === "light" ? "text-black/20" : "text-white/20"}>•</span>
-              <span>Since 2000</span>
+              <span>Since 2010</span>
             </div>
           </div>
 

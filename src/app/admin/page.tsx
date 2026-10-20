@@ -943,7 +943,7 @@ export default function AdminDashboardPage() {
                   <label className="block text-gray-400 mb-1">Since Year</label>
                   <input
                     type="text"
-                    value={settings.since_year || "2000"}
+                    value={settings.since_year || "2010"}
                     onChange={(e) => setSettings({ ...settings, since_year: e.target.value })}
                     className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
                   />

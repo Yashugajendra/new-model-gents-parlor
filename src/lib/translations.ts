@@ -153,8 +153,8 @@ export const TRANSLATIONS = {
       exploreServices: "Explore Services",
       highlights: {
         experience: {
-          title: "25+ Years Experience",
-          desc: "Serving Thirthahalli & nearby towns since 2000",
+          title: "15+ Years Experience",
+          desc: "Serving Thirthahalli & nearby towns since 2010",
         },
         punctuality: {
           title: "No Waiting & Zero Queues",
@@ -177,13 +177,13 @@ export const TRANSLATIONS = {
       heading: "Built for gentlemen who value master-grade precision.",
       whoWeAreTitle: "Who we are",
       whoWeAreDesc:
-        "New Model Gents Parlor is a men’s grooming salon in Thirthahalli, Shivamogga district, Karnataka. Since 2000, we have served the people of Thirthahalli and nearby villages with clean, stylish and affordable grooming. Owner: Hanumanthu (Chinanna).",
+        "New Model Gents Parlor is a men’s grooming salon in Thirthahalli, Shivamogga district, Karnataka. Since 2010, we have served the people of Thirthahalli and nearby villages with clean, stylish and affordable grooming. Owner: Hanumanthu (Chinanna).",
       whatWeDoTitle: "What we do",
       whatWeDoDesc:
         "From an everyday haircut to a full groom for a wedding or festival, our experienced barbers take care of your hair, beard and skin with proper hygiene and attention to detail.",
       whyChooseTitle: "Why choose us",
       whyPoints: [
-        "25+ years of experience",
+        "15+ years of experience",
         "Clean tools and a hygienic shop",
         "Fair, clearly listed prices",
         "Easy online booking, with no long queues",
@@ -191,7 +191,7 @@ export const TRANSLATIONS = {
       promiseTitle: "Our promise",
       promiseDesc: "Every customer leaves looking good and feeling confident.",
       stats: {
-        stat1Num: "25+",
+        stat1Num: "15+",
         stat1Label: "Years of Trust",
         stat2Num: "1-on-1",
         stat2Label: "Dedicated Chair",
@@ -343,7 +343,7 @@ export const TRANSLATIONS = {
 
     // Footer
     footer: {
-      rights: "© New Model Gents Parlor, Thirthahalli. Since 2000. All rights reserved.",
+      rights: "© New Model Gents Parlor, Thirthahalli. Since 2010. All rights reserved.",
       ownerText: "Owner: Hanumanthu (Chinanna)",
       tagline: "Your Style. Your Time. Your Signature Look.",
       navTitle: "Quick Navigation",
@@ -381,8 +381,8 @@ export const TRANSLATIONS = {
       exploreServices: "ಸೇವೆಗಳನ್ನು ನೋಡಿ",
       highlights: {
         experience: {
-          title: "25+ ವರ್ಷಗಳ ಅನುಭವ",
-          desc: "2000ನೇ ಇಸವಿಯಿಂದ ತೀರ್ಥಹಳ್ಳಿ ಮತ್ತು ಹಳ್ಳಿಗಳ ಜನರಿಗೆ ಸೇವೆ",
+          title: "15+ ವರ್ಷಗಳ ಅನುಭವ",
+          desc: "2010ನೇ ಇಸವಿಯಿಂದ ತೀರ್ಥಹಳ್ಳಿ ಮತ್ತು ಹಳ್ಳಿಗಳ ಜನರಿಗೆ ಸೇವೆ",
         },
         punctuality: {
           title: "ಉದ್ದದ ಸಾಲಿಲ್ಲ, ಕಾಯುವಂತಿಲ್ಲ",
@@ -405,13 +405,13 @@ export const TRANSLATIONS = {
       heading: "ಶ್ರೇಷ್ಠ ಮಟ್ಟದ ಗ್ರೂಮಿಂಗ್ ಬಯಸುವ ಪುರುಷರಿಗಾಗಿ.",
       whoWeAreTitle: "ನಾವು ಯಾರು",
       whoWeAreDesc:
-        "ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್ ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲೆಯ ತೀರ್ಥಹಳ್ಳಿಯಲ್ಲಿರುವ ಪುರುಷರ ಗ್ರೂಮಿಂಗ್ ಸಲೂನ್. 2000ನೇ ಇಸವಿಯಿಂದ ತೀರ್ಥಹಳ್ಳಿ ಮತ್ತು ಸುತ್ತಮುತ್ತಲಿನ ಹಳ್ಳಿಗಳ ಜನರಿಗೆ ಸ್ವಚ್ಛ, ಸ್ಟೈಲಿಶ್ ಹಾಗೂ ಕೈಗೆಟುಕುವ ದರದ ಸೇವೆ ನೀಡುತ್ತಿದ್ದೇವೆ. ಮಾಲೀಕರು: ಹನುಮಂತು (ಚಿನ್ನಣ್ಣ).",
+        "ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್ ಶಿವಮೊಗ್ಗ ಜಿಲ್ಲೆಯ ತೀರ್ಥಹಳ್ಳಿಯಲ್ಲಿರುವ ಪುರುಷರ ಗ್ರೂಮಿಂಗ್ ಸಲೂನ್. 2010ನೇ ಇಸವಿಯಿಂದ ತೀರ್ಥಹಳ್ಳಿ ಮತ್ತು ಸುತ್ತಮುತ್ತಲಿನ ಹಳ್ಳಿಗಳ ಜನರಿಗೆ ಸ್ವಚ್ಛ, ಸ್ಟೈಲಿಶ್ ಹಾಗೂ ಕೈಗೆಟುಕುವ ದರದ ಸೇವೆ ನೀಡುತ್ತಿದ್ದೇವೆ. ಮಾಲೀಕರು: ಹನುಮಂತು (ಚಿನ್ನಣ್ಣ).",
       whatWeDoTitle: "ನಾವು ಏನು ಮಾಡುತ್ತೇವೆ",
       whatWeDoDesc:
         "ದಿನನಿತ್ಯದ ಕಟಿಂಗ್ನಿಂದ ಮದುವೆ ಅಥವಾ ಹಬ್ಬಕ್ಕೆ ಪೂರ್ಣ ಗ್ರೂಮಿಂಗ್ವರೆಗೆ, ನಮ್ಮ ಅನುಭವಿ ಕ್ಷೌರಿಕರು ನಿಮ್ಮ ಕೂದಲು, ಗಡ್ಡ ಮತ್ತು ಚರ್ಮದ ಆರೈಕೆಯನ್ನು ಸ್ವಚ್ಛತೆ ಮತ್ತು ಕಾಳಜಿಯೊಂದಿಗೆ ಮಾಡುತ್ತಾರೆ.",
       whyChooseTitle: "ನಮ್ಮನ್ನು ಏಕೆ ಆರಿಸಬೇಕು",
       whyPoints: [
-        "25 ವರ್ಷಗಳಿಗೂ ಹೆಚ್ಚಿನ ಅನುಭವ",
+        "15 ವರ್ಷಗಳಿಗೂ ಹೆಚ್ಚಿನ ಅನುಭವ",
         "ಸ್ವಚ್ಛ ಉಪಕರಣಗಳು ಮತ್ತು ಶುದ್ಧ ಅಂಗಡಿ",
         "ಸ್ಪಷ್ಟವಾಗಿ ತಿಳಿಸಿದ ನ್ಯಾಯಯುತ ದರಗಳು",
         "ಸುಲಭ ಆನ್ಲೈನ್ ಬುಕಿಂಗ್, ಉದ್ದದ ಸಾಲಿಲ್ಲ",
@@ -419,7 +419,7 @@ export const TRANSLATIONS = {
       promiseTitle: "ನಮ್ಮ ಭರವಸೆ",
       promiseDesc: "ಪ್ರತಿ ಗ್ರಾಹಕರೂ ಚೆನ್ನಾಗಿ ಕಾಣುತ್ತಾ, ಆತ್ಮವಿಶ್ವಾಸದಿಂದ ಹೊರಡಬೇಕು.",
       stats: {
-        stat1Num: "25+",
+        stat1Num: "15+",
         stat1Label: "ವರ್ಷಗಳ ನಂಬಿಕೆ",
         stat2Num: "1-on-1",
         stat2Label: "ವೈಯಕ್ತಿಕ ಕುರ್ಚಿ",
@@ -572,7 +572,7 @@ export const TRANSLATIONS = {
 
     // Footer
     footer: {
-      rights: "© ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್, ತೀರ್ಥಹಳ್ಳಿ. 2000ರಿಂದ. ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
+      rights: "© ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್, ತೀರ್ಥಹಳ್ಳಿ. 2010ರಿಂದ. ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
       ownerText: "ಮಾಲೀಕರು: ಹನುಮಂತು (ಚಿನ್ನಣ್ಣ)",
       tagline: "ಸ್ಟೈಲಿಶ್ ಆಗಿರಿ, ಆತ್ಮವಿಶ್ವಾಸದಿಂದಿರಿ.",
       navTitle: "ತ್ವರಿತ ಲಿಂಕ್ಗಳು",

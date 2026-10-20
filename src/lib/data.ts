@@ -16,7 +16,7 @@ export const INITIAL_SHOP_SETTINGS: ShopSettings = {
   tagline_kn: "ಸ್ಟೈಲಿಶ್ ಆಗಿರಿ, ಆತ್ಮವಿಶ್ವಾಸದಿಂದಿರಿ.",
   owner_name: "Hanumanthu (Chinanna)",
   owner_name_kn: "ಹನುಮಂತು (ಚಿನ್ನಣ್ಣ)",
-  since_year: "2000",
+  since_year: "2010",
   phone_number: "+91 73380 76977",
   whatsapp_number: "917338076977",
   address: "Katte Complex, Thirthahalli, Shivamogga – 577432",

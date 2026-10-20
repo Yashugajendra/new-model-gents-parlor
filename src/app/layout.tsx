@@ -21,7 +21,7 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "New Model Gents Parlor — Precision Grooming & Styling | Thirthahalli",
   description:
-    "New Model Gents Parlor (ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್) at Katte Complex, Thirthahalli, Shivamogga. Reserve your appointment for haircuts, beard styling, and grooming since 2000.",
+    "New Model Gents Parlor (ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್) at Katte Complex, Thirthahalli, Shivamogga. Reserve your appointment for haircuts, beard styling, and grooming since 2010.",
   keywords: [
     "New Model Gents Parlor",
     "ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್",

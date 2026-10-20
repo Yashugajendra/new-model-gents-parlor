@@ -39,89 +39,89 @@ const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: "gallery-01",
     title: "Executive Side-Part & Low Taper Fade",
-    title_kn: "ಸೈಡ್-ಪಾರ್ಟ್ ಮತ್ತು ಲೋ ಟೇಪರ್ ಫೇಡ್",
+    title_kn: "à²¸à³ˆà²¡à³-à²ªà²¾à²°à³à²Ÿà³ à²®à²¤à³à²¤à³ à²²à³‹ à²Ÿà³‡à²ªà²°à³ à²«à³‡à²¡à³",
     categories: ["classic", "fade"],
     categoryLabel: "Classic / Fade",
-    categoryLabel_kn: "ಕ್ಲಾಸಿಕ್ / ಫೇಡ್",
+    categoryLabel_kn: "à²•à³à²²à²¾à²¸à²¿à²•à³ / à²«à³‡à²¡à³",
     description: "Sleek combed contour with a clean side parting and seamless low skin taper fade.",
-    description_kn: "ನೀಟಾದ ಬಾಚಿದ ಹೇರ್ಸ್ಟೈಲ್ ಮತ್ತು ಅಚ್ಚುಕಟ್ಟಾದ ಲೋ ಸ್ಕಿನ್ ಟೇಪರ್ ಫೇಡ್.",
+    description_kn: "à²¨à³€à²Ÿà²¾à²¦ à²¬à²¾à²šà²¿à²¦ à²¹à³‡à²°à³à²¸à³à²Ÿà³ˆà²²à³ à²®à²¤à³à²¤à³ à²…à²šà³à²šà³à²•à²Ÿà³à²Ÿà²¾à²¦ à²²à³‹ à²¸à³à²•à²¿à²¨à³ à²Ÿà³‡à²ªà²°à³ à²«à³‡à²¡à³.",
     imageSrc: "/images/gallery/hairstyle-slick-sidepart-fade.png",
   },
   {
     id: "gallery-02",
     title: "Artisan Shear Styling & Beard Sculpt",
-    title_kn: "ಕತ್ತರಿ ಸ್ಟೈಲಿಂಗ್ ಮತ್ತು ಗಡ್ಡದ ಆಕಾರ",
+    title_kn: "à²•à²¤à³à²¤à²°à²¿ à²¸à³à²Ÿà³ˆà²²à²¿à²‚à²—à³ à²®à²¤à³à²¤à³ à²—à²¡à³à²¡à²¦ à²†à²•à²¾à²°",
     categories: ["beard", "trendy"],
     categoryLabel: "Beard Styles",
-    categoryLabel_kn: "ಗಡ್ಡದ ಸ್ಟೈಲ್",
+    categoryLabel_kn: "à²—à²¡à³à²¡à²¦ à²¸à³à²Ÿà³ˆà²²à³",
     description: "Freehand Japanese shear craftsmanship shaping crown volume paired with full textured beard shaping.",
-    description_kn: "ಕತ್ತರಿಯಿಂದ ನಿಖರ ಕಟಿಂಗ್ ಮತ್ತು ಪೂರ್ಣ ಗಡ್ಡದ ಅಂದವಾದ ಟ್ರಿಮ್ಮಿಂಗ್.",
+    description_kn: "à²•à²¤à³à²¤à²°à²¿à²¯à²¿à²‚à²¦ à²¨à²¿à²–à²° à²•à²Ÿà²¿à²‚à²—à³ à²®à²¤à³à²¤à³ à²ªà³‚à²°à³à²£ à²—à²¡à³à²¡à²¦ à²…à²‚à²¦à²µà²¾à²¦ à²Ÿà³à²°à²¿à²®à³à²®à²¿à²‚à²—à³.",
     imageSrc: "/images/gallery/hairstyle-shear-beard-styling.jpg",
   },
   {
     id: "gallery-03",
     title: "Master Artisan Barber Tool Station",
-    title_kn: "ಬಾರ್ಬರ್ ಕಾರ್ಯಕ್ಷೇತ್ರದ ಉಪಕರಣಗಳು",
+    title_kn: "à²¬à²¾à²°à³à²¬à²°à³ à²•à²¾à²°à³à²¯à²•à³à²·à³‡à²¤à³à²°à²¦ à²‰à²ªà²•à²°à²£à²—à²³à³",
     categories: ["tools"],
     categoryLabel: "Chairs & Tools",
-    categoryLabel_kn: "ಕುರ್ಚಿ & ಉಪಕರಣಗಳು",
+    categoryLabel_kn: "à²•à³à²°à³à²šà²¿ & à²‰à²ªà²•à²°à²£à²—à²³à³",
     description: "Wahl Senior cordless clippers, Andis foil shavers, Japanese steel texturizing shears, and sanitized combs.",
-    description_kn: "ವಾಲ್ ಸೀನಿಯರ್ ಕಾರ್ಡ್ಲೆಸ್ ಕ್ಲಿಪ್ಪರ್ಗಳು, ಶೇವರ್ಗಳು, ಜಪಾನೀಸ್ ಕತ್ತರಿಗಳು ಮತ್ತು ಶುದ್ಧೀಕರಿಸಿದ ಬಾಚಣಿಗೆಗಳು.",
+    description_kn: "à²µà²¾à²²à³ à²¸à³€à²¨à²¿à²¯à²°à³ à²•à²¾à²°à³à²¡à³à²²à³†à²¸à³ à²•à³à²²à²¿à²ªà³à²ªà²°à³à²—à²³à³, à²¶à³‡à²µà²°à³à²—à²³à³, à²œà²ªà²¾à²¨à³€à²¸à³ à²•à²¤à³à²¤à²°à²¿à²—à²³à³ à²®à²¤à³à²¤à³ à²¶à³à²¦à³à²§à³€à²•à²°à²¿à²¸à²¿à²¦ à²¬à²¾à²šà²£à²¿à²—à³†à²—à²³à³.",
     imageSrc: "/images/gallery/barber-workstation-tools.jpg",
   },
   {
     id: "gallery-04",
     title: "Hydraulic Reclining Leather Barber Chair",
-    title_kn: "ಹೈಡ್ರಾಲಿಕ್ ಲೆದರ್ ಬಾರ್ಬರ್ ಕುರ್ಚಿ",
+    title_kn: "à²¹à³ˆà²¡à³à²°à²¾à²²à²¿à²•à³ à²²à³†à²¦à²°à³ à²¬à²¾à²°à³à²¬à²°à³ à²•à³à²°à³à²šà²¿",
     categories: ["tools"],
     categoryLabel: "Chairs & Tools",
-    categoryLabel_kn: "ಕುರ್ಚಿ & ಉಪಕರಣಗಳು",
+    categoryLabel_kn: "à²•à³à²°à³à²šà²¿ & à²‰à²ªà²•à²°à²£à²—à²³à³",
     description: "Heavy-duty ergonomic vintage leather barber chairs with illuminated vanity stations.",
-    description_kn: "ಆರಾಮದಾಯಕ ಹಾಗೂ ಸುಸಜ್ಜಿತ ಹೈಡ್ರಾಲಿಕ್ ಲೆದರ್ ಕುರ್ಚಿಗಳು.",
+    description_kn: "à²†à²°à²¾à²®à²¦à²¾à²¯à²• à²¹à²¾à²—à³‚ à²¸à³à²¸à²œà³à²œà²¿à²¤ à²¹à³ˆà²¡à³à²°à²¾à²²à²¿à²•à³ à²²à³†à²¦à²°à³ à²•à³à²°à³à²šà²¿à²—à²³à³.",
     imageSrc: "/images/gallery/luxury-barber-chair-station.jpg",
   },
   {
     id: "gallery-05",
     title: "Royal Straight Razor Hot Lather Shave",
-    title_kn: "ರಾಯಲ್ ಹಾಟ್ ಟವೆಲ್ ನುಣುಪಾದ ಶೇವಿಂಗ್",
+    title_kn: "à²°à²¾à²¯à²²à³ à²¹à²¾à²Ÿà³ à²Ÿà²µà³†à²²à³ à²¨à³à²£à³à²ªà²¾à²¦ à²¶à³‡à²µà²¿à²‚à²—à³",
     categories: ["beard", "classic"],
     categoryLabel: "Beard Styles / Classic",
-    categoryLabel_kn: "ಗಡ್ಡದ ಸ್ಟೈಲ್ / ಕ್ಲಾಸಿಕ್",
+    categoryLabel_kn: "à²—à²¡à³à²¡à²¦ à²¸à³à²Ÿà³ˆà²²à³ / à²•à³à²²à²¾à²¸à²¿à²•à³",
     description: "Traditional steamed eucalyptus towel, pre-shave botanical oils, and razor precision.",
-    description_kn: "ಸಾಂಪ್ರದಾಯಿಕ ಬಿಸಿ ಟವೆಲ್ ಮತ್ತು ಬೊಟಾನಿಕಲ್ ಆಯಿಲ್ ಜೊತೆ ನುಣುಪಾದ ಶೇವ್.",
+    description_kn: "à²¸à²¾à²‚à²ªà³à²°à²¦à²¾à²¯à²¿à²• à²¬à²¿à²¸à²¿ à²Ÿà²µà³†à²²à³ à²®à²¤à³à²¤à³ à²¬à³Šà²Ÿà²¾à²¨à²¿à²•à²²à³ à²†à²¯à²¿à²²à³ à²œà³Šà²¤à³† à²¨à³à²£à³à²ªà²¾à²¦ à²¶à³‡à²µà³.",
     imageSrc: "/images/gallery/royal-straight-razor-shave.jpg",
   },
   {
     id: "gallery-06",
     title: "Master Barber Scissor Artistry",
-    title_kn: "ಮಾಸ್ಟರ್ ಕತ್ತರಿ ಕಟಿಂಗ್ ಮತ್ತು ಶಿಸ್ತು",
+    title_kn: "à²®à²¾à²¸à³à²Ÿà²°à³ à²•à²¤à³à²¤à²°à²¿ à²•à²Ÿà²¿à²‚à²—à³ à²®à²¤à³à²¤à³ à²¶à²¿à²¸à³à²¤à³",
     categories: ["trendy", "classic"],
     categoryLabel: "Trendy / Classic",
-    categoryLabel_kn: "ಟ್ರೆಂಡಿ / ಕ್ಲಾಸಿಕ್",
+    categoryLabel_kn: "à²Ÿà³à²°à³†à²‚à²¡à²¿ / à²•à³à²²à²¾à²¸à²¿à²•à³",
     description: "Tailored grooming discipline in an exclusive, private appointment atmosphere.",
-    description_kn: "ವೈಯಕ್ತಿಕ ಕಾಳಜಿ ಮತ್ತು ಶಿಸ್ತಿನೊಂದಿಗೆ ಮಾಡುವ ಕೇಶ ವಿನ್ಯಾಸ.",
+    description_kn: "à²µà³ˆà²¯à²•à³à²¤à²¿à²• à²•à²¾à²³à²œà²¿ à²®à²¤à³à²¤à³ à²¶à²¿à²¸à³à²¤à²¿à²¨à³Šà²‚à²¦à²¿à²—à³† à²®à²¾à²¡à³à²µ à²•à³‡à²¶ à²µà²¿à²¨à³à²¯à²¾à²¸.",
     imageSrc: "/images/gallery/master-barber-craftsman.jpg",
   },
   {
     id: "gallery-07",
     title: "Modern Textured Crew & Temple Taper",
-    title_kn: "ಮಾಡರ್ನ್ ಟೆಕ್ಸ್ಚರ್ಡ್ ಕ್ರೂ ಕಟ್",
+    title_kn: "à²®à²¾à²¡à²°à³à²¨à³ à²Ÿà³†à²•à³à²¸à³à²šà²°à³à²¡à³ à²•à³à²°à³‚ à²•à²Ÿà³",
     categories: ["crew", "trendy", "fade"],
     categoryLabel: "Crew Cut / Trendy",
-    categoryLabel_kn: "ಕ್ರೂ ಕಟ್ / ಟ್ರೆಂಡಿ",
+    categoryLabel_kn: "à²•à³à²°à³‚ à²•à²Ÿà³ / à²Ÿà³à²°à³†à²‚à²¡à²¿",
     description: "Layered crown texture with precision temple taper and natural wave flow.",
-    description_kn: "ಮೇಲ್ಭಾಗದಲ್ಲಿ ಟೆಕ್ಸ್ಚರ್ ಕಟ್ ಮತ್ತು ಬದಿಗಳಲ್ಲಿ ನೈಸರ್ಗಿಕ ಟೇಪರ್.",
+    description_kn: "à²®à³‡à²²à³à²­à²¾à²—à²¦à²²à³à²²à²¿ à²Ÿà³†à²•à³à²¸à³à²šà²°à³ à²•à²Ÿà³ à²®à²¤à³à²¤à³ à²¬à²¦à²¿à²—à²³à²²à³à²²à²¿ à²¨à³ˆà²¸à²°à³à²—à²¿à²• à²Ÿà³‡à²ªà²°à³.",
     imageSrc: "/images/gallery/hairstyle-textured-taper.jpg",
   },
   {
     id: "gallery-08",
     title: "Executive Low Skin Fade & Sculpted Beard",
-    title_kn: "ಎಕ್ಸಿಕ್ಯೂಟಿವ್ ಸ್ಕಿನ್ ಫೇಡ್ ಮತ್ತು ಗಡ್ಡ",
+    title_kn: "à²Žà²•à³à²¸à²¿à²•à³à²¯à³‚à²Ÿà²¿à²µà³ à²¸à³à²•à²¿à²¨à³ à²«à³‡à²¡à³ à²®à²¤à³à²¤à³ à²—à²¡à³à²¡",
     categories: ["fade", "beard"],
     categoryLabel: "Fade / Beard Styles",
-    categoryLabel_kn: "ಫೇಡ್ / ಗಡ್ಡದ ಸ್ಟೈಲ್",
+    categoryLabel_kn: "à²«à³‡à²¡à³ / à²—à²¡à³à²¡à²¦ à²¸à³à²Ÿà³ˆà²²à³",
     description: "Seamless skin taper transition paired with razor-sharp cheekline beard definition.",
-    description_kn: "ಸ್ಪಷ್ಟ ಸ್ಕಿನ್ ಫೇಡ್ ಮತ್ತು ಗಡ್ಡದ ಚೂಪಾದ ಲೈನ್-ಅಪ್.",
+    description_kn: "à²¸à³à²ªà²·à³à²Ÿ à²¸à³à²•à²¿à²¨à³ à²«à³‡à²¡à³ à²®à²¤à³à²¤à³ à²—à²¡à³à²¡à²¦ à²šà³‚à²ªà²¾à²¦ à²²à³ˆà²¨à³-à²…à²ªà³.",
     imageSrc: "/images/gallery/hairstyle-classic-fade.jpg",
   },
 ];
@@ -136,7 +136,7 @@ export function AboutSection({
   const [previewImage, setPreviewImage] = useState<GalleryItem | null>(null);
 
   // Tabs as specified by user:
-  // Classic · Fade · Crew Cut · Trendy · Beard Styles · Chairs & Tools · All
+  // Classic Â· Fade Â· Crew Cut Â· Trendy Â· Beard Styles Â· Chairs & Tools Â· All
   const filterTabs = [
     { id: "all", label: t.gallery.tabs.all },
     { id: "classic", label: t.gallery.tabs.classic },
@@ -155,9 +155,8 @@ export function AboutSection({
   return (
     <section
       id="about"
-      className={`py-24 relative scroll-mt-12 overflow-hidden border-t transition-colors duration-300 ${
-        theme === "light" ? "bg-[#fbfaf8] border-black/[0.08]" : "bg-[#0a0a0d] border-white/[0.06]"
-      }`}
+      className={`py-24 relative scroll-mt-12 overflow-hidden border-t transition-colors duration-300 ${theme === "light" ? "bg-[#fbfaf8] border-black/[0.08]" : "bg-[#0a0a0d] border-white/[0.06]"
+        }`}
     >
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-10 w-96 h-96 bg-[#c5a880]/5 rounded-full blur-[140px] pointer-events-none" />
@@ -168,78 +167,69 @@ export function AboutSection({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
           <div className="lg:col-span-7 space-y-6">
             <div
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${
-                theme === "light"
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${theme === "light"
                   ? "border-[#c5a880]/50 bg-white text-[#9e7946] shadow-xs"
                   : "border-[#c5a880]/30 bg-[#141417] text-[#c5a880]"
-              }`}
+                }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span className="tracking-[0.2em] uppercase font-semibold">{t.about.badge}</span>
             </div>
 
             <h2
-              className={`font-serif text-3xl sm:text-5xl font-medium leading-[1.15] ${
-                theme === "light" ? "text-[#18181b]" : "text-white"
-              }`}
+              className={`font-serif text-3xl sm:text-5xl font-medium leading-[1.15] ${theme === "light" ? "text-[#18181b]" : "text-white"
+                }`}
             >
               {t.about.heading}
             </h2>
 
-            {/* Who we are / ನಾವು ಯಾರು */}
+            {/* Who we are / à²¨à²¾à²µà³ à²¯à²¾à²°à³ */}
             <div
-              className={`p-5 rounded-2xl border space-y-2 transition-colors ${
-                theme === "light"
+              className={`p-5 rounded-2xl border space-y-2 transition-colors ${theme === "light"
                   ? "bg-white border-black/[0.08] shadow-xs"
                   : "bg-[#121215]/90 border-white/[0.06]"
-              }`}
+                }`}
             >
               <h4
-                className={`text-xs uppercase font-bold tracking-widest ${
-                  theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
-                }`}
+                className={`text-xs uppercase font-bold tracking-widest ${theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
+                  }`}
               >
                 {t.about.whoWeAreTitle}
               </h4>
               <p
-                className={`text-sm sm:text-base leading-relaxed ${
-                  theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
-                }`}
+                className={`text-sm sm:text-base leading-relaxed ${theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
               >
                 {t.about.whoWeAreDesc}
               </p>
             </div>
 
-            {/* What we do / ನಾವು ಏನು ಮಾಡುತ್ತೇವೆ */}
+            {/* What we do / à²¨à²¾à²µà³ à²à²¨à³ à²®à²¾à²¡à³à²¤à³à²¤à³‡à²µà³† */}
             <div
-              className={`p-5 rounded-2xl border space-y-2 transition-colors ${
-                theme === "light"
+              className={`p-5 rounded-2xl border space-y-2 transition-colors ${theme === "light"
                   ? "bg-white border-black/[0.08] shadow-xs"
                   : "bg-[#121215]/90 border-white/[0.06]"
-              }`}
+                }`}
             >
               <h4
-                className={`text-xs uppercase font-bold tracking-widest ${
-                  theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
-                }`}
+                className={`text-xs uppercase font-bold tracking-widest ${theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
+                  }`}
               >
                 {t.about.whatWeDoTitle}
               </h4>
               <p
-                className={`text-sm sm:text-base leading-relaxed ${
-                  theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
-                }`}
+                className={`text-sm sm:text-base leading-relaxed ${theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
               >
                 {t.about.whatWeDoDesc}
               </p>
             </div>
 
-            {/* Why choose us / ನಮ್ಮನ್ನು ಏಕೆ ಆರಿಸಬೇಕು */}
+            {/* Why choose us / à²¨à²®à³à²®à²¨à³à²¨à³ à²à²•à³† à²†à²°à²¿à²¸à²¬à³‡à²•à³ */}
             <div className="space-y-3 pt-2">
               <h4
-                className={`text-xs uppercase font-bold tracking-widest ${
-                  theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
-                }`}
+                className={`text-xs uppercase font-bold tracking-widest ${theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
+                  }`}
               >
                 {t.about.whyChooseTitle}
               </h4>
@@ -247,11 +237,10 @@ export function AboutSection({
                 {t.about.whyPoints.map((point, i) => (
                   <div
                     key={i}
-                    className={`flex items-center gap-2.5 p-3 rounded-xl border ${
-                      theme === "light"
+                    className={`flex items-center gap-2.5 p-3 rounded-xl border ${theme === "light"
                         ? "bg-white border-black/[0.06] shadow-xs text-[#27272a]"
                         : "bg-[#121215] border-white/[0.04] text-gray-300"
-                    }`}
+                      }`}
                   >
                     <CheckCircle2 className="w-4 h-4 text-[#c5a880] shrink-0" />
                     <span className="text-xs sm:text-sm font-medium">{point}</span>
@@ -260,27 +249,24 @@ export function AboutSection({
               </div>
             </div>
 
-            {/* Our promise / ನಮ್ಮ ಭರವಸೆ */}
+            {/* Our promise / à²¨à²®à³à²® à²­à²°à²µà²¸à³† */}
             <div
-              className={`p-4 rounded-xl border flex items-center gap-3 ${
-                theme === "light"
+              className={`p-4 rounded-xl border flex items-center gap-3 ${theme === "light"
                   ? "border-[#c5a880]/50 bg-[#f4efe6] text-[#18181b]"
                   : "border-[#c5a880]/30 bg-[#c5a880]/5 text-white"
-              }`}
+                }`}
             >
               <Award className="w-6 h-6 text-[#c5a880] shrink-0" />
               <div>
                 <span
-                  className={`text-xs uppercase font-bold tracking-wider block ${
-                    theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
-                  }`}
+                  className={`text-xs uppercase font-bold tracking-wider block ${theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
+                    }`}
                 >
                   {t.about.promiseTitle}
                 </span>
                 <p
-                  className={`text-sm font-medium italic mt-0.5 ${
-                    theme === "light" ? "text-[#18181b]" : "text-white"
-                  }`}
+                  className={`text-sm font-medium italic mt-0.5 ${theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
                 >
                   &ldquo;{t.about.promiseDesc}&rdquo;
                 </p>
@@ -291,55 +277,48 @@ export function AboutSection({
           {/* Master Barber Signature Card */}
           <div className="lg:col-span-5">
             <div
-              className={`relative rounded-2xl overflow-hidden border p-7 space-y-6 transition-all ${
-                theme === "light"
+              className={`relative rounded-2xl overflow-hidden border p-7 space-y-6 transition-all ${theme === "light"
                   ? "bg-white border-black/[0.09] shadow-xl"
                   : "bg-[#121215] border-white/[0.09] shadow-2xl"
-              }`}
+                }`}
             >
               <div
-                className={`flex items-center gap-4 pb-5 border-b ${
-                  theme === "light" ? "border-black/[0.08]" : "border-white/[0.06]"
-                }`}
+                className={`flex items-center gap-4 pb-5 border-b ${theme === "light" ? "border-black/[0.08]" : "border-white/[0.06]"
+                  }`}
               >
                 <div
-                  className={`w-14 h-14 rounded-2xl border flex items-center justify-center shrink-0 font-serif font-bold text-xl shadow-lg ${
-                    theme === "light"
+                  className={`w-14 h-14 rounded-2xl border flex items-center justify-center shrink-0 font-serif font-bold text-xl shadow-lg ${theme === "light"
                       ? "bg-[#f4efe6] border-[#c5a880]/50 text-[#9e7946]"
                       : "bg-gradient-to-br from-[#1a1a20] to-[#121215] border-[#c5a880]/40 text-[#c5a880]"
-                  }`}
+                    }`}
                 >
                   NM
                 </div>
                 <div>
                   <h3
-                    className={`font-serif text-lg font-semibold ${
-                      theme === "light" ? "text-[#18181b]" : "text-white"
-                    }`}
+                    className={`font-serif text-lg font-semibold ${theme === "light" ? "text-[#18181b]" : "text-white"
+                      }`}
                   >
                     {t.about.card.title}
                   </h3>
                   <p
-                    className={`text-xs font-medium mt-0.5 ${
-                      theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
-                    }`}
+                    className={`text-xs font-medium mt-0.5 ${theme === "light" ? "text-[#9e7946]" : "text-[#c5a880]"
+                      }`}
                   >
                     {t.about.card.ownerBadge}
                   </p>
                   <p
-                    className={`text-[11px] mt-0.5 ${
-                      theme === "light" ? "text-[#71717a]" : "text-[#94a3b8]"
-                    }`}
+                    className={`text-[11px] mt-0.5 ${theme === "light" ? "text-[#71717a]" : "text-[#94a3b8]"
+                      }`}
                   >
-                    {t.about.card.subtitle} • Since 2000
+                    {t.about.card.subtitle} â€¢ Since 2010
                   </p>
                 </div>
               </div>
 
               <div
-                className={`space-y-3.5 text-xs ${
-                  theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
-                }`}
+                className={`space-y-3.5 text-xs ${theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
               >
                 <div className="flex items-start gap-2.5">
                   <ShieldCheck className="w-4 h-4 text-[#c5a880] shrink-0 mt-0.5" />
@@ -368,28 +347,25 @@ export function AboutSection({
           </div>
         </div>
 
-        {/* Hairstyle Gallery / ಹೇರ್ಸ್ಟೈಲ್ ಗ್ಯಾಲರಿ */}
+        {/* Hairstyle Gallery / à²¹à³‡à²°à³à²¸à³à²Ÿà³ˆà²²à³ à²—à³à²¯à²¾à²²à²°à²¿ */}
         <div id="gallery" className="pt-10 scroll-mt-12">
           <div
-            className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b ${
-              theme === "light" ? "border-black/[0.08]" : "border-white/[0.08]"
-            }`}
+            className={`flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b ${theme === "light" ? "border-black/[0.08]" : "border-white/[0.08]"
+              }`}
           >
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c5a880] mb-2">
                 {t.gallery.badge}
               </p>
               <h3
-                className={`font-serif text-2xl sm:text-4xl font-medium ${
-                  theme === "light" ? "text-[#18181b]" : "text-white"
-                }`}
+                className={`font-serif text-2xl sm:text-4xl font-medium ${theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
               >
                 {t.gallery.title}
               </h3>
               <p
-                className={`text-xs sm:text-sm mt-1 max-w-xl ${
-                  theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
-                }`}
+                className={`text-xs sm:text-sm mt-1 max-w-xl ${theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
               >
                 {t.gallery.subtitle}
               </p>
@@ -401,13 +377,12 @@ export function AboutSection({
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
-                    activeTab === tab.id
+                  className={`px-3 py-1.5 rounded-lg font-medium transition-all ${activeTab === tab.id
                       ? "bg-[#c5a880] text-[#09090b] font-semibold shadow-md"
                       : theme === "light"
-                      ? "bg-white text-[#52525b] hover:text-[#18181b] border border-black/10 hover:border-[#c5a880] shadow-xs"
-                      : "bg-[#141417] text-[#94a3b8] hover:text-white border border-white/[0.06] hover:border-[#c5a880]/30"
-                  }`}
+                        ? "bg-white text-[#52525b] hover:text-[#18181b] border border-black/10 hover:border-[#c5a880] shadow-xs"
+                        : "bg-[#141417] text-[#94a3b8] hover:text-white border border-white/[0.06] hover:border-[#c5a880]/30"
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -472,16 +447,14 @@ export function AboutSection({
 
                     {/* Quick Card Footer */}
                     <div
-                      className={`px-4 py-2.5 border-t flex items-center justify-between text-xs transition-colors ${
-                        theme === "light"
+                      className={`px-4 py-2.5 border-t flex items-center justify-between text-xs transition-colors ${theme === "light"
                           ? "bg-white border-black/[0.06]"
                           : "bg-[#141418] border-white/[0.05]"
-                      }`}
+                        }`}
                     >
                       <span
-                        className={`text-[11px] flex items-center gap-1.5 truncate ${
-                          theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
-                        }`}
+                        className={`text-[11px] flex items-center gap-1.5 truncate ${theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                          }`}
                       >
                         <Scissors className="w-3 h-3 text-[#c5a880]" />
                         {t.gallery.authenticLabel}
@@ -505,11 +478,10 @@ export function AboutSection({
           onClick={() => setPreviewImage(null)}
         >
           <div
-            className={`relative max-w-3xl w-full border rounded-2xl overflow-hidden shadow-2xl transition-colors ${
-              theme === "light"
+            className={`relative max-w-3xl w-full border rounded-2xl overflow-hidden shadow-2xl transition-colors ${theme === "light"
                 ? "bg-white border-black/10"
                 : "bg-[#121215] border-white/[0.1]"
-            }`}
+              }`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
@@ -534,27 +506,24 @@ export function AboutSection({
 
             {/* Details Bar */}
             <div
-              className={`p-6 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-colors ${
-                theme === "light"
+              className={`p-6 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-colors ${theme === "light"
                   ? "bg-[#fbfaf8] border-black/[0.08]"
                   : "bg-[#16161b] border-white/[0.08]"
-              }`}
+                }`}
             >
               <div>
                 <span className="text-[10px] uppercase font-bold tracking-widest text-[#c5a880] block mb-1">
                   {language === "kn" ? previewImage.categoryLabel_kn : previewImage.categoryLabel}
                 </span>
                 <h3
-                  className={`font-serif text-xl sm:text-2xl font-medium ${
-                    theme === "light" ? "text-[#18181b]" : "text-white"
-                  }`}
+                  className={`font-serif text-xl sm:text-2xl font-medium ${theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
                 >
                   {language === "kn" ? previewImage.title_kn : previewImage.title}
                 </h3>
                 <p
-                  className={`text-xs mt-1 max-w-xl ${
-                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
-                  }`}
+                  className={`text-xs mt-1 max-w-xl ${theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                    }`}
                 >
                   {language === "kn" ? previewImage.description_kn : previewImage.description}
                 </p>
