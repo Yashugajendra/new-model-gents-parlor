@@ -120,7 +120,11 @@ CREATE TABLE IF NOT EXISTS public.appointments (
 );
 
 -- 6. GiST Range Exclusion Constraint: Enforce NO overlapping CONFIRMED appointments
-DO $$ BEGIN
+ALTER TABLE public.appointments DROP CONSTRAINT IF EXISTS prevent_overlapping_confirmed_appointments CASCADE;
+DROP INDEX IF EXISTS public.prevent_overlapping_confirmed_appointments CASCADE;
+
+DO $$ 
+BEGIN
     ALTER TABLE public.appointments
     ADD CONSTRAINT prevent_overlapping_confirmed_appointments
     EXCLUDE USING gist (
@@ -128,7 +132,9 @@ DO $$ BEGIN
     )
     WHERE (status = 'CONFIRMED');
 EXCEPTION
-    WHEN duplicate_object THEN null;
+    WHEN duplicate_object OR duplicate_table OR others THEN
+        -- Handled gracefully if constraint or index already active
+        NULL;
 END $$;
 
 -- 7. Atomic Approval Function (Pessimistic Locking & Conflict Check)
@@ -187,42 +193,33 @@ ALTER TABLE public.services ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.blocked_times ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.appointments ENABLE ROW LEVEL SECURITY;
 
--- Idempotent policy creation
-DO $$ BEGIN
-    CREATE POLICY "Public can view active services" ON public.services FOR SELECT USING (is_active = true);
-EXCEPTION WHEN duplicate_object THEN null; END $$;
+-- Idempotent policy creation (DROP IF EXISTS then CREATE)
+DROP POLICY IF EXISTS "Public can view active services" ON public.services;
+CREATE POLICY "Public can view active services" ON public.services FOR SELECT USING (is_active = true);
 
-DO $$ BEGIN
-    CREATE POLICY "Public can view shop settings" ON public.shop_settings FOR SELECT USING (true);
-EXCEPTION WHEN duplicate_object THEN null; END $$;
+DROP POLICY IF EXISTS "Public can view shop settings" ON public.shop_settings;
+CREATE POLICY "Public can view shop settings" ON public.shop_settings FOR SELECT USING (true);
 
-DO $$ BEGIN
-    CREATE POLICY "Public can view blocked time boundaries" ON public.blocked_times FOR SELECT USING (true);
-EXCEPTION WHEN duplicate_object THEN null; END $$;
+DROP POLICY IF EXISTS "Public can view blocked time boundaries" ON public.blocked_times;
+CREATE POLICY "Public can view blocked time boundaries" ON public.blocked_times FOR SELECT USING (true);
 
-DO $$ BEGIN
-    CREATE POLICY "Public can request appointment" ON public.appointments FOR INSERT WITH CHECK (true);
-EXCEPTION WHEN duplicate_object THEN null; END $$;
+DROP POLICY IF EXISTS "Public can request appointment" ON public.appointments;
+CREATE POLICY "Public can request appointment" ON public.appointments FOR INSERT WITH CHECK (true);
 
-DO $$ BEGIN
-    CREATE POLICY "Public can view their appointment" ON public.appointments FOR SELECT USING (true);
-EXCEPTION WHEN duplicate_object THEN null; END $$;
+DROP POLICY IF EXISTS "Public can view their appointment" ON public.appointments;
+CREATE POLICY "Public can view their appointment" ON public.appointments FOR SELECT USING (true);
 
-DO $$ BEGIN
-    CREATE POLICY "Admin full access shop_settings" ON public.shop_settings TO authenticated USING (true) WITH CHECK (true);
-EXCEPTION WHEN duplicate_object THEN null; END $$;
+DROP POLICY IF EXISTS "Admin full access shop_settings" ON public.shop_settings;
+CREATE POLICY "Admin full access shop_settings" ON public.shop_settings TO authenticated USING (true) WITH CHECK (true);
 
-DO $$ BEGIN
-    CREATE POLICY "Admin full access services" ON public.services TO authenticated USING (true) WITH CHECK (true);
-EXCEPTION WHEN duplicate_object THEN null; END $$;
+DROP POLICY IF EXISTS "Admin full access services" ON public.services;
+CREATE POLICY "Admin full access services" ON public.services TO authenticated USING (true) WITH CHECK (true);
 
-DO $$ BEGIN
-    CREATE POLICY "Admin full access blocked_times" ON public.blocked_times TO authenticated USING (true) WITH CHECK (true);
-EXCEPTION WHEN duplicate_object THEN null; END $$;
+DROP POLICY IF EXISTS "Admin full access blocked_times" ON public.blocked_times;
+CREATE POLICY "Admin full access blocked_times" ON public.blocked_times TO authenticated USING (true) WITH CHECK (true);
 
-DO $$ BEGIN
-    CREATE POLICY "Admin full access appointments" ON public.appointments TO authenticated USING (true) WITH CHECK (true);
-EXCEPTION WHEN duplicate_object THEN null; END $$;
+DROP POLICY IF EXISTS "Admin full access appointments" ON public.appointments;
+CREATE POLICY "Admin full access appointments" ON public.appointments TO authenticated USING (true) WITH CHECK (true);
 
 -- 9. Insert All 9 Authentic New Model Gents Parlor Services
 INSERT INTO public.services (
