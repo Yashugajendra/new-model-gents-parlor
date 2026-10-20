@@ -91,8 +91,37 @@ Key areas include:
 - Appointment booking
 - Shop management interface
 
-Add screenshots of the actual deployed website here to help visitors
+Added screenshots of the actual deployed website here to help visitors
 understand the project at a glance.
+
+## 📸 Website Preview
+
+### 🏠 Homepage
+
+![New Model Gents Parlor Homepage](Parlor_screenshots/Homepage.png)
+
+### ✂️ Services
+
+![Grooming Services](Parlor_screenshots/Services.png)
+
+### 💈 About Us
+
+<p align="center">
+  <img src="Parlor_screenshots/About-1.png" width="48%" alt="About_1" />
+  <img src="Parlor_screenshots/About-2.png" width="48%" alt="About_2" />
+</p>
+
+### 📅 Appointment Booking
+
+![Appointment Booking Interface](Parlor_screenshots/Appointment_booking.png)
+
+### 🔥 Shop management
+
+![Shop Management]
+<p align="center">
+  <img src="Parlor_screenshots/Shop-management-1.png" width="48%" alt="About_1" />
+  <img src="Parlor_screenshots/Shop-management-2.png" width="48%" alt="About_2" />
+</p>
 
 ## ⚙️ Getting Started
 
@@ -129,8 +158,6 @@ npm install
 If the application uses environment variables, create a `.env.local`
 file in the project root.
 
-Add the variables required by your application, using the names and
-values from your local development configuration.
 
 For example, a Supabase integration may require:
 
@@ -138,10 +165,6 @@ For example, a Supabase integration may require:
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_publishable_or_anon_key
 ```
-
-Use the exact variable names expected by your code.
-
-Never commit private credentials, service-role keys, or database passwords.
 
 ### 5. Start the development server
 
