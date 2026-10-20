@@ -133,6 +133,62 @@ Potential improvements include:
 | Vercel | Deployment and hosting |
 
 ---
+## ⚙️ Getting Started
+
+Follow these instructions to run the project locally.
+
+### Prerequisites
+
+Install the following:
+
+- [Node.js](https://nodejs.org/) — LTS version recommended
+- npm (included with Node.js)
+- [Git](https://git-scm.com/)
+
+---
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Yashugajendra/new-model-gents-parlor.git
+```
+
+### 2. Navigate to the project folder
+
+```bash
+cd new-model-gents-parlor
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Configure environment variables
+
+If your project requires environment variables, create a `.env.local` file in the project root and add the required variables.
+
+For example, if your application uses Supabase:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### 5. Start the development server
+
+```bash
+npm run dev
+```
+
+### 6. Open the website
+
+Visit the following address in your browser:
+
+http://localhost:3000
+
+---
 
 ## 🌐 Live Demo
 
@@ -160,25 +216,6 @@ Built with a focus on modern web development, practical business needs, and a be
 
 ### Made with ❤️ for New Model Gents Parlor
 
-**Thirthahalli · Shivamogga · Karnataka, India**
+**Thirthahalli · Shivamogga · Karnataka · India**
 
 </div>
-
----
-
-## ⚙️ Getting Started
-
-Follow these instructions to run the project locally.
-
-### Prerequisites
-
-Install the following:
-
-- [Node.js](https://nodejs.org/) — LTS version recommended
-- npm
-- Git
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Yashugajendra/new-model-gents-parlor.git
