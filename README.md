@@ -88,6 +88,36 @@ customers through a convenient and user-friendly online experience.
 
 ---
 
+---
+
+## 🔐 Security
+
+Security is especially important for an application that handles customer appointments and shop management.
+
+- Keep environment files and private credentials out of Git.
+- Configure appropriate database access policies.
+- Validate appointment submissions on the server.
+- Protect owner-only management functionality.
+- Restrict access to customer information.
+- Avoid exposing private server credentials to the browser.
+- Test authentication and authorization before production use.
+
+---
+
+## 🗺️ Future Improvements
+
+Potential improvements include:
+
+- Enhanced appointment management.
+- Improved booking status notifications.
+- Better customer and owner workflows.
+- Performance and accessibility improvements.
+- Custom domain integration.
+- Additional automated testing.
+- Further improvements to mobile usability.
+
+---
+
 ## 🖥️ Tech Stack
 
 | Technology | Purpose |
@@ -111,6 +141,28 @@ https://new-model-gents-parlor.vercel.app
 
 **GitHub Repository:**  
 https://github.com/Yashugajendra/new-model-gents-parlor
+
+---
+
+## 👨‍💻 Developer
+
+**Yashwanth**
+
+- **GitHub:** [@Yashugajendra](https://github.com/Yashugajendra)
+- **Project Repository:** [New Model Gents Parlor](https://github.com/Yashugajendra/new-model-gents-parlor)
+- **Live Website:** [Visit Website](https://new-model-gents-parlor.vercel.app)
+
+Built with a focus on modern web development, practical business needs, and a better digital experience for local customers.
+
+---
+
+<div align="center">
+
+### Made with ❤️ for New Model Gents Parlor
+
+**Thirthahalli · Shivamogga · Karnataka, India**
+
+</div>
 
 ---
 
