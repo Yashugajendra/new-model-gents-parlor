@@ -23,7 +23,7 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
+  font-family: var(--font-sans), 'Nirmala UI', 'Noto Sans Kannada', 'Tunga', system-ui, sans-serif;
   overflow-x: hidden;
   selection-background-color: #c5a880;
   selection-color: #09090b;
@@ -139,4 +139,89 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #c5a880;
+}
+
+/* ==========================================================================
+   Light Mode Theme Styling
+   ========================================================================== */
+html.light {
+  --background: #fbfaf8;
+  --foreground: #18181b;
+  color-scheme: light;
+}
+
+html.light body {
+  background-color: #fbfaf8 !important;
+  color: #18181b !important;
+}
+
+/* Light Mode Structural Surface Overrides */
+html.light .bg-\[\#09090b\],
+html.light .bg-\[\#0a0a0d\],
+html.light .bg-\[\#0d0d10\] {
+  background-color: #fbfaf8 !important;
+}
+
+html.light .bg-\[\#121215\],
+html.light .bg-\[\#141417\],
+html.light .bg-\[\#141418\],
+html.light .bg-\[\#16161b\],
+html.light .bg-\[\#1a1a20\],
+html.light .bg-\[\#1a1a1f\] {
+  background-color: #ffffff !important;
+}
+
+html.light .text-white {
+  color: #18181b !important;
+}
+
+html.light .text-\[\#94a3b8\],
+html.light .text-gray-300,
+html.light .text-gray-400 {
+  color: #52525b !important;
+}
+
+html.light .border-white\/\[0\.04\],
+html.light .border-white\/\[0\.05\],
+html.light .border-white\/\[0\.06\],
+html.light .border-white\/\[0\.07\],
+html.light .border-white\/\[0\.08\],
+html.light .border-white\/\[0\.09\],
+html.light .border-white\/\[0\.1\],
+html.light .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.09) !important;
+}
+
+html.light .divide-white\/\[0\.04\] > * + * {
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light header {
+  background-color: rgba(251, 250, 248, 0.94) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light .luxury-card {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 18px -3px rgba(0, 0, 0, 0.05);
+}
+
+html.light .luxury-card:hover {
+  border-color: rgba(158, 121, 70, 0.45) !important;
+  box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.1), 0 0 18px -3px rgba(158, 121, 70, 0.2) !important;
+}
+
+html.light .gold-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #9e7946 0%,
+    #2c1f0e 30%,
+    #9e7946 60%,
+    #b89058 85%,
+    #9e7946 100%
+  ) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }

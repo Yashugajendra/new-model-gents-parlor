@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import { CustomCursor } from "@/components/CustomCursor";
+import { LanguageThemeProvider } from "@/context/LanguageThemeContext";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -18,16 +19,18 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "New Model Gents Beauty Parlor — Precision Grooming & Styling",
+  title: "New Model Gents Parlor — Precision Grooming & Styling | Thirthahalli",
   description:
-    "Premier gents styling and grooming sanctuary at Katte Complex, Thirthahalli, Shivamogga. Reserve your appointment for bespoke haircuts, beard sculpting, and luxury grooming.",
+    "New Model Gents Parlor (ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್) at Katte Complex, Thirthahalli, Shivamogga. Reserve your appointment for haircuts, beard styling, and grooming since 2000.",
   keywords: [
-    "New Model Gents Beauty Parlor",
+    "New Model Gents Parlor",
+    "ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್",
     "Gents Parlor Thirthahalli",
     "Barbershop Shivamogga",
-    "Haircut",
+    "Haircut Thirthahalli",
     "Beard Grooming",
     "Katte Complex",
+    "Hanumanthu Chinanna",
   ],
 };
 
@@ -37,10 +40,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} dark`}>
+    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} dark`} suppressHydrationWarning>
       <body className="min-h-screen bg-[#09090b] text-[#f8fafc] font-sans antialiased selection:bg-[#c5a880] selection:text-[#09090b] flex flex-col">
-        <CustomCursor />
-        {children}
+        <LanguageThemeProvider>
+          <CustomCursor />
+          {children}
+        </LanguageThemeProvider>
       </body>
     </html>
   );

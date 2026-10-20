@@ -17,6 +17,7 @@ import confetti from "canvas-confetti";
 import { Service, Appointment, SlotAvailability } from "@/types/database.types";
 import { NewModelData } from "@/lib/data";
 import { formatCurrency, formatDate, generateWhatsAppLink } from "@/lib/utils";
+import { useLanguageTheme } from "@/context/LanguageThemeContext";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -31,6 +32,7 @@ export function BookingModal({
   preselectedService,
   onBookingCreated,
 }: BookingModalProps) {
+  const { language, t } = useLanguageTheme();
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1); // 1: Service, 2: Slot, 3: Details, 4: Confirmed
   const [services, setServices] = useState<Service[]>([]);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -48,6 +50,11 @@ export function BookingModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdAppointment, setCreatedAppointment] = useState<Appointment | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [messageLang, setMessageLang] = useState<"en" | "kn">(language);
+
+  useEffect(() => {
+    setMessageLang(language);
+  }, [language]);
 
   // Initialize services and dates
   useEffect(() => {
@@ -102,10 +109,14 @@ export function BookingModal({
 
   const handleSubmitRequest = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedService || !selectedSlot) return;
+    if (!selectedService || !selectedSlot || !selectedDate) return;
 
     if (!customerName.trim() || !customerPhone.trim()) {
-      setErrorMessage("Please enter both your name and phone number.");
+      setErrorMessage(
+        language === "kn"
+          ? "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಹೆಸರು ಮತ್ತು ಫೋನ್ ನಂಬರ್ ನಮೂದಿಸಿ."
+          : "Please provide your name and phone number."
+      );
       return;
     }
 
@@ -113,8 +124,16 @@ export function BookingModal({
     setErrorMessage("");
 
     try {
-      const newApt = NewModelData.createAppointmentRequest({
-        service: selectedService,
+      const localizedServiceName =
+        language === "kn" && selectedService.name_kn
+          ? selectedService.name_kn
+          : selectedService.name;
+
+      const newAppointment = NewModelData.createAppointmentRequest({
+        service: {
+          ...selectedService,
+          name: localizedServiceName,
+        },
         customer_name: customerName,
         customer_phone: customerPhone,
         customer_notes: customerNotes,
@@ -122,11 +141,12 @@ export function BookingModal({
         end_time: selectedSlot.endISO,
       });
 
-      setCreatedAppointment(newApt);
+      setCreatedAppointment(newAppointment);
+      if (onBookingCreated) {
+        onBookingCreated(newAppointment);
+      }
       setStep(4);
-      if (onBookingCreated) onBookingCreated(newApt);
 
-      // Trigger celebratory confetti
       confetti({
         particleCount: 80,
         spread: 60,
@@ -134,7 +154,12 @@ export function BookingModal({
         colors: ["#c5a880", "#ffffff", "#b38f5c"],
       });
     } catch (err: unknown) {
-      const errorMsg = err instanceof Error ? err.message : "Failed to record request. Please try again.";
+      const errorMsg =
+        err instanceof Error
+          ? err.message
+          : language === "kn"
+          ? "ವಿನಂತಿ ಸಲ್ಲಿಸಲು ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ."
+          : "Failed to record request. Please try again.";
       setErrorMessage(errorMsg);
     } finally {
       setIsSubmitting(false);
@@ -142,7 +167,6 @@ export function BookingModal({
   };
 
   const handleClose = () => {
-    // Reset state on close
     setStep(1);
     setSelectedService(null);
     setSelectedSlot(null);
@@ -153,21 +177,28 @@ export function BookingModal({
     onClose();
   };
 
-  // WhatsApp share message for customer
+  // Construct exact user-specified WhatsApp pre-filled message
   const shopSettings = NewModelData.getSettings();
+  const dateFormatted = createdAppointment ? formatDate(createdAppointment.start_time) : "";
+  const timeFormatted = selectedSlot?.startTime || "";
+
+  const whatsAppText =
+    messageLang === "kn"
+      ? `ನಮಸ್ಕಾರ ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್, ನಾನು ಅಪಾಯಿಂಟ್ಮೆಂಟ್ ಬುಕ್ ಮಾಡಲು ಬಯಸುತ್ತೇನೆ.\n` +
+        `ಹೆಸರು: ${createdAppointment?.customer_name || customerName} | ` +
+        `ಸೇವೆ: ${createdAppointment?.service_name_snapshot || selectedService?.name || ""} | ` +
+        `ದಿನಾಂಕ: ${dateFormatted} | ` +
+        `ಸಮಯ: ${timeFormatted}\n` +
+        `ದಯವಿಟ್ಟು ಖಚಿತಪಡಿಸಿ. ಧನ್ಯವಾದಗಳು.`
+      : `Hello New Model Gents Parlor, I would like to book an appointment.\n` +
+        `Name: ${createdAppointment?.customer_name || customerName} | ` +
+        `Service: ${createdAppointment?.service_name_snapshot || selectedService?.name || ""} | ` +
+        `Date: ${dateFormatted} | ` +
+        `Time: ${timeFormatted}\n` +
+        `Please confirm. Thank you.`;
+
   const whatsAppShareUrl = createdAppointment
-    ? generateWhatsAppLink(
-        shopSettings.whatsapp_number,
-        `💈 *${shopSettings.shop_name || "New Model Gents Beauty Parlor"} Booking Request*\n` +
-          `Ref: ${createdAppointment.booking_reference}\n` +
-          `Name: ${createdAppointment.customer_name}\n` +
-          `Service: ${createdAppointment.service_name_snapshot}\n` +
-          `Requested Time: ${formatDate(createdAppointment.start_time)} at ${new Date(
-            createdAppointment.start_time
-          ).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true })}\n` +
-          `Status: ⏳ Pending Owner Approval\n\n` +
-          `Hi! I have submitted an appointment request on your website. Looking forward to your confirmation.`
-      )
+    ? generateWhatsAppLink(shopSettings.whatsapp_number || "917338076977", whatsAppText)
     : "#";
 
   return (
@@ -177,13 +208,13 @@ export function BookingModal({
         <div className="px-6 py-5 border-b border-white/[0.07] flex items-center justify-between bg-[#16161b]">
           <div>
             <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#c5a880]">
-              Step {step} of 4
+              {t.bookingModal.step} {step} {t.bookingModal.of} 4
             </span>
             <h3 className="font-serif text-xl sm:text-2xl text-white font-medium">
-              {step === 1 && "Choose Your Grooming Ritual"}
-              {step === 2 && "Select Date & Available Time"}
-              {step === 3 && "Your Contact Details"}
-              {step === 4 && "Request Received"}
+              {step === 1 && t.bookingModal.step1Title}
+              {step === 2 && t.bookingModal.step2Title}
+              {step === 3 && t.bookingModal.step3Title}
+              {step === 4 && t.bookingModal.step4Title}
             </h3>
           </div>
           <button
@@ -200,41 +231,52 @@ export function BookingModal({
           {step === 1 && (
             <div className="space-y-3">
               <p className="text-xs text-[#94a3b8] mb-4">
-                Select a service from our menu to view live barber availability.
+                {t.bookingModal.step1Desc}
               </p>
               <div className="grid grid-cols-1 gap-3 max-h-[420px] overflow-y-auto pr-1">
-                {services.map((service) => (
-                  <button
-                    key={service.id}
-                    onClick={() => handleServiceSelect(service)}
-                    className="w-full p-4 rounded-xl text-left bg-[#18181d] border border-white/[0.06] hover:border-[#c5a880]/50 hover:bg-[#1d1d24] transition-all flex items-center justify-between group"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-white group-hover:text-[#c5a880] transition-colors">
-                          {service.name}
-                        </span>
-                        {service.badge && (
-                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#c5a880]/15 text-[#c5a880]">
-                            {service.badge}
+                {services.map((service) => {
+                  const sName =
+                    language === "kn" && service.name_kn ? service.name_kn : service.name;
+                  const sPrice =
+                    language === "kn" && service.price_display_kn
+                      ? service.price_display_kn
+                      : service.price_display || `₹${service.price}`;
+                  const sBadge =
+                    language === "kn" && service.badge_kn ? service.badge_kn : service.badge;
+
+                  return (
+                    <button
+                      key={service.id}
+                      onClick={() => handleServiceSelect(service)}
+                      className="w-full p-4 rounded-xl text-left bg-[#18181d] border border-white/[0.06] hover:border-[#c5a880]/50 hover:bg-[#1d1d24] transition-all flex items-center justify-between group"
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-white group-hover:text-[#c5a880] transition-colors">
+                            {sName}
                           </span>
-                        )}
+                          {sBadge && (
+                            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#c5a880]/15 text-[#c5a880]">
+                              {sBadge}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-[#94a3b8]">
+                          <Clock className="w-3.5 h-3.5 text-[#c5a880]" />
+                          <span>{service.duration_minutes} {t.services.minutes}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-[#94a3b8]">
-                        <Clock className="w-3.5 h-3.5 text-[#c5a880]" />
-                        <span>{service.duration_minutes} Mins</span>
+                      <div className="text-right">
+                        <div className="font-serif text-lg font-bold text-white">
+                          {sPrice}
+                        </div>
+                        <span className="text-[11px] text-[#c5a880] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                          {t.services.selectBtn} <ArrowRight className="w-3 h-3" />
+                        </span>
                       </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-serif text-lg font-bold text-white">
-                        {formatCurrency(service.price)}
-                      </div>
-                      <span className="text-[11px] text-[#c5a880] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                        Select <ArrowRight className="w-3 h-3" />
-                      </span>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -245,88 +287,97 @@ export function BookingModal({
               {/* Selected Service Bar */}
               <div className="p-3.5 rounded-xl bg-[#18181d] border border-white/[0.06] flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] text-[#94a3b8] uppercase tracking-wider">Service</span>
-                  <div className="text-sm font-semibold text-white">{selectedService.name}</div>
+                  <span className="text-[10px] text-[#94a3b8] uppercase tracking-wider">
+                    {language === "kn" ? "ಆಯ್ದ ಸೇವೆ" : "Selected Service"}
+                  </span>
+                  <div className="text-sm font-semibold text-white">
+                    {language === "kn" && selectedService.name_kn
+                      ? selectedService.name_kn
+                      : selectedService.name}
+                  </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm font-bold text-[#c5a880]">
-                    {formatCurrency(selectedService.price)}
+                  <div className="text-xs font-serif font-bold text-[#c5a880]">
+                    {selectedService.price_display || `₹${selectedService.price}`}
                   </div>
                   <button
                     onClick={() => setStep(1)}
-                    className="text-[11px] text-[#94a3b8] hover:text-white underline"
+                    className="text-[11px] text-gray-400 hover:text-white underline mt-0.5"
                   >
-                    Change
+                    {language === "kn" ? "ಬದಲಾಯಿಸಿ" : "Change"}
                   </button>
                 </div>
               </div>
 
-              {/* Date Selector Tabs */}
+              {/* Day Selector */}
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-2.5">
-                  Select Appointment Date
+                <label className="block text-xs font-semibold uppercase tracking-wider text-[#94a3b8] mb-3">
+                  {t.bookingModal.dateLabel}
                 </label>
-                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
-                  {availableDays.map((day, idx) => {
-                    const isSelected = selectedDate
-                      ? day.toDateString() === selectedDate.toDateString()
-                      : false;
+                <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+                  {availableDays.map((d, i) => {
+                    const isSelected =
+                      selectedDate?.toDateString() === d.toDateString();
+                    const dayName = d.toLocaleDateString("en-US", { weekday: "short" });
+                    const dateNum = d.getDate();
+
                     return (
                       <button
-                        key={idx}
-                        onClick={() => setSelectedDate(day)}
-                        className={`shrink-0 px-3.5 py-2.5 rounded-xl border text-center transition-all ${
+                        key={i}
+                        onClick={() => setSelectedDate(d)}
+                        className={`p-2.5 rounded-xl border text-center transition-all ${
                           isSelected
-                            ? "bg-[#c5a880] text-[#09090b] border-[#c5a880] font-bold shadow-md"
-                            : "bg-[#18181d] text-gray-300 border-white/[0.06] hover:border-white/20"
+                            ? "bg-[#c5a880] border-[#c5a880] text-[#09090b] font-bold shadow-md"
+                            : "bg-[#18181d] border-white/[0.06] text-gray-300 hover:border-[#c5a880]/40"
                         }`}
                       >
-                        <div className="text-[11px] uppercase tracking-wider">
-                          {day.toLocaleDateString("en-US", { weekday: "short" })}
-                        </div>
-                        <div className="text-base font-semibold">
-                          {day.getDate()}
-                        </div>
+                        <span className="block text-[11px] uppercase">{dayName}</span>
+                        <span className="block text-lg font-serif mt-0.5">{dateNum}</span>
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Slot Availability Grid */}
+              {/* Slot Selector */}
               <div>
-                <div className="flex items-center justify-between mb-2.5">
-                  <label className="text-xs font-medium text-gray-300">
-                    Available Time Slots ({selectedService.duration_minutes} mins)
-                  </label>
-                  <span className="text-[11px] text-[#94a3b8]">
-                    {slots.filter((s) => s.isAvailable).length} slots available
-                  </span>
-                </div>
-
+                <label className="block text-xs font-semibold uppercase tracking-wider text-[#94a3b8] mb-3">
+                  {t.bookingModal.timeLabel}
+                </label>
                 {slots.length === 0 ? (
-                  <div className="p-8 text-center text-sm text-gray-400 bg-[#16161a] rounded-xl border border-white/[0.04]">
-                    No available slots for this date. Please choose another date.
+                  <div className="p-6 text-center text-xs text-gray-400 bg-[#18181d] rounded-xl border border-white/[0.06]">
+                    {t.bookingModal.noSlots}
                   </div>
                 ) : (
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 max-h-56 overflow-y-auto pr-1">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 max-h-52 overflow-y-auto pr-1">
                     {slots.map((slot, idx) => (
                       <button
                         key={idx}
                         disabled={!slot.isAvailable}
                         onClick={() => handleSlotSelect(slot)}
-                        className={`py-2 px-1 rounded-lg text-xs font-medium border text-center transition-all ${
+                        className={`p-2.5 rounded-xl border text-xs font-medium transition-all ${
                           !slot.isAvailable
-                            ? "opacity-35 bg-black/40 border-white/[0.04] text-gray-500 cursor-not-allowed line-through"
-                            : "bg-[#18181d] border-white/[0.08] text-white hover:border-[#c5a880] hover:bg-[#c5a880]/10 active:scale-95"
+                            ? "opacity-35 bg-[#141417] border-white/[0.04] text-gray-500 cursor-not-allowed line-through"
+                            : selectedSlot?.startISO === slot.startISO
+                            ? "bg-[#c5a880] border-[#c5a880] text-[#09090b] font-bold shadow-md"
+                            : "bg-[#18181d] border-white/[0.06] text-white hover:border-[#c5a880]/50"
                         }`}
-                        title={slot.isAvailable ? "Available" : slot.conflictReason}
                       >
                         {slot.startTime}
                       </button>
                     ))}
                   </div>
                 )}
+              </div>
+
+              <div className="flex justify-between pt-2">
+                <button
+                  type="button"
+                  onClick={() => setStep(1)}
+                  className="px-4 py-2 rounded-lg border border-white/10 text-gray-300 hover:text-white text-xs font-medium"
+                >
+                  {t.bookingModal.backBtn}
+                </button>
               </div>
             </div>
           )}
@@ -337,19 +388,23 @@ export function BookingModal({
               {/* Summary Card */}
               <div className="p-4 rounded-xl bg-[#18181d] border border-white/[0.06] space-y-2">
                 <div className="flex justify-between text-xs text-[#94a3b8]">
-                  <span>Requested Service:</span>
-                  <span className="text-white font-medium">{selectedService.name}</span>
+                  <span>{language === "kn" ? "ಆಯ್ದ ಸೇವೆ:" : "Requested Service:"}</span>
+                  <span className="text-white font-medium">
+                    {language === "kn" && selectedService.name_kn
+                      ? selectedService.name_kn
+                      : selectedService.name}
+                  </span>
                 </div>
                 <div className="flex justify-between text-xs text-[#94a3b8]">
-                  <span>Date & Time:</span>
+                  <span>{language === "kn" ? "ದಿನಾಂಕ ಮತ್ತು ಸಮಯ:" : "Date & Time:"}</span>
                   <span className="text-white font-medium">
                     {selectedDate ? formatDate(selectedDate) : ""} at {selectedSlot.startTime}
                   </span>
                 </div>
                 <div className="flex justify-between text-xs text-[#94a3b8]">
-                  <span>Price (Pay at shop):</span>
+                  <span>{language === "kn" ? "ದರ (ಅಂಗಡಿಯಲ್ಲಿ ಪಾವತಿಸಿ):" : "Price (Pay at shop):"}</span>
                   <span className="text-[#c5a880] font-bold">
-                    {formatCurrency(selectedService.price)}
+                    {selectedService.price_display || `₹${selectedService.price}`}
                   </span>
                 </div>
               </div>
@@ -364,12 +419,12 @@ export function BookingModal({
               <div>
                 <label className="block text-xs font-medium text-gray-300 mb-1.5 flex items-center gap-1.5">
                   <User className="w-3.5 h-3.5 text-[#c5a880]" />
-                  Your Full Name *
+                  <span>{t.bookingModal.nameLabel} *</span>
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. John Doe"
+                  placeholder={t.bookingModal.namePlaceholder}
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-sm focus:outline-none focus:border-[#c5a880] placeholder-gray-500"
@@ -379,29 +434,26 @@ export function BookingModal({
               <div>
                 <label className="block text-xs font-medium text-gray-300 mb-1.5 flex items-center gap-1.5">
                   <Phone className="w-3.5 h-3.5 text-[#c5a880]" />
-                  Phone Number (For Booking Confirmation) *
+                  <span>{t.bookingModal.phoneLabel} *</span>
                 </label>
                 <input
                   type="tel"
                   required
-                  placeholder="e.g. +91 98765 43210"
+                  placeholder={t.bookingModal.phonePlaceholder}
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-sm focus:outline-none focus:border-[#c5a880] placeholder-gray-500"
                 />
-                <span className="text-[11px] text-gray-400 mt-1 block">
-                  You can look up your appointment status anytime using this phone number.
-                </span>
               </div>
 
               <div>
                 <label className="block text-xs font-medium text-gray-300 mb-1.5 flex items-center gap-1.5">
                   <MessageSquare className="w-3.5 h-3.5 text-[#c5a880]" />
-                  Special Requests or Hair Preferences (Optional)
+                  <span>{t.bookingModal.notesLabel}</span>
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="e.g. Skin fade with razor clean neckline, or scalp sensitivity notes..."
+                  placeholder={t.bookingModal.notesPlaceholder}
                   value={customerNotes}
                   onChange={(e) => setCustomerNotes(e.target.value)}
                   className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-sm focus:outline-none focus:border-[#c5a880] placeholder-gray-500"
@@ -414,48 +466,72 @@ export function BookingModal({
                   onClick={() => setStep(2)}
                   className="px-4 py-2.5 rounded-lg border border-white/10 text-gray-300 hover:text-white text-xs font-medium"
                 >
-                  Back
+                  {t.bookingModal.backBtn}
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className="flex-1 py-3 px-4 rounded-lg bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-sm hover:brightness-110 active:scale-98 transition-all disabled:opacity-50"
                 >
-                  {isSubmitting ? "Submitting Request..." : "Submit Booking Request"}
+                  {isSubmitting ? t.bookingModal.submitting : t.bookingModal.submitRequestBtn}
                 </button>
               </div>
             </form>
           )}
 
-          {/* STEP 4: Success & Confirmation View */}
+          {/* STEP 4: Success & WhatsApp Send View */}
           {step === 4 && createdAppointment && (
             <div className="text-center py-4 space-y-6">
-              <div className="w-16 h-16 rounded-full bg-[#c5a880]/15 border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880] mx-auto">
+              <div className="w-16 h-16 rounded-full bg-[#c5a880]/15 border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880] mx-auto shadow-lg">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
 
               <div>
                 <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30 mb-2">
-                  Status: ⏳ Pending Owner Approval
+                  {t.bookingModal.statusPending}
                 </span>
                 <h3 className="font-serif text-2xl sm:text-3xl font-medium text-white">
-                  Request Successfully Submitted
+                  {t.bookingModal.step4Title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#94a3b8] max-w-md mx-auto mt-2">
-                  Our shop owner has received your request. You will receive confirmation shortly.
+                <p className="text-xs sm:text-sm text-[#94a3b8] max-w-md mx-auto mt-2 leading-relaxed">
+                  {t.bookingModal.whatsappShareDesc}
                 </p>
               </div>
 
-              {/* Booking Reference Box */}
-              <div className="p-4 rounded-xl bg-[#16161b] border border-[#c5a880]/30 max-w-sm mx-auto">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#94a3b8] block mb-1">
-                  Your Booking Reference
+              {/* Message Language Switcher */}
+              <div className="inline-flex items-center gap-2 p-1 rounded-lg bg-[#18181d] border border-white/10 text-xs">
+                <span className="text-[#94a3b8] text-[11px] px-1">Message Language:</span>
+                <button
+                  type="button"
+                  onClick={() => setMessageLang("en")}
+                  className={`px-2.5 py-1 rounded ${
+                    messageLang === "en"
+                      ? "bg-[#c5a880] text-black font-bold"
+                      : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMessageLang("kn")}
+                  className={`px-2.5 py-1 rounded ${
+                    messageLang === "kn"
+                      ? "bg-[#c5a880] text-black font-bold"
+                      : "text-gray-400 hover:text-white"
+                  }`}
+                >
+                  ಕನ್ನಡ
+                </button>
+              </div>
+
+              {/* WhatsApp Message Preview Box */}
+              <div className="p-4 rounded-xl bg-[#16161b] border border-[#25D366]/30 max-w-md mx-auto text-left">
+                <span className="text-[10px] uppercase font-bold tracking-widest text-[#25D366] block mb-2">
+                  WhatsApp Message Preview
                 </span>
-                <span className="font-mono text-2xl font-bold tracking-wider text-[#c5a880]">
-                  {createdAppointment.booking_reference}
-                </span>
-                <p className="text-[11px] text-gray-400 mt-1">
-                  Keep this code to look up your status or notify the shop.
+                <p className="font-mono text-xs text-gray-300 whitespace-pre-line leading-relaxed bg-[#09090b] p-3 rounded-lg border border-white/[0.04]">
+                  {whatsAppText}
                 </p>
               </div>
 
@@ -465,10 +541,10 @@ export function BookingModal({
                   href={whatsAppShareUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-lg"
+                  className="w-full py-3.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#25D366]/20"
                 >
                   <Share2 className="w-4 h-4" />
-                  <span>Notify Shop on WhatsApp</span>
+                  <span>{t.bookingModal.sendWhatsappBtn}</span>
                 </a>
 
                 <a
@@ -476,14 +552,14 @@ export function BookingModal({
                   className="w-full py-2.5 px-4 rounded-xl border border-white/10 hover:border-white/20 bg-white/[0.04] text-white text-xs font-medium flex items-center justify-center gap-2 transition-all"
                 >
                   <CalendarIcon className="w-3.5 h-3.5 text-[#c5a880]" />
-                  <span>Track Status Live</span>
+                  <span>{t.bookingModal.trackStatusBtn} ({createdAppointment.booking_reference})</span>
                 </a>
 
                 <button
                   onClick={handleClose}
                   className="w-full py-2 text-xs text-gray-400 hover:text-white"
                 >
-                  Close Window
+                  {t.bookingModal.closeBtn}
                 </button>
               </div>
             </div>

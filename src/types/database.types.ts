@@ -8,13 +8,18 @@ export type AppointmentStatus =
 export interface Service {
   id: string;
   name: string;
+  name_kn?: string;
   slug: string;
   description: string;
+  description_kn?: string;
   duration_minutes: number;
-  price: number; // e.g. 750 for ₹750
+  price: number; // e.g. 250 for base price
+  price_display?: string; // e.g. "₹250 – ₹300"
+  price_display_kn?: string;
   is_active: boolean;
   display_order: number;
-  badge?: string; // e.g. "Signature", "Popular"
+  badge?: string; // e.g. "Signature", "Popular", "Special"
+  badge_kn?: string;
 }
 
 export interface Appointment {
@@ -38,18 +43,28 @@ export interface Appointment {
 export interface ShopSettings {
   id: string;
   shop_name: string;
+  shop_name_kn?: string;
   tagline: string;
+  tagline_kn?: string;
+  owner_name?: string;
+  owner_name_kn?: string;
+  since_year?: string;
   phone_number: string;
   whatsapp_number: string;
   address: string;
+  address_kn?: string;
   google_maps_url: string;
   currency_code: string;
   currency_symbol: string;
   slot_interval_minutes: number;
   buffer_minutes: number;
-  opening_time: string; // "09:00"
-  closing_time: string; // "21:00"
+  opening_time: string; // "06:30"
+  closing_time: string; // "23:00"
   operating_days: number[]; // [1,2,3,4,5,6,7] (1 = Monday, 7 = Sunday)
+  is_closed?: boolean;
+  closure_reason?: string;
+  closure_date?: string;
+  closure_reopen_date?: string;
 }
 
 export interface BlockedTime {

@@ -10,86 +10,171 @@ import { generateBookingReference } from "./utils";
 
 export const INITIAL_SHOP_SETTINGS: ShopSettings = {
   id: "shop-default-01",
-  shop_name: "New Model Gents Beauty Parlor",
-  tagline: "Your Style. Your Time. Your Signature Look.",
-  phone_number: "+91 733 807 6977",
+  shop_name: "New Model Gents Parlor",
+  shop_name_kn: "ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್",
+  tagline: "Look sharp. Feel confident.",
+  tagline_kn: "ಸ್ಟೈಲಿಶ್ ಆಗಿರಿ, ಆತ್ಮವಿಶ್ವಾಸದಿಂದಿರಿ.",
+  owner_name: "Hanumanthu (Chinanna)",
+  owner_name_kn: "ಹನುಮಂತು (ಚಿನ್ನಣ್ಣ)",
+  since_year: "2000",
+  phone_number: "+91 73380 76977",
   whatsapp_number: "917338076977",
-  address: "Kate Complex, Thirthahalli, Shivamogga",
-  google_maps_url: "https://www.google.com/maps/search/?api=1&query=Kate+Complex%2C+Thirthahalli%2C+Shivamogga",
+  address: "Katte Complex, Thirthahalli, Shivamogga – 577432",
+  address_kn: "ಕಟ್ಟೆ ಕಾಂಪ್ಲೆಕ್ಸ್, ತೀರ್ಥಹಳ್ಳಿ, ಶಿವಮೊಗ್ಗ – 577432",
+  google_maps_url: "https://www.google.com/maps/search/?api=1&query=Katte+Complex%2C+Thirthahalli%2C+Shivamogga",
   currency_code: "INR",
   currency_symbol: "₹",
   slot_interval_minutes: 30,
   buffer_minutes: 5,
   opening_time: "06:30",
-  closing_time: "11:00",
+  closing_time: "23:00",
   operating_days: [1, 2, 3, 4, 5, 6, 7], // 7 days a week
+  is_closed: false,
+  closure_reason: "",
+  closure_date: "",
+  closure_reopen_date: "",
 };
 
 export const INITIAL_SERVICES: Service[] = [
   {
     id: "srv-01",
-    name: "The Master Ritual",
-    slug: "the-master-ritual",
-    description:
-      "Our definitive grooming experience: bespoke tailored haircut, charcoal detox wash, hot towel facial massage, straight razor neck clean, and styling consultation.",
-    duration_minutes: 60,
-    price: 1200,
+    name: "Haircut",
+    name_kn: "ಹೇರ್ ಕಟಿಂಗ್",
+    slug: "haircut",
+    description: "Classic or modern cut with styling",
+    description_kn: "ಕ್ಲಾಸಿಕ್ ಅಥವಾ ಮಾಡರ್ನ್ ಕಟ್, ಸ್ಟೈಲಿಂಗ್ ಸಹಿತ",
+    duration_minutes: 30,
+    price: 250,
+    price_display: "₹250 – ₹300",
+    price_display_kn: "₹250 – ₹300",
     is_active: true,
     display_order: 1,
-    badge: "Signature",
+    badge: "Essential",
+    badge_kn: "ಪ್ರಮುಖ",
   },
   {
     id: "srv-02",
-    name: "Classic Scissor & Fade",
-    slug: "classic-scissor-fade",
-    description:
-      "Precision taper or skin fade executed with Japanese shears and fine clippers, followed by styling and organic matte clay finish.",
-    duration_minutes: 45,
-    price: 750,
+    name: "Shaving",
+    name_kn: "ಶೇವಿಂಗ್",
+    slug: "shaving",
+    description: "Clean, smooth shave with a hot towel",
+    description_kn: "ಬಿಸಿ ಟವೆಲ್ನೊಂದಿಗೆ ನುಣುಪಾದ ಶೇವ್",
+    duration_minutes: 25,
+    price: 150,
+    price_display: "₹150 – ₹200",
+    price_display_kn: "₹150 – ₹200",
     is_active: true,
     display_order: 2,
-    badge: "Popular",
   },
   {
     id: "srv-03",
-    name: "Royal Hot Towel Shave",
-    slug: "royal-hot-towel-shave",
-    description:
-      "Old-school straight razor traditional shave with eucalyptus pre-shave oil, two steamed herbal towels, badger brush lather, and cold compress astringent.",
-    duration_minutes: 40,
-    price: 650,
+    name: "Beard Trim & Styling",
+    name_kn: "ಗಡ್ಡ ಟ್ರಿಮ್ ಮತ್ತು ಸ್ಟೈಲಿಂಗ್",
+    slug: "beard-trim-styling",
+    description: "Shaping, trimming and line-up",
+    description_kn: "ಆಕಾರ, ಟ್ರಿಮ್ ಮತ್ತು ಲೈನ್-ಅಪ್",
+    duration_minutes: 20,
+    price: 150,
+    price_display: "₹150",
+    price_display_kn: "₹150",
     is_active: true,
     display_order: 3,
   },
   {
     id: "srv-04",
-    name: "Beard Sculpt & Ozone Hydration",
-    slug: "beard-sculpt-hydration",
-    description:
-      "Meticulous beard reshaping, sharp razor cheek lines, high-frequency ozone steam, and conditioning botanical argan oil infusion.",
-    duration_minutes: 35,
-    price: 550,
+    name: "Haircut + Beard",
+    name_kn: "ಕಟಿಂಗ್ + ಗಡ್ಡ",
+    slug: "haircut-beard-package",
+    description: "Combined package",
+    description_kn: "ಒಟ್ಟಿಗೆ ಪ್ಯಾಕೇಜ್",
+    duration_minutes: 45,
+    price: 399,
+    price_display: "₹399",
+    price_display_kn: "₹399",
     is_active: true,
     display_order: 4,
+    badge: "Popular",
+    badge_kn: "ಜನಪ್ರಿಯ",
   },
   {
     id: "srv-05",
-    name: "The Executive Quick Touchup",
-    slug: "executive-touchup",
-    description:
-      "Neckline cleanup, sideburn tapering, eyebrow shaping, and scalp refresh for gentlemen between major appointments.",
+    name: "Head Massage",
+    name_kn: "ಹೆಡ್ ಮಸಾಜ್",
+    slug: "head-massage",
+    description: "Relaxing oil massage",
+    description_kn: "ಆರಾಮದಾಯಕ ಎಣ್ಣೆ ಮಸಾಜ್",
     duration_minutes: 25,
-    price: 450,
+    price: 200,
+    price_display: "₹200",
+    price_display_kn: "₹200",
     is_active: true,
     display_order: 5,
+  },
+  {
+    id: "srv-06",
+    name: "Facial / Cleanup",
+    name_kn: "ಫೇಶಿಯಲ್ / ಕ್ಲೀನಪ್",
+    slug: "facial-cleanup",
+    description: "Skin cleansing and refresh",
+    description_kn: "ಚರ್ಮದ ಶುದ್ಧೀಕರಣ ಮತ್ತು ಹೊಳಪು",
+    duration_minutes: 35,
+    price: 250,
+    price_display: "₹250",
+    price_display_kn: "₹250",
+    is_active: true,
+    display_order: 6,
+  },
+  {
+    id: "srv-07",
+    name: "Hair Colour / Mehendi",
+    name_kn: "ಹೇರ್ ಕಲರ್ / ಮೆಹೆಂದಿ",
+    slug: "hair-colour-mehendi",
+    description: "Black, brown or natural colour",
+    description_kn: "ಕಪ್ಪು, ಕಂದು ಅಥವಾ ನೈಸರ್ಗಿಕ ಬಣ್ಣ",
+    duration_minutes: 40,
+    price: 200,
+    price_display: "₹200",
+    price_display_kn: "₹200",
+    is_active: true,
+    display_order: 7,
+  },
+  {
+    id: "srv-08",
+    name: "Kids’ Haircut",
+    name_kn: "ಮಕ್ಕಳ ಕಟಿಂಗ್",
+    slug: "kids-haircut",
+    description: "Gentle, patient service for children",
+    description_kn: "ಮಕ್ಕಳಿಗೆ ತಾಳ್ಮೆಯ, ಮೃದುವಾದ ಸೇವೆ",
+    duration_minutes: 25,
+    price: 150,
+    price_display: "₹150",
+    price_display_kn: "₹150",
+    is_active: true,
+    display_order: 8,
+  },
+  {
+    id: "srv-09",
+    name: "Groom Package",
+    name_kn: "ಗ್ರೂಮ್ ಪ್ಯಾಕೇಜ್",
+    slug: "groom-package",
+    description: "Haircut, shave, facial and styling for weddings and functions",
+    description_kn: "ಮದುವೆ ಮತ್ತು ಸಮಾರಂಭಗಳಿಗೆ ಕಟಿಂಗ್, ಶೇವ್, ಫೇಶಿಯಲ್ ಮತ್ತು ಸ್ಟೈಲಿಂಗ್",
+    duration_minutes: 90,
+    price: 2999,
+    price_display: "₹2,999",
+    price_display_kn: "₹2,999",
+    is_active: true,
+    display_order: 9,
+    badge: "Special",
+    badge_kn: "ವಿಶೇಷ",
   },
 ];
 
 // In-memory / LocalStorage persistent store for demo/development mode
-const STORAGE_KEY_APPOINTMENTS = "newmodel_appointments_v1";
-const STORAGE_KEY_SERVICES = "newmodel_services_v1";
-const STORAGE_KEY_SETTINGS = "newmodel_settings_v1";
-const STORAGE_KEY_BLOCKED = "newmodel_blocked_v1";
+const STORAGE_KEY_APPOINTMENTS = "newmodel_appointments_v2";
+const STORAGE_KEY_SERVICES = "newmodel_services_v2";
+const STORAGE_KEY_SETTINGS = "newmodel_settings_v2";
+const STORAGE_KEY_BLOCKED = "newmodel_blocked_v2";
 
 // Helper to determine if we are in browser
 const isClient = typeof window !== "undefined";
@@ -401,8 +486,25 @@ export const NewModelData = {
     const settings = this.getSettings();
     const appointments = this.getAppointments();
 
-    const [openHour, openMin] = settings.opening_time.split(":").map(Number);
-    const [closeHour, closeMin] = settings.closing_time.split(":").map(Number);
+    // Check if shop is marked closed on this date
+    if (settings.is_closed) {
+      if (settings.closure_date) {
+        const checkDateStr = date.toISOString().split("T")[0];
+        if (checkDateStr === settings.closure_date) {
+          return [];
+        }
+      } else {
+        return [];
+      }
+    }
+
+    // Tuesday has specific operating hours: 7:30 AM – 9:00 PM
+    const isTuesday = date.getDay() === 2;
+    const effectiveOpen = isTuesday ? "07:30" : (settings.opening_time || "06:30");
+    const effectiveClose = isTuesday ? "21:00" : (settings.closing_time || "23:00");
+
+    const [openHour, openMin] = effectiveOpen.split(":").map(Number);
+    const [closeHour, closeMin] = effectiveClose.split(":").map(Number);
 
     const slotInterval = settings.slot_interval_minutes || 30;
     const slots: SlotAvailability[] = [];

@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { AboutSection } from "@/components/AboutSection";
 import { ServicesSection } from "@/components/ServicesSection";
+import { HowBookingWorksSection } from "@/components/HowBookingWorksSection";
 import { CraftSection } from "@/components/CraftSection";
 import { LocationHoursSection } from "@/components/LocationHoursSection";
 import { BookingModal } from "@/components/BookingModal";
@@ -12,8 +13,11 @@ import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
 import { Footer } from "@/components/Footer";
 import { Service, ShopSettings } from "@/types/database.types";
 import { NewModelData, INITIAL_SHOP_SETTINGS, INITIAL_SERVICES } from "@/lib/data";
+import { useLanguageTheme } from "@/context/LanguageThemeContext";
+import { AlertTriangle } from "lucide-react";
 
 export default function HomePage() {
+  const { language } = useLanguageTheme();
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
 
@@ -32,12 +36,12 @@ export default function HomePage() {
 
     // Listen to real-time events triggered by the Owner Dashboard
     window.addEventListener("newmodel-data-updated", syncData);
-    window.addEventListener("ritualcut-data-updated", syncData);
+    window.addEventListener("newmodel-settings-updated", syncData);
     window.addEventListener("storage", syncData);
 
     return () => {
       window.removeEventListener("newmodel-data-updated", syncData);
-      window.removeEventListener("ritualcut-data-updated", syncData);
+      window.removeEventListener("newmodel-settings-updated", syncData);
       window.removeEventListener("storage", syncData);
     };
   }, []);
@@ -58,6 +62,24 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#09090b] flex flex-col selection:bg-[#c5a880] selection:text-[#09090b]">
+      {/* Dynamic Closure Notice Banner across top of site if closed */}
+      {settings.is_closed && (
+        <div className="bg-[#ef4444] text-white text-xs sm:text-sm px-4 py-2.5 text-center font-medium shadow-md flex items-center justify-center gap-2">
+          <AlertTriangle className="w-4 h-4 shrink-0" />
+          <span>
+            {language === "kn"
+              ? `⚠ ${settings.closure_date || "ನಿಗದಿತ ದಿನಾಂಕ"}ದಂದು ${
+                  settings.closure_reason || "ವಿಶೇಷ ಕಾರಣ"
+                }ದಿಂದ ಅಂಗಡಿ ಮುಚ್ಚಿರುತ್ತದೆ. ${
+                  settings.closure_reopen_date || "ಶೀಘ್ರದಲ್ಲೇ"
+                }ದಂದು ಮತ್ತೆ ತೆರೆಯುತ್ತದೆ. ಅನಾನುಕೂಲಕ್ಕಾಗಿ ಕ್ಷಮಿಸಿ.`
+              : `⚠ We are closed on ${settings.closure_date || "the specified date"} due to ${
+                  settings.closure_reason || "scheduled maintenance"
+                }. We reopen on ${settings.closure_reopen_date || "soon"}. Sorry for the inconvenience.`}
+          </span>
+        </div>
+      )}
+
       {/* Navigation */}
       <Navbar onOpenBooking={() => handleOpenBooking()} settings={settings} />
 
@@ -67,6 +89,7 @@ export default function HomePage() {
           onOpenBooking={() => handleOpenBooking()}
           shopName={settings.shop_name}
           tagline={settings.tagline}
+          whatsappNumber={settings.whatsapp_number}
         />
         <AboutSection
           onOpenBooking={() => handleOpenBooking()}
@@ -77,6 +100,7 @@ export default function HomePage() {
           services={services}
           onSelectService={(service) => handleOpenBooking(service)}
         />
+        <HowBookingWorksSection onOpenBooking={() => handleOpenBooking()} />
         <CraftSection />
         <LocationHoursSection settings={settings} />
       </main>

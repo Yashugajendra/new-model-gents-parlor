@@ -1,137 +1,152 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Clock, MapPin, Phone, MessageSquare, ExternalLink } from "lucide-react";
+import { Clock, MapPin, Phone, MessageSquare, ExternalLink, AlertTriangle, Navigation } from "lucide-react";
 import { ShopSettings } from "@/types/database.types";
+import { useLanguageTheme } from "@/context/LanguageThemeContext";
 
 interface LocationHoursSectionProps {
   settings: ShopSettings;
 }
 
-function formatTimeString(timeStr?: string): string {
-  if (!timeStr) return "09:00 AM";
-  const [hStr, mStr] = timeStr.split(":");
-  const h = parseInt(hStr, 10);
-  const m = parseInt(mStr || "0", 10);
-  if (isNaN(h)) return timeStr;
-  const period = h >= 12 ? "PM" : "AM";
-  const displayH = h % 12 || 12;
-  const displayM = m.toString().padStart(2, "0");
-  return `${displayH.toString().padStart(2, "0")}:${displayM} ${period}`;
-}
-
 export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
-  const [todayName, setTodayName] = useState("");
+  const { language, t } = useLanguageTheme();
+  const [todayIndex, setTodayIndex] = useState<number>(0);
 
   useEffect(() => {
-    const currentDayIndex = new Date().getDay();
-    const names = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    setTodayName(names[currentDayIndex]);
+    setTodayIndex(new Date().getDay()); // 0 = Sunday, 1 = Monday, etc.
   }, []);
 
-  const formattedHours = `${formatTimeString(settings.opening_time)} – ${formatTimeString(
-    settings.closing_time
-  )}`;
+  const cleanWhatsapp = (settings.whatsapp_number || "917338076977").replace(/\D/g, "");
 
-  const daysOfWeek = [
-    { day: "Monday", time: formattedHours },
-    { day: "Tuesday", time: formattedHours },
-    { day: "Wednesday", time: formattedHours },
-    { day: "Thursday", time: formattedHours },
-    { day: "Friday", time: formattedHours },
-    { day: "Saturday", time: formattedHours },
-    { day: "Sunday", time: formattedHours },
+  // Weekly hours matching user's specific table
+  const weeklyHours = [
+    { dayEn: "Sunday", dayKn: "ಭಾನುವಾರ", time: "6:30 AM – 11:00 PM", dayIdx: 0 },
+    { dayEn: "Monday", dayKn: "ಸೋಮವಾರ", time: "6:30 AM – 11:00 PM", dayIdx: 1 },
+    { dayEn: "Tuesday", dayKn: "ಮಂಗಳವಾರ", time: "7:30 AM – 9:00 PM", dayIdx: 2 },
+    { dayEn: "Wednesday", dayKn: "ಬುಧವಾರ", time: "6:30 AM – 11:00 PM", dayIdx: 3 },
+    { dayEn: "Thursday", dayKn: "ಗುರುವಾರ", time: "6:30 AM – 11:00 PM", dayIdx: 4 },
+    { dayEn: "Friday", dayKn: "ಶುಕ್ರವಾರ", time: "6:30 AM – 11:00 PM", dayIdx: 5 },
+    { dayEn: "Saturday", dayKn: "ಶನಿವಾರ", time: "6:30 AM – 11:00 PM", dayIdx: 6 },
   ];
 
-  const cleanWhatsapp = (settings.whatsapp_number || "+91 7338076977").replace(/\D/g, "");
+  const addressText =
+    language === "kn" && settings.address_kn
+      ? settings.address_kn
+      : settings.address || "New Model Gents Parlor, Katte Complex, Thirthahalli, Shivamogga – 577432";
+
+  const googleMapsUrl =
+    settings.google_maps_url ||
+    "https://www.google.com/maps/search/?api=1&query=Katte+Complex%2C+Thirthahalli%2C+Shivamogga";
 
   return (
-    <section id="hours" className="py-24 bg-[#09090b] relative scroll-mt-12">
+    <section id="hours" className="py-24 bg-[#09090b] relative scroll-mt-12 border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Closure Notice (Auto-shown when owner marks shop closed) */}
+        {settings.is_closed && (
+          <div className="mb-12 p-5 rounded-2xl bg-[#ef4444]/10 border border-[#ef4444]/30 text-white flex items-start gap-3.5 shadow-lg animate-pulse">
+            <AlertTriangle className="w-5 h-5 text-[#ef4444] shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-sm font-bold uppercase tracking-wider text-[#ef4444]">
+                {t.hours.closureNoticeTitle}
+              </h4>
+              <p className="text-sm text-gray-200 mt-1 leading-relaxed">
+                {language === "kn"
+                  ? `${settings.closure_date || "ನಿಗದಿತ ದಿನಾಂಕ"}ದಂದು ${
+                      settings.closure_reason || "ವಿಶೇಷ ಕಾರ್ಯ"
+                    }ದಿಂದ ಅಂಗಡಿ ಮುಚ್ಚಿರುತ್ತದೆ. ${
+                      settings.closure_reopen_date || "ಶೀಘ್ರದಲ್ಲೇ"
+                    }ದಂದು ಮತ್ತೆ ತೆರೆಯುತ್ತದೆ. ಅನಾನುಕೂಲಕ್ಕಾಗಿ ಕ್ಷಮಿಸಿ.`
+                  : `We are closed on ${settings.closure_date || "the specified date"} due to ${
+                      settings.closure_reason || "special reasons"
+                    }. We reopen on ${settings.closure_reopen_date || "soon"}. Sorry for the inconvenience.`}
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Location & Contact Information */}
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c5a880]">
-              Visit Our Shop
+              {t.hours.badge}
             </p>
             <h2 className="font-serif text-3xl sm:text-5xl font-medium text-white">
-              Location & Enquiries
+              {t.hours.title}
             </h2>
-            <p
-              className="text-[#94a3b8] text-sm sm:text-base leading-relaxed"
-              suppressHydrationWarning
-            >
-              Visit us at {settings.address || "our studio"}, for your next tailored grooming experience.
+            <p className="text-[#94a3b8] text-sm sm:text-base leading-relaxed">
+              {t.hours.subtitle}
             </p>
 
-            <div className="space-y-4 pt-4">
+            <div className="space-y-4 pt-2">
+              {/* Full Address */}
               <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#121215] border border-white/[0.06]">
                 <MapPin className="w-5 h-5 text-[#c5a880] shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-white text-sm font-semibold">Address</h4>
-                  <p
-                    className="text-xs sm:text-sm text-[#94a3b8] mt-0.5"
-                    suppressHydrationWarning
-                  >
-                    {settings.address}
+                <div className="flex-1">
+                  <h4 className="text-white text-sm font-semibold">{t.hours.addressTitle}</h4>
+                  <p className="text-xs sm:text-sm text-[#94a3b8] mt-0.5 leading-relaxed" suppressHydrationWarning>
+                    {addressText}
                   </p>
                   <a
-                    href={
-                      settings.google_maps_url ||
-                      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                        settings.address || "Barbershop"
-                      )}`
-                    }
+                    href={googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs text-[#c5a880] hover:underline mt-2"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#c5a880] hover:underline mt-2.5"
                   >
-                    <span>Get Directions on Google Maps</span>
-                    <ExternalLink className="w-3 h-3" />
+                    <Navigation className="w-3.5 h-3.5" />
+                    <span>{t.hours.directionsBtn}</span>
+                    <ExternalLink className="w-3 h-3 ml-0.5" />
                   </a>
                 </div>
               </div>
 
+              {/* Phone / WhatsApp */}
               <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#121215] border border-white/[0.06]">
                 <Phone className="w-5 h-5 text-[#c5a880] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-white text-sm font-semibold">Telephone Consultation</h4>
-                  <p
-                    className="text-xs sm:text-sm text-[#94a3b8] mt-0.5"
-                    suppressHydrationWarning
-                  >
-                    {settings.phone_number}
+                  <h4 className="text-white text-sm font-semibold">{t.hours.phoneTitle}</h4>
+                  <p className="text-xs sm:text-sm text-[#94a3b8] mt-0.5">
+                    {settings.phone_number || "+91 73380 76977"}
                   </p>
+                  <div className="flex items-center gap-3 mt-2">
+                    <a
+                      href={`https://wa.me/${cleanWhatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs text-[#25D366] hover:underline font-medium"
+                    >
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      <span>WhatsApp Chat</span>
+                    </a>
+                    <span className="text-white/20 text-xs">•</span>
+                    <a
+                      href={`tel:${settings.phone_number || "+917338076977"}`}
+                      className="text-xs text-[#c5a880] hover:underline font-medium"
+                    >
+                      Direct Call
+                    </a>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#121215] border border-white/[0.06]">
-                <MessageSquare className="w-5 h-5 text-[#25D366] shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-white text-sm font-semibold">WhatsApp Shop Concierge</h4>
-                  <p className="text-xs sm:text-sm text-[#94a3b8] mt-0.5">
-                    Fast responses for special requests, rescheduling & private events.
-                  </p>
-                  <a
-                    href={`https://wa.me/${cleanWhatsapp}?text=Hello%20${encodeURIComponent(
-                      settings.shop_name || "New Model Gents Beauty Parlor"
-                    )}%2C%20I%20have%20an%20enquiry.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs text-[#25D366] hover:underline mt-2 font-medium"
-                  >
-                    <span>Chat on WhatsApp</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
+              {/* Embedded Google Maps Box */}
+              <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-[#121215] h-52 relative shadow-lg">
+                <iframe
+                  title="New Model Gents Parlor Location Map"
+                  src="https://maps.google.com/maps?q=Katte+Complex,+Thirthahalli,+Karnataka+577432&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  className="w-full h-full border-0 filter invert-[90%] hue-rotate-180 opacity-80 hover:opacity-100 transition-opacity"
+                  loading="lazy"
+                  allowFullScreen
+                />
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-[#09090b]/90 border border-white/20 text-[11px] font-semibold text-[#c5a880] backdrop-blur-md flex items-center gap-1.5 hover:scale-105 transition-transform"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  <span>{t.hours.getDirectionsMap}</span>
+                </a>
               </div>
             </div>
           </div>
@@ -141,36 +156,35 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
             <div className="flex items-center gap-3 pb-6 border-b border-white/[0.08] mb-6">
               <Clock className="w-6 h-6 text-[#c5a880]" />
               <div>
-                <h3 className="font-serif text-2xl text-white">Opening Hours</h3>
-                <p className="text-xs text-[#94a3b8]">By appointment only to maintain exclusivity</p>
+                <h3 className="font-serif text-2xl text-white">{t.hours.openingHoursTitle}</h3>
+                <p className="text-xs text-[#94a3b8] mt-0.5">{t.hours.exclusivityNote}</p>
               </div>
             </div>
 
             <div className="divide-y divide-white/[0.04]">
-              {daysOfWeek.map(({ day, time }) => {
-                const isToday = day === todayName;
+              {weeklyHours.map((item) => {
+                const isToday = item.dayIdx === todayIndex;
+                const dayLabel = language === "kn" ? item.dayKn : item.dayEn;
+
                 return (
                   <div
-                    key={day}
-                    className={`py-3.5 flex items-center justify-between text-sm ${
+                    key={item.dayEn}
+                    className={`py-3.5 flex items-center justify-between text-sm transition-colors ${
                       isToday
-                        ? "text-[#c5a880] font-semibold bg-[#c5a880]/5 px-3 rounded-lg"
-                        : "text-[#94a3b8]"
+                        ? "text-[#c5a880] font-semibold bg-[#c5a880]/10 px-3.5 rounded-xl border border-[#c5a880]/20"
+                        : "text-[#94a3b8] hover:text-white"
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <span>{day}</span>
+                      <span className="font-medium">{dayLabel}</span>
                       {isToday && (
-                        <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#c5a880]/20 text-[#c5a880] font-bold">
-                          Today
+                        <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#c5a880] text-[#09090b] font-bold">
+                          {t.hours.todayBadge}
                         </span>
                       )}
                     </div>
-                    <span
-                      className={isToday ? "text-white" : "text-gray-300"}
-                      suppressHydrationWarning
-                    >
-                      {time}
+                    <span className={isToday ? "text-white font-semibold" : "text-gray-300"}>
+                      {item.time}
                     </span>
                   </div>
                 );

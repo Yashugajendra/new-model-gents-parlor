@@ -21,35 +21,27 @@ import {
   Share2,
   DollarSign,
   Layers,
+  MessageCircle,
+  Sun,
+  Moon,
 } from "lucide-react";
 import { Appointment, Service, ShopSettings } from "@/types/database.types";
 import { INITIAL_SHOP_SETTINGS, NewModelData } from "@/lib/data";
 import { formatDate, formatTime, formatCurrency, generateWhatsAppLink } from "@/lib/utils";
+import { useLanguageTheme } from "@/context/LanguageThemeContext";
 
 export default function AdminDashboardPage() {
+  const { language, setLanguage, theme, setTheme } = useLanguageTheme();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pinInput, setPinInput] = useState("");
   const [loginError, setLoginError] = useState("");
 
   const [activeTab, setActiveTab] = useState<"pending" | "confirmed" | "services" | "settings">("pending");
+  const [scheduleFilter, setScheduleFilter] = useState<"all" | "today">("all");
+  const [todayStr, setTodayStr] = useState("");
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [services, setServices] = useState<Service[]>([]);
-  const [settings, setSettings] = useState<ShopSettings>(
-    INITIAL_SHOP_SETTINGS
-  );
-
-  useEffect(() => {
-    setServices(NewModelData.getServices());
-
-    const savedSettings = NewModelData.getSettings();
-
-    setSettings({
-      ...savedSettings,
-      address: savedSettings.address
-        .replace(/\s*,\s*/g, ", ")
-        .trim(),
-    });
-  }, []);
+  const [settings, setSettings] = useState<ShopSettings>(INITIAL_SHOP_SETTINGS);
 
   // Modal states
   const [conflictModalData, setConflictModalData] = useState<{
@@ -80,6 +72,7 @@ export default function AdminDashboardPage() {
     if (session === "true") {
       setIsAuthenticated(true);
     }
+    setTodayStr(new Date().toDateString());
     refreshData();
   }, []);
 
@@ -90,13 +83,16 @@ export default function AdminDashboardPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Default demo passcode: 1234 or newmodel
     if (pinInput === "1234" || pinInput.toLowerCase() === "newmodel" || pinInput.toLowerCase() === "ritualcut") {
       setIsAuthenticated(true);
       sessionStorage.setItem("newmodel_admin_auth", "true");
       setLoginError("");
     } else {
-      setLoginError("Invalid passcode. Use demo passcode: 1234");
+      setLoginError(
+        language === "kn"
+          ? "ಅಮಾನ್ಯ ಪಾಸ್ಕೋಡ್. ಡೆಮೊ ಪಾಸ್ಕೋಡ್ ಬಳಸಿ: 1234"
+          : "Invalid passcode. Use demo passcode: 1234"
+      );
     }
   };
 
@@ -120,7 +116,12 @@ export default function AdminDashboardPage() {
       return;
     }
     refreshData();
-    showToast(`Confirmed appointment ${appointment.booking_reference} for ${appointment.customer_name}!`);
+    window.dispatchEvent(new Event("newmodel-data-updated"));
+    showToast(
+      language === "kn"
+        ? `${appointment.customer_name} ಅವರ ಅಪಾಯಿಂಟ್ಮೆಂಟ್ (${appointment.booking_reference}) ಅನುಮೋದಿಸಲಾಗಿದೆ!`
+        : `Confirmed appointment ${appointment.booking_reference} for ${appointment.customer_name}!`
+    );
   };
 
   // Rejection Handler
@@ -128,13 +129,19 @@ export default function AdminDashboardPage() {
     if (!rejectModalData) return;
     NewModelData.rejectAppointment(rejectModalData.appointment.id, rejectModalData.reason);
     refreshData();
+    window.dispatchEvent(new Event("newmodel-data-updated"));
     setRejectModalData(null);
-    showToast(`Rejected request ${rejectModalData.appointment.booking_reference}.`);
+    showToast(
+      language === "kn"
+        ? `ವಿನಂತಿ ${rejectModalData.appointment.booking_reference} ತಿರಸ್ಕರಿಸಲಾಗಿದೆ.`
+        : `Rejected request ${rejectModalData.appointment.booking_reference}.`
+    );
   };
 
   const handleUpdateStatus = (id: string, status: Appointment["status"]) => {
     NewModelData.updateAppointmentStatus(id, status);
     refreshData();
+    window.dispatchEvent(new Event("newmodel-data-updated"));
     showToast(`Updated status to ${status}.`);
   };
 
@@ -144,16 +151,18 @@ export default function AdminDashboardPage() {
     if (!editingService) return;
     NewModelData.saveService(editingService);
     refreshData();
+    window.dispatchEvent(new Event("newmodel-data-updated"));
     setIsServiceModalOpen(false);
     setEditingService(null);
-    showToast("Service saved successfully.");
+    showToast(language === "kn" ? "ಸೇವೆಯನ್ನು ಉಳಿಸಲಾಗಿದೆ." : "Service saved successfully.");
   };
 
   const handleDeleteService = (id: string) => {
-    if (confirm("Are you sure you want to delete this service?")) {
+    if (confirm(language === "kn" ? "ನೀವು ಖಚಿತವಾಗಿ ಈ ಸೇವೆಯನ್ನು ಅಳಿಸಲು ಬಯಸುವಿರಾ?" : "Are you sure you want to delete this service?")) {
       NewModelData.deleteService(id);
       refreshData();
-      showToast("Service deleted.");
+      window.dispatchEvent(new Event("newmodel-data-updated"));
+      showToast(language === "kn" ? "ಸೇವೆ ಅಳಿಸಲಾಗಿದೆ." : "Service deleted.");
     }
   };
 
@@ -162,27 +171,54 @@ export default function AdminDashboardPage() {
     e.preventDefault();
     NewModelData.updateSettings(settings);
     refreshData();
-    showToast("Shop settings updated.");
+    window.dispatchEvent(new Event("newmodel-data-updated"));
+    window.dispatchEvent(new Event("newmodel-settings-updated"));
+    showToast(language === "kn" ? "ಅಂಗಡಿ ಸೆಟ್ಟಿಂಗ್ಸ್ ನವೀಕರಿಸಲಾಗಿದೆ." : "Shop settings updated.");
   };
 
   // Filter lists
   const pendingAppointments = appointments.filter((a) => a.status === "PENDING");
-  const confirmedAppointments = appointments.filter(
-    (a) => a.status === "CONFIRMED" || a.status === "COMPLETED"
-  );
+
+  const confirmedAppointments = appointments
+    .filter((a) => a.status === "CONFIRMED" || a.status === "COMPLETED")
+    .filter((a) => {
+      if (scheduleFilter === "today") {
+        return todayStr ? new Date(a.start_time).toDateString() === todayStr : true;
+      }
+      return true;
+    });
 
   // If not logged in, render PIN prompt
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[#09090b] text-white flex items-center justify-center p-4">
         <div className="w-full max-w-md p-8 rounded-2xl bg-[#121215] border border-white/[0.08] shadow-2xl space-y-6">
+          <div className="flex justify-end gap-2 text-xs">
+            <button
+              onClick={() => setLanguage(language === "en" ? "kn" : "en")}
+              className="px-2.5 py-1 rounded bg-[#18181d] border border-white/10 text-[#c5a880] font-bold"
+            >
+              {language === "en" ? "ಕನ್ನಡ" : "English"}
+            </button>
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-1 rounded bg-[#18181d] border border-white/10 text-gray-400"
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4 text-[#c5a880]" /> : <Moon className="w-4 h-4" />}
+            </button>
+          </div>
+
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 rounded-xl bg-[#1a1a1f] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] mx-auto">
+            <div className="w-12 h-12 rounded-xl bg-[#1a1a1f] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] mx-auto shadow-md">
               <Lock className="w-6 h-6" />
             </div>
-            <h2 className="font-serif text-2xl font-bold">Owner Sanctuary Access</h2>
+            <h2 className="font-serif text-2xl font-bold">
+              {language === "kn" ? "ಮಾಲೀಕರಿಗೆ ಮಾತ್ರ ಸುರಕ್ಷಿತ ಲಾಗಿನ್" : "Secure Owner Login"}
+            </h2>
             <p className="text-xs text-[#94a3b8]">
-              Enter master PIN to manage appointments, services, and shop availability.
+              {language === "kn"
+                ? "ಅಪಾಯಿಂಟ್ಮೆಂಟ್ಗಳು, ಸೇವೆಗಳು ಹಾಗೂ ಲಭ್ಯತೆ ನಿರ್ವಹಿಸಲು ಪಾಸ್ಕೋಡ್ ನಮೂದಿಸಿ."
+                : "Enter master passcode to manage appointments, services, and availability."}
             </p>
           </div>
 
@@ -194,13 +230,13 @@ export default function AdminDashboardPage() {
             )}
             <div>
               <label className="block text-xs font-medium text-gray-400 mb-1.5">
-                Master Passcode (Demo: 1234)
+                {language === "kn" ? "ಮಾಸ್ಟರ್ ಪಾಸ್ಕೋಡ್ (ಡೆಮೊ: 1234)" : "Master Passcode (Demo: 1234)"}
               </label>
               <input
                 type="password"
                 required
                 autoFocus
-                placeholder="Enter passcode"
+                placeholder="••••"
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
                 className="w-full px-4 py-2.5 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-center text-lg tracking-widest font-mono focus:outline-none focus:border-[#c5a880]"
@@ -208,13 +244,14 @@ export default function AdminDashboardPage() {
             </div>
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-sm hover:brightness-110 transition-all"
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-sm hover:brightness-110 active:scale-98 transition-all shadow-md"
             >
-              Unlock Dashboard
+              {language === "kn" ? "ಡ್ಯಾಶ್ಬೋರ್ಡ್ ಪ್ರವೇಶಿಸಿ" : "Access Owner Dashboard"}
             </button>
             <div className="text-center">
-              <Link href="/" className="text-xs text-gray-500 hover:text-white">
-                ← Return to Public Website
+              <Link href="/" className="text-xs text-gray-500 hover:text-white inline-flex items-center gap-1">
+                <ArrowLeft className="w-3 h-3" />
+                <span>{language === "kn" ? "ವೆಬ್ಸೈಟ್ಗೆ ಹಿಂತಿರುಗಿ" : "Back to Website"}</span>
               </Link>
             </div>
           </form>
@@ -227,108 +264,151 @@ export default function AdminDashboardPage() {
     <div className="min-h-screen bg-[#09090b] text-[#f8fafc] flex flex-col">
       {/* Toast Alert */}
       {toastMessage && (
-        <div className="fixed top-5 right-5 z-50 bg-[#16161b] border border-[#c5a880] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs animate-bounce">
+        <div className="fixed top-5 right-5 z-50 bg-[#16161b] border border-[#c5a880] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs">
           <CheckCircle2 className="w-4 h-4 text-[#c5a880]" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Top Navigation */}
+      {/* Top Header */}
       <header className="border-b border-white/[0.08] bg-[#0d0d10] py-4 px-6 sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1a1a20] to-[#121215] border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880]">
               <span className="font-serif font-bold text-xs text-[#c5a880]">NM</span>
             </div>
             <div>
-              <span className="font-serif text-lg font-bold tracking-wider text-white">
+              <span className="font-serif text-base sm:text-lg font-bold tracking-wider text-white">
                 NEW MODEL <span className="text-[#c5a880]">GENTS PARLOR</span>
               </span>
               <span className="ml-2 text-[10px] px-2 py-0.5 rounded bg-[#c5a880]/20 text-[#c5a880] font-semibold uppercase tracking-wider">
-                Owner Portal
+                {language === "kn" ? "ಮಾಲೀಕರ ಪೋರ್ಟಲ್" : "Owner Portal"}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-3 text-xs">
+            {/* Language Toggle */}
+            <div className="flex items-center p-0.5 rounded-lg border border-white/10 bg-[#141418]">
+              <button
+                onClick={() => setLanguage("en")}
+                className={`px-2 py-0.5 rounded ${language === "en" ? "bg-[#c5a880] text-black font-bold" : "text-gray-400"}`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLanguage("kn")}
+                className={`px-2 py-0.5 rounded ${language === "kn" ? "bg-[#c5a880] text-black font-bold" : "text-gray-400"}`}
+              >
+                ಕನ್ನಡ
+              </button>
+            </div>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-1.5 rounded-lg border border-white/10 bg-[#141418] text-gray-300"
+              title="Toggle Theme"
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4 text-[#c5a880]" /> : <Moon className="w-4 h-4" />}
+            </button>
+
             <Link
               href="/"
               target="_blank"
               className="text-[#94a3b8] hover:text-white hidden sm:flex items-center gap-1"
             >
-              <span>View Live Website</span>
+              <span>{language === "kn" ? "ಲೈವ್ ಸೈಟ್ ನೋಡಿ" : "View Website"}</span>
               <ArrowLeft className="w-3 h-3 rotate-135" />
             </Link>
+
             <button
               onClick={handleLogout}
               className="px-3 py-1.5 rounded-lg border border-white/10 hover:border-red-500/50 hover:bg-red-950/20 text-gray-300 hover:text-red-400 transition-colors flex items-center gap-1.5"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
+              <span className="hidden sm:inline">{language === "kn" ? "ನಿರ್ಗಮಿಸಿ" : "Sign Out"}</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-6">
-        {/* KPI Summary Cards */}
+      {/* Main Dashboard Container */}
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-6 flex-1">
+        {/* Metric Overview Counters */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-4 rounded-xl bg-[#121215] border border-white/[0.06]">
             <div className="flex items-center justify-between text-xs text-[#94a3b8]">
-              <span>Pending Queue</span>
+              <span>{language === "kn" ? "ಬಾಕಿ ವಿನಂತಿಗಳು" : "Pending Requests"}</span>
               <Clock className="w-4 h-4 text-amber-500" />
             </div>
             <div className="text-2xl font-serif font-bold text-white mt-1">
               {pendingAppointments.length}
             </div>
-            <span className="text-[10px] text-amber-400">Needs master review</span>
+            <span className="text-[10px] text-amber-400">
+              {language === "kn" ? "ಪರಿಶೀಲನೆ ಅಗತ್ಯವಿದೆ" : "Needs owner review"}
+            </span>
           </div>
 
           <div className="p-4 rounded-xl bg-[#121215] border border-white/[0.06]">
             <div className="flex items-center justify-between text-xs text-[#94a3b8]">
-              <span>Confirmed Slots</span>
+              <span>{language === "kn" ? "ಖಚಿತ ಅಪಾಯಿಂಟ್ಮೆಂಟ್ಗಳು" : "Confirmed Slots"}</span>
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
             </div>
             <div className="text-2xl font-serif font-bold text-white mt-1">
               {confirmedAppointments.filter((a) => a.status === "CONFIRMED").length}
             </div>
-            <span className="text-[10px] text-emerald-400">Locked in calendar</span>
+            <span className="text-[10px] text-emerald-400">
+              {language === "kn" ? "ಕ್ಯಾಲೆಂಡರ್ನಲ್ಲಿ ಲಾಕ್ ಆಗಿದೆ" : "Locked in calendar"}
+            </span>
           </div>
 
           <div className="p-4 rounded-xl bg-[#121215] border border-white/[0.06]">
             <div className="flex items-center justify-between text-xs text-[#94a3b8]">
-              <span>Active Services</span>
+              <span>{language === "kn" ? "ಸಕ್ರಿಯ ಸೇವೆಗಳು" : "Active Services"}</span>
               <Layers className="w-4 h-4 text-[#c5a880]" />
             </div>
             <div className="text-2xl font-serif font-bold text-white mt-1">
               {services.filter((s) => s.is_active).length}
             </div>
-            <span className="text-[10px] text-[#94a3b8]">On customer menu</span>
+            <span className="text-[10px] text-[#94a3b8]">
+              {language === "kn" ? "ಗ್ರಾಹಕರ ಮೆನುವಿನಲ್ಲಿ" : "On customer menu"}
+            </span>
           </div>
 
           <div className="p-4 rounded-xl bg-[#121215] border border-white/[0.06]">
             <div className="flex items-center justify-between text-xs text-[#94a3b8]">
-              <span>Total History</span>
-              <Calendar className="w-4 h-4 text-blue-500" />
+              <span>{language === "kn" ? "ಅಂಗಡಿ ಸ್ಥಿತಿ" : "Shop Status"}</span>
+              <AlertTriangle className={`w-4 h-4 ${settings.is_closed ? "text-red-500" : "text-emerald-500"}`} />
             </div>
-            <div className="text-2xl font-serif font-bold text-white mt-1">
-              {appointments.length}
+            <div className="text-sm font-bold text-white mt-2">
+              {settings.is_closed ? (
+                <span className="text-red-400 uppercase tracking-wide">
+                  {language === "kn" ? "ಮುಚ್ಚಿದೆ (Closed)" : "Closed / Notice Active"}
+                </span>
+              ) : (
+                <span className="text-emerald-400 uppercase tracking-wide">
+                  {language === "kn" ? "ತೆರೆದಿದೆ (Open)" : "Open for Bookings"}
+                </span>
+              )}
             </div>
-            <span className="text-[10px] text-[#94a3b8]">All-time bookings</span>
+            <span className="text-[10px] text-[#94a3b8]">
+              {settings.is_closed ? settings.closure_reason || "Notice enabled" : "7 days operating"}
+            </span>
           </div>
         </div>
 
-        {/* Tab Controls */}
+        {/* Tab Navigation */}
         <div className="flex border-b border-white/[0.08] gap-4 overflow-x-auto text-xs sm:text-sm font-medium">
           <button
             onClick={() => setActiveTab("pending")}
-            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === "pending"
-              ? "border-[#c5a880] text-[#c5a880] font-semibold"
-              : "border-transparent text-[#94a3b8] hover:text-white"
-              }`}
+            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${
+              activeTab === "pending"
+                ? "border-[#c5a880] text-[#c5a880] font-semibold"
+                : "border-transparent text-[#94a3b8] hover:text-white"
+            }`}
           >
-            <span>Pending Requests</span>
+            <span>{language === "kn" ? "ಬಾಕಿ ವಿನಂತಿಗಳು" : "Pending Requests"}</span>
             {pendingAppointments.length > 0 && (
               <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-bold">
                 {pendingAppointments.length}
@@ -338,161 +418,208 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab("confirmed")}
-            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === "confirmed"
-              ? "border-[#c5a880] text-[#c5a880] font-semibold"
-              : "border-transparent text-[#94a3b8] hover:text-white"
-              }`}
+            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${
+              activeTab === "confirmed"
+                ? "border-[#c5a880] text-[#c5a880] font-semibold"
+                : "border-transparent text-[#94a3b8] hover:text-white"
+            }`}
           >
-            <span>Confirmed Schedule</span>
-            <span className="text-xs text-gray-500">
-              ({confirmedAppointments.length})
-            </span>
+            <span>{language === "kn" ? "ಇಂದಿನ ವೇಳಾಪಟ್ಟಿ ಮತ್ತು ಖಚಿತ" : "Today's Schedule & Confirmed"}</span>
+            <span className="text-xs text-gray-500">({confirmedAppointments.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab("services")}
-            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === "services"
-              ? "border-[#c5a880] text-[#c5a880] font-semibold"
-              : "border-transparent text-[#94a3b8] hover:text-white"
-              }`}
+            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${
+              activeTab === "services"
+                ? "border-[#c5a880] text-[#c5a880] font-semibold"
+                : "border-transparent text-[#94a3b8] hover:text-white"
+            }`}
           >
             <Scissors className="w-4 h-4" />
-            <span>Services & Rates</span>
+            <span>{language === "kn" ? "ಸೇವೆ ಮತ್ತು ದರ ಬದಲಿಸಿ" : "Edit Services & Rates"}</span>
           </button>
 
           <button
             onClick={() => setActiveTab("settings")}
-            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${activeTab === "settings"
-              ? "border-[#c5a880] text-[#c5a880] font-semibold"
-              : "border-transparent text-[#94a3b8] hover:text-white"
-              }`}
+            className={`pb-3 px-2 border-b-2 transition-all flex items-center gap-2 ${
+              activeTab === "settings"
+                ? "border-[#c5a880] text-[#c5a880] font-semibold"
+                : "border-transparent text-[#94a3b8] hover:text-white"
+            }`}
           >
             <Settings className="w-4 h-4" />
-            <span>Shop Settings</span>
+            <span>{language === "kn" ? "ಅಂಗಡಿ ಸೆಟ್ಟಿಂಗ್ಸ್ & ರಜೆ" : "Shop Open/Closed & Settings"}</span>
           </button>
         </div>
 
-        {/* TAB 1: PENDING REQUESTS QUEUE */}
+        {/* TAB 1: PENDING REQUESTS */}
         {activeTab === "pending" && (
           <div className="space-y-4">
             {pendingAppointments.length === 0 ? (
               <div className="p-12 text-center rounded-2xl bg-[#121215] border border-white/[0.06] space-y-2">
                 <CheckCircle2 className="w-10 h-10 text-emerald-500 mx-auto" />
-                <h3 className="font-serif text-lg text-white">Queue is Clear!</h3>
+                <h3 className="font-serif text-lg text-white">
+                  {language === "kn" ? "ಯಾವುದೇ ಬಾಕಿ ವಿನಂತಿಗಳಿಲ್ಲ!" : "Queue is Clear!"}
+                </h3>
                 <p className="text-xs text-[#94a3b8]">
-                  No pending appointment requests waiting for review.
+                  {language === "kn"
+                    ? "ಪರಿಶೀಲನೆಗೆ ಕಾಯುತ್ತಿರುವ ಹೊಸ ಅಪಾಯಿಂಟ್ಮೆಂಟ್ ವಿನಂತಿಗಳಿಲ್ಲ."
+                    : "No pending appointment requests waiting for review."}
                 </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {pendingAppointments.map((apt) => (
-                  <div
-                    key={apt.id}
-                    className="p-5 rounded-2xl bg-[#121215] border border-amber-500/20 space-y-4 shadow-lg hover:border-amber-500/40 transition-all"
-                  >
-                    <div className="flex items-start justify-between border-b border-white/[0.06] pb-3">
-                      <div>
-                        <span className="font-mono text-xs font-bold text-[#c5a880]">
-                          {apt.booking_reference}
-                        </span>
-                        <h4 className="font-medium text-white text-base">
-                          {apt.customer_name}
-                        </h4>
-                      </div>
-                      <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30">
-                        Pending Approval
-                      </span>
-                    </div>
+                {pendingAppointments.map((apt) => {
+                  const cleanPhone = apt.customer_phone.replace(/\D/g, "");
+                  const suggestText =
+                    language === "kn"
+                      ? `ನಮಸ್ಕಾರ ${apt.customer_name}, ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್ ನಿಂದ. ನಿಮ್ಮ ${apt.service_name_snapshot} ಅಪಾಯಿಂಟ್ಮೆಂಟ್ (${formatDate(apt.start_time)}) ಬಗ್ಗೆ: ಬೇರೆ ಅನುಕೂಲಕರ ಸಮಯವನ್ನು ನಿಗದಿಪಡಿಸಬಹುದೇ?`
+                      : `Hello ${apt.customer_name}, from New Model Gents Parlor. Regarding your appointment request for ${apt.service_name_snapshot} on ${formatDate(apt.start_time)}: Could we suggest another time that works for you?`;
 
-                    <div className="space-y-2 text-xs text-[#94a3b8]">
-                      <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-1.5">
-                          <Scissors className="w-3.5 h-3.5 text-[#c5a880]" /> Service:
-                        </span>
-                        <span className="text-white font-medium">
-                          {apt.service_name_snapshot} ({apt.service_duration_snapshot}m)
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-1.5">
-                          <Calendar className="w-3.5 h-3.5 text-[#c5a880]" /> Requested:
-                        </span>
-                        <span className="text-white font-medium">
-                          {formatDate(apt.start_time)} at {formatTime(apt.start_time)}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <span className="flex items-center gap-1.5">
-                          <Phone className="w-3.5 h-3.5 text-[#c5a880]" /> Phone:
-                        </span>
-                        <a
-                          href={`tel:${apt.customer_phone}`}
-                          className="text-white hover:text-[#c5a880] underline"
-                        >
-                          {apt.customer_phone}
-                        </a>
-                      </div>
-
-                      {apt.customer_notes && (
-                        <div className="p-2.5 rounded-lg bg-[#18181d] text-[11px] text-gray-300 italic border border-white/[0.04]">
-                          &ldquo;{apt.customer_notes}&rdquo;
+                  return (
+                    <div
+                      key={apt.id}
+                      className="p-5 rounded-2xl bg-[#121215] border border-amber-500/20 space-y-4 shadow-lg hover:border-amber-500/40 transition-all"
+                    >
+                      <div className="flex items-start justify-between border-b border-white/[0.06] pb-3">
+                        <div>
+                          <span className="font-mono text-xs font-bold text-[#c5a880]">
+                            {apt.booking_reference}
+                          </span>
+                          <h4 className="font-medium text-white text-base">
+                            {apt.customer_name}
+                          </h4>
                         </div>
-                      )}
-                    </div>
+                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                          {language === "kn" ? "ಅನುಮೋದನೆಗೆ ಬಾಕಿ" : "Pending Approval"}
+                        </span>
+                      </div>
 
-                    {/* Action Bar */}
-                    <div className="pt-2 flex items-center gap-2">
-                      <button
-                        onClick={() => handleApprove(apt)}
-                        className="flex-1 py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95"
-                      >
-                        <CheckCircle2 className="w-4 h-4" />
-                        <span>Approve Slot</span>
-                      </button>
+                      <div className="space-y-2 text-xs text-[#94a3b8]">
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5">
+                            <Scissors className="w-3.5 h-3.5 text-[#c5a880]" />
+                            <span>{language === "kn" ? "ಸೇವೆ:" : "Service:"}</span>
+                          </span>
+                          <span className="text-white font-medium">
+                            {apt.service_name_snapshot} ({apt.service_duration_snapshot}m)
+                          </span>
+                        </div>
 
-                      <button
-                        onClick={() => setRejectModalData({ appointment: apt, reason: "" })}
-                        className="py-2 px-3 rounded-lg bg-red-950/60 hover:bg-red-900 border border-red-800 text-red-200 text-xs font-medium flex items-center justify-center gap-1 transition-all"
-                      >
-                        <XCircle className="w-4 h-4" />
-                        <span>Decline</span>
-                      </button>
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-[#c5a880]" />
+                            <span>{language === "kn" ? "ದಿನಾಂಕ & ಸಮಯ:" : "Requested:"}</span>
+                          </span>
+                          <span className="text-white font-medium">
+                            {formatDate(apt.start_time)} at {formatTime(apt.start_time)}
+                          </span>
+                        </div>
 
-                      <a
-                        href={generateWhatsAppLink(
-                          apt.customer_phone,
-                          `Hello ${apt.customer_name}, this is the Master Barber from ${settings.shop_name || "New Model Gents Beauty Parlor"} regarding your appointment request (Ref: ${apt.booking_reference}).`
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5">
+                            <Phone className="w-3.5 h-3.5 text-[#c5a880]" />
+                            <span>{language === "kn" ? "ಫೋನ್ ನಂಬರ್:" : "Phone:"}</span>
+                          </span>
+                          <a
+                            href={`tel:${apt.customer_phone}`}
+                            className="text-white hover:text-[#c5a880] underline"
+                          >
+                            {apt.customer_phone}
+                          </a>
+                        </div>
+
+                        {apt.customer_notes && (
+                          <div className="p-2.5 rounded-lg bg-[#18181d] text-[11px] text-gray-300 italic border border-white/[0.04]">
+                            &ldquo;{apt.customer_notes}&rdquo;
+                          </div>
                         )}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-[#25D366]/15 hover:bg-[#25D366]/30 text-[#25D366] border border-[#25D366]/30"
-                        title="Chat on WhatsApp"
-                      >
-                        <Share2 className="w-4 h-4" />
-                      </a>
+                      </div>
+
+                      {/* Action Bar: Approve / Suggest Time / Reject */}
+                      <div className="pt-2 flex flex-wrap items-center gap-2">
+                        {/* 1. Approve */}
+                        <button
+                          onClick={() => handleApprove(apt)}
+                          className="flex-1 py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>{language === "kn" ? "ಅನುಮೋದಿಸಿ" : "Approve"}</span>
+                        </button>
+
+                        {/* 2. Suggest another time via WhatsApp */}
+                        <a
+                          href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(suggestText)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="py-2 px-3 rounded-lg border border-[#c5a880]/40 bg-[#c5a880]/10 hover:bg-[#c5a880]/20 text-[#c5a880] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
+                          title="Suggest another time via WhatsApp"
+                        >
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>{language === "kn" ? "ಬೇರೆ ಸಮಯ ಸೂಚಿಸಿ" : "Suggest Time"}</span>
+                        </a>
+
+                        {/* 3. Reject */}
+                        <button
+                          onClick={() => setRejectModalData({ appointment: apt, reason: "" })}
+                          className="py-2 px-3 rounded-lg bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
+                        >
+                          <XCircle className="w-3.5 h-3.5" />
+                          <span>{language === "kn" ? "ತಿರಸ್ಕರಿಸಿ" : "Reject"}</span>
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
         )}
 
-        {/* TAB 2: CONFIRMED SCHEDULE */}
+        {/* TAB 2: CONFIRMED SCHEDULE & TODAY'S APPOINTMENTS */}
         {activeTab === "confirmed" && (
           <div className="space-y-4">
-            <div className="overflow-x-auto rounded-2xl bg-[#121215] border border-white/[0.08] shadow-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <h3 className="font-serif text-lg text-white">
+                {language === "kn" ? "ಕ್ಯಾಲೆಂಡರ್ ವೇಳಾಪಟ್ಟಿ" : "Master Booking Calendar"}
+              </h3>
+
+              {/* Today's Schedule Filter */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setScheduleFilter("all")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    scheduleFilter === "all"
+                      ? "bg-[#c5a880] text-black font-bold shadow-sm"
+                      : "bg-[#18181d] text-gray-400 hover:text-white"
+                  }`}
+                >
+                  {language === "kn" ? "ಎಲ್ಲಾ ಅಪಾಯಿಂಟ್ಮೆಂಟ್ಗಳು" : "All Confirmed"}
+                </button>
+                <button
+                  onClick={() => setScheduleFilter("today")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    scheduleFilter === "today"
+                      ? "bg-[#c5a880] text-black font-bold shadow-sm"
+                      : "bg-[#18181d] text-gray-400 hover:text-white"
+                  }`}
+                >
+                  {language === "kn" ? "ಇಂದಿನ ಅಪಾಯಿಂಟ್ಮೆಂಟ್ಗಳು" : "Today's Schedule"}
+                </button>
+              </div>
+            </div>
+
+            <div className="rounded-2xl overflow-hidden border border-white/[0.08] bg-[#121215] shadow-xl">
               <table className="w-full text-left text-xs">
-                <thead className="bg-[#18181d] border-b border-white/[0.06] text-[#94a3b8] uppercase tracking-wider text-[10px]">
+                <thead className="bg-[#18181d] text-gray-400 border-b border-white/[0.06] uppercase text-[10px] tracking-wider">
                   <tr>
-                    <th className="py-3 px-4">Ref Code</th>
-                    <th className="py-3 px-4">Customer</th>
-                    <th className="py-3 px-4">Service</th>
-                    <th className="py-3 px-4">Scheduled Time</th>
-                    <th className="py-3 px-4">Status</th>
-                    <th className="py-3 px-4 text-right">Actions</th>
+                    <th className="py-3 px-4">Ref</th>
+                    <th className="py-3 px-4">{language === "kn" ? "ಗ್ರಾಹಕ" : "Customer"}</th>
+                    <th className="py-3 px-4">{language === "kn" ? "ಸೇವೆ" : "Service"}</th>
+                    <th className="py-3 px-4">{language === "kn" ? "ದಿನಾಂಕ & ಸಮಯ" : "Schedule"}</th>
+                    <th className="py-3 px-4">{language === "kn" ? "ಸ್ಥಿತಿ" : "Status"}</th>
+                    <th className="py-3 px-4 text-right">{language === "kn" ? "ಕ್ರಿಯೆ" : "Actions"}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/[0.04]">
@@ -503,7 +630,7 @@ export default function AdminDashboardPage() {
                       </td>
                       <td className="py-3.5 px-4">
                         <div className="font-medium text-white">{apt.customer_name}</div>
-                        <div className="text-[11px] text-gray-500">{apt.customer_phone}</div>
+                        <div className="text-[11px] text-gray-400">{apt.customer_phone}</div>
                       </td>
                       <td className="py-3.5 px-4 text-gray-300">
                         {apt.service_name_snapshot} ({formatCurrency(apt.service_price_snapshot)})
@@ -516,10 +643,11 @@ export default function AdminDashboardPage() {
                       </td>
                       <td className="py-3.5 px-4">
                         <span
-                          className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${apt.status === "CONFIRMED"
-                            ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
-                            : "bg-blue-500/15 text-blue-400 border border-blue-500/30"
-                            }`}
+                          className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
+                            apt.status === "CONFIRMED"
+                              ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                              : "bg-blue-500/15 text-blue-400 border border-blue-500/30"
+                          }`}
                         >
                           {apt.status}
                         </span>
@@ -530,14 +658,14 @@ export default function AdminDashboardPage() {
                             onClick={() => handleUpdateStatus(apt.id, "COMPLETED")}
                             className="px-2.5 py-1 rounded bg-blue-900/60 hover:bg-blue-800 text-blue-200 text-[11px] font-medium"
                           >
-                            Mark Done
+                            {language === "kn" ? "ಮುಗಿದಿದೆ" : "Mark Done"}
                           </button>
                         )}
                         <button
                           onClick={() => handleUpdateStatus(apt.id, "CANCELLED")}
                           className="px-2 py-1 rounded bg-red-950/60 hover:bg-red-900 text-red-300 text-[11px]"
                         >
-                          Cancel
+                          {language === "kn" ? "ರದ್ದುಮಾಡಿ" : "Cancel"}
                         </button>
                       </td>
                     </tr>
@@ -552,7 +680,16 @@ export default function AdminDashboardPage() {
         {activeTab === "services" && (
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <h3 className="font-serif text-lg text-white">Barbershop Service Catalog</h3>
+              <div>
+                <h3 className="font-serif text-lg text-white">
+                  {language === "kn" ? "ಸೇವೆಗಳು ಮತ್ತು ದರಗಳು" : "Services & Rates Catalog"}
+                </h3>
+                <p className="text-xs text-[#94a3b8]">
+                  {language === "kn"
+                    ? "ದರಗಳು, ಹೆಸರು ಹಾಗೂ ವಿವರಗಳನ್ನು ಬದಲಿಸಿ"
+                    : "Add or modify grooming services, prices, and descriptions"}
+                </p>
+              </div>
               <button
                 onClick={() => {
                   setEditingService({
@@ -560,17 +697,18 @@ export default function AdminDashboardPage() {
                     name: "",
                     slug: `custom-${Date.now()}`,
                     description: "",
-                    duration_minutes: 45,
-                    price: 800,
+                    duration_minutes: 30,
+                    price: 250,
+                    price_display: "₹250",
                     is_active: true,
                     display_order: services.length + 1,
                   });
                   setIsServiceModalOpen(true);
                 }}
-                className="py-2 px-3.5 rounded-lg bg-[#c5a880] text-[#09090b] font-semibold text-xs flex items-center gap-1.5 hover:brightness-110"
+                className="py-2 px-3.5 rounded-lg bg-[#c5a880] text-[#09090b] font-semibold text-xs flex items-center gap-1.5 hover:brightness-110 shadow-sm"
               >
                 <Plus className="w-4 h-4" />
-                <span>Add Service</span>
+                <span>{language === "kn" ? "ಹೊಸ ಸೇವೆ ಸೇರಿಸಿ" : "Add Service"}</span>
               </button>
             </div>
 
@@ -582,20 +720,24 @@ export default function AdminDashboardPage() {
                 >
                   <div>
                     <div className="flex items-start justify-between gap-2">
-                      <h4 className="font-serif text-base text-white font-medium">{srv.name}</h4>
+                      <h4 className="font-serif text-base text-white font-medium">
+                        {language === "kn" && srv.name_kn ? srv.name_kn : srv.name}
+                      </h4>
                       {srv.badge && (
                         <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#c5a880]/20 text-[#c5a880]">
                           {srv.badge}
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-[#94a3b8] mt-2 line-clamp-2">{srv.description}</p>
+                    <p className="text-xs text-[#94a3b8] mt-2 line-clamp-2">
+                      {language === "kn" && srv.description_kn ? srv.description_kn : srv.description}
+                    </p>
                   </div>
 
                   <div className="border-t border-white/[0.06] pt-3 flex items-center justify-between text-xs">
                     <div>
                       <span className="text-white font-bold text-sm">
-                        {formatCurrency(srv.price)}
+                        {srv.price_display || `₹${srv.price}`}
                       </span>
                       <span className="text-gray-400 ml-2">({srv.duration_minutes} mins)</span>
                     </div>
@@ -624,29 +766,133 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* TAB 4: SHOP SETTINGS */}
+        {/* TAB 4: SHOP OPEN / CLOSED TOGGLE & SETTINGS */}
         {activeTab === "settings" && (
-          <div className="max-w-2xl bg-[#121215] p-6 rounded-2xl border border-white/[0.08] shadow-xl">
-            <h3 className="font-serif text-lg text-white mb-4">Shop Settings & Business Rules</h3>
-            <form onSubmit={handleSaveSettings} className="space-y-4 text-xs">
-              <div>
-                <label className="block text-gray-400 mb-1">Barbershop Brand Name</label>
-                <input
-                  type="text"
-                  value={settings.shop_name}
-                  onChange={(e) => setSettings({ ...settings, shop_name: e.target.value })}
-                  className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
-                />
+          <div className="max-w-2xl bg-[#121215] p-6 rounded-2xl border border-white/[0.08] shadow-xl space-y-6">
+            <div>
+              <h3 className="font-serif text-lg text-white">
+                {language === "kn" ? "ಅಂಗಡಿ ಸೆಟ್ಟಿಂಗ್ಸ್ ಮತ್ತು ರಜೆ ಸೂಚನೆ" : "Shop Settings & Closure Controls"}
+              </h3>
+              <p className="text-xs text-[#94a3b8] mt-0.5">
+                {language === "kn"
+                  ? "ಅಂಗಡಿ ತೆರೆದಿದೆ/ಮುಚ್ಚಿದೆ ಸ್ವಿಚ್ ಹಾಗೂ ಕೆಲಸದ ಸಮಯವನ್ನು ಇಲ್ಲಿ ನಿರ್ವಹಿಸಿ."
+                  : "Configure closure dates, reason notices, working hours, and shop details."}
+              </p>
+            </div>
+
+            <form onSubmit={handleSaveSettings} className="space-y-5 text-xs">
+              {/* SHOP OPEN / CLOSED TOGGLE WITH DATE AND REASON */}
+              <div className="p-4 rounded-xl bg-[#18181d] border border-white/[0.08] space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="text-white text-sm font-semibold flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-[#c5a880]" />
+                      <span>
+                        {language === "kn"
+                          ? "ಅಂಗಡಿ ಮುಚ್ಚುವಿಕೆ / ರಜೆ ಪ್ರಕಟಣೆ (Shop Closed Toggle)"
+                          : "Shop Closed / Vacation Notice"}
+                      </span>
+                    </h4>
+                    <p className="text-[11px] text-gray-400 mt-0.5">
+                      {language === "kn"
+                        ? "ಆನ್ ಮಾಡಿದಾಗ ವೆಬ್ಸೈಟ್ನಲ್ಲಿ ಗ್ರಾಹಕರಿಗೆ ಕೆಂಪು ಬ್ಯಾನರ್ನಲ್ಲಿ ಸೂಚನೆ ತೋರಿಸಲಾಗುತ್ತದೆ"
+                        : "Displays an automatic notice banner on the website when shop is closed"}
+                    </p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={settings.is_closed || false}
+                      onChange={(e) => setSettings({ ...settings, is_closed: e.target.checked })}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  </label>
+                </div>
+
+                {settings.is_closed && (
+                  <div className="space-y-3 pt-3 border-t border-white/[0.06]">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-gray-400 mb-1">
+                          {language === "kn" ? "ಮುಚ್ಚಿರುವ ದಿನಾಂಕ (Date of closure)" : "Date of Closure"}
+                        </label>
+                        <input
+                          type="date"
+                          value={settings.closure_date || ""}
+                          onChange={(e) => setSettings({ ...settings, closure_date: e.target.value })}
+                          className="w-full px-3 py-2 rounded-lg bg-[#121215] border border-white/[0.1] text-white"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-gray-400 mb-1">
+                          {language === "kn" ? "ಮತ್ತೆ ತೆರೆಯುವ ದಿನಾಂಕ (Reopen date)" : "Reopening Date"}
+                        </label>
+                        <input
+                          type="date"
+                          value={settings.closure_reopen_date || ""}
+                          onChange={(e) => setSettings({ ...settings, closure_reopen_date: e.target.value })}
+                          className="w-full px-3 py-2 rounded-lg bg-[#121215] border border-white/[0.1] text-white"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-gray-400 mb-1">
+                        {language === "kn" ? "ಮುಚ್ಚಲು ಕಾರಣ (Reason for closure)" : "Reason for Closure"}
+                      </label>
+                      <input
+                        type="text"
+                        placeholder={language === "kn" ? "ಉದಾ: ಹಬ್ಬ / ಅಂಗಡಿ ನವೀಕರಣ" : "e.g. Festival / Maintenance"}
+                        value={settings.closure_reason || ""}
+                        onChange={(e) => setSettings({ ...settings, closure_reason: e.target.value })}
+                        className="w-full px-3 py-2 rounded-lg bg-[#121215] border border-white/[0.1] text-white"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <div>
-                <label className="block text-gray-400 mb-1">Tagline</label>
-                <input
-                  type="text"
-                  value={settings.tagline}
-                  onChange={(e) => setSettings({ ...settings, tagline: e.target.value })}
-                  className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
-                />
+              {/* Basic Shop Info */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-400 mb-1">Shop Name (English)</label>
+                  <input
+                    type="text"
+                    value={settings.shop_name}
+                    onChange={(e) => setSettings({ ...settings, shop_name: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 mb-1">Shop Name (ಕನ್ನಡ)</label>
+                  <input
+                    type="text"
+                    value={settings.shop_name_kn || "ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್"}
+                    onChange={(e) => setSettings({ ...settings, shop_name_kn: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-400 mb-1">Owner Name</label>
+                  <input
+                    type="text"
+                    value={settings.owner_name || "Hanumanthu (Chinanna)"}
+                    onChange={(e) => setSettings({ ...settings, owner_name: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 mb-1">Since Year</label>
+                  <input
+                    type="text"
+                    value={settings.since_year || "2000"}
+                    onChange={(e) => setSettings({ ...settings, since_year: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -660,7 +906,7 @@ export default function AdminDashboardPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">WhatsApp Number (with country code)</label>
+                  <label className="block text-gray-400 mb-1">WhatsApp Number (with 91)</label>
                   <input
                     type="text"
                     value={settings.whatsapp_number}
@@ -672,7 +918,7 @@ export default function AdminDashboardPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-400 mb-1">Opening Time</label>
+                  <label className="block text-gray-400 mb-1">Default Opening Time</label>
                   <input
                     type="time"
                     value={settings.opening_time}
@@ -681,7 +927,7 @@ export default function AdminDashboardPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-400 mb-1">Closing Time</label>
+                  <label className="block text-gray-400 mb-1">Default Closing Time</label>
                   <input
                     type="time"
                     value={settings.closing_time}
@@ -689,20 +935,6 @@ export default function AdminDashboardPage() {
                     className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
                   />
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-gray-400 mb-1">Slot Interval (Minutes)</label>
-                <select
-                  value={settings.slot_interval_minutes}
-                  onChange={(e) => setSettings({ ...settings, slot_interval_minutes: Number(e.target.value) })}
-                  className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
-                >
-                  <option value={15}>15 Minutes</option>
-                  <option value={30}>30 Minutes</option>
-                  <option value={45}>45 Minutes</option>
-                  <option value={60}>60 Minutes</option>
-                </select>
               </div>
 
               <div>
@@ -717,16 +949,119 @@ export default function AdminDashboardPage() {
 
               <button
                 type="submit"
-                className="py-2.5 px-5 rounded-lg bg-[#c5a880] text-[#09090b] font-semibold text-xs hover:brightness-110"
+                className="py-3 px-6 rounded-xl bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-xs tracking-wide hover:brightness-110 shadow-md"
               >
-                Save Settings
+                {language === "kn" ? "ಸೆಟ್ಟಿಂಗ್ಸ್ ಉಳಿಸಿ" : "Save All Settings"}
               </button>
             </form>
           </div>
         )}
       </div>
 
-      {/* CONFLICT MODAL: Proves the transactional booking rule! */}
+      {/* SERVICE EDIT MODAL */}
+      {isServiceModalOpen && editingService && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+          <div className="w-full max-w-lg p-6 rounded-2xl bg-[#121215] border border-white/[0.1] shadow-2xl space-y-4">
+            <h3 className="font-serif text-lg text-white">
+              {editingService.name ? "Edit Service" : "New Service"}
+            </h3>
+            <form onSubmit={handleSaveService} className="space-y-3 text-xs">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-gray-400 mb-1">Name (English) *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingService.name}
+                    onChange={(e) => setEditingService({ ...editingService, name: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 mb-1">Name (ಕನ್ನಡ)</label>
+                  <input
+                    type="text"
+                    value={editingService.name_kn || ""}
+                    onChange={(e) => setEditingService({ ...editingService, name_kn: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-gray-400 mb-1">Description (English)</label>
+                <textarea
+                  rows={2}
+                  value={editingService.description}
+                  onChange={(e) => setEditingService({ ...editingService, description: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-400 mb-1">Description (ಕನ್ನಡ)</label>
+                <textarea
+                  rows={2}
+                  value={editingService.description_kn || ""}
+                  onChange={(e) => setEditingService({ ...editingService, description_kn: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                />
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-gray-400 mb-1">Price (₹) *</label>
+                  <input
+                    type="number"
+                    required
+                    value={editingService.price}
+                    onChange={(e) => setEditingService({ ...editingService, price: Number(e.target.value) })}
+                    className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 mb-1">Price Display</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. ₹250 – ₹300"
+                    value={editingService.price_display || ""}
+                    onChange={(e) => setEditingService({ ...editingService, price_display: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 mb-1">Duration (Mins)</label>
+                  <input
+                    type="number"
+                    required
+                    value={editingService.duration_minutes}
+                    onChange={(e) => setEditingService({ ...editingService, duration_minutes: Number(e.target.value) })}
+                    className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-3">
+                <button
+                  type="button"
+                  onClick={() => setIsServiceModalOpen(false)}
+                  className="px-4 py-2 rounded-lg border border-white/10 text-gray-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-lg bg-[#c5a880] text-black font-semibold hover:brightness-110"
+                >
+                  Save Service
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* CONFLICT MODAL */}
       {conflictModalData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
           <div className="w-full max-w-lg p-6 rounded-2xl bg-[#141418] border border-red-500/50 shadow-2xl space-y-4">
@@ -736,47 +1071,13 @@ export default function AdminDashboardPage() {
                 Booking Conflict Detected
               </h3>
             </div>
-
             <p className="text-xs text-gray-300 leading-relaxed">
-              You cannot confirm this appointment because its requested time window directly overlaps with
-              an already <strong className="text-emerald-400 font-semibold">CONFIRMED</strong> appointment in the database.
+              Cannot confirm this appointment because its requested time window directly overlaps with an already confirmed appointment.
             </p>
-
-            <div className="p-4 rounded-xl bg-red-950/30 border border-red-800/40 text-xs space-y-2">
-              <div className="flex justify-between">
-                <span className="text-gray-400">Target Request:</span>
-                <span className="text-white font-medium">
-                  {conflictModalData.target.customer_name} ({formatTime(conflictModalData.target.start_time)} - {formatTime(conflictModalData.target.end_time)})
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400">Existing Confirmed Slot:</span>
-                <span className="text-emerald-300 font-medium">
-                  {conflictModalData.conflict.customer_name} (Ref: {conflictModalData.conflict.booking_reference})
-                </span>
-              </div>
-            </div>
-
-            <p className="text-[11px] text-[#94a3b8]">
-              Recommendation: Contact {conflictModalData.target.customer_name} via WhatsApp to offer an alternative slot, or decline this request.
-            </p>
-
-            <div className="flex items-center justify-end gap-3 pt-2">
-              <a
-                href={generateWhatsAppLink(
-                  conflictModalData.target.customer_phone,
-                  `Hello ${conflictModalData.target.customer_name}, I am following up on your ${settings.shop_name || "New Model Gents Beauty Parlor"} request (Ref: ${conflictModalData.target.booking_reference}). The requested time has already been booked. Would you like to reschedule for another time today?`
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-2 px-3.5 rounded-lg bg-[#25D366] text-white text-xs font-semibold flex items-center gap-1.5"
-              >
-                <Share2 className="w-3.5 h-3.5" />
-                <span>Message Customer</span>
-              </a>
+            <div className="flex justify-end pt-2">
               <button
                 onClick={() => setConflictModalData(null)}
-                className="py-2 px-4 rounded-lg bg-[#27272a] text-white text-xs hover:bg-[#3f3f46]"
+                className="px-4 py-2 rounded-lg bg-[#18181d] border border-white/10 text-white text-xs"
               >
                 Close
               </button>
@@ -787,134 +1088,37 @@ export default function AdminDashboardPage() {
 
       {/* REJECT MODAL */}
       {rejectModalData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="w-full max-w-md p-6 rounded-2xl bg-[#141418] border border-white/[0.1] shadow-2xl space-y-4">
-            <h3 className="font-serif text-lg font-bold text-white">Decline Appointment Request</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+          <div className="w-full max-w-md p-6 rounded-2xl bg-[#121215] border border-white/[0.1] shadow-2xl space-y-4">
+            <h3 className="font-serif text-base text-white font-medium">
+              {language === "kn" ? "ವಿನಂತಿ ತಿರಸ್ಕರಿಸಿ" : "Reject Appointment Request"}
+            </h3>
             <p className="text-xs text-gray-400">
-              Provide a reason for declining this request ({rejectModalData.appointment.booking_reference}). The customer will be able to see this reason on their status page.
+              {language === "kn"
+                ? "ಗ್ರಾಹಕರಿಗೆ ತಿಳಿಸಲು ಕಾರಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ನಮೂದಿಸಿ:"
+                : "Optionally specify a reason for declining this request:"}
             </p>
             <textarea
               rows={3}
-              placeholder="e.g. Barber attending training, or slot unavailable..."
+              placeholder={language === "kn" ? "ಉದಾ: ಸಮಯ ಲಭ್ಯವಿಲ್ಲ" : "e.g. Barber unavailable at this requested hour"}
               value={rejectModalData.reason}
-              onChange={(e) =>
-                setRejectModalData({ ...rejectModalData, reason: e.target.value })
-              }
-              className="w-full p-3 rounded-lg bg-[#18181d] border border-white/[0.1] text-xs text-white focus:outline-none focus:border-[#c5a880]"
+              onChange={(e) => setRejectModalData({ ...rejectModalData, reason: e.target.value })}
+              className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-xs"
             />
-            <div className="flex justify-end gap-2 pt-2 text-xs">
+            <div className="flex justify-end gap-2 pt-2">
               <button
                 onClick={() => setRejectModalData(null)}
-                className="py-2 px-3.5 rounded-lg border border-white/10 text-gray-300"
+                className="px-4 py-2 rounded-lg border border-white/10 text-gray-400 hover:text-white text-xs"
               >
                 Cancel
               </button>
               <button
                 onClick={handleRejectConfirm}
-                className="py-2 px-4 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold"
+                className="px-4 py-2 rounded-lg bg-red-700 hover:bg-red-600 text-white font-medium text-xs"
               >
-                Confirm Decline
+                Confirm Reject
               </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* SERVICE EDIT/ADD MODAL */}
-      {isServiceModalOpen && editingService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="w-full max-w-md p-6 rounded-2xl bg-[#141418] border border-white/[0.1] shadow-2xl space-y-4">
-            <h3 className="font-serif text-lg font-bold text-white">
-              {editingService.name ? "Edit Service" : "Add New Service"}
-            </h3>
-            <form onSubmit={handleSaveService} className="space-y-3 text-xs">
-              <div>
-                <label className="block text-gray-400 mb-1">Service Name *</label>
-                <input
-                  type="text"
-                  required
-                  value={editingService.name}
-                  onChange={(e) => setEditingService({ ...editingService, name: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-400 mb-1">Description</label>
-                <textarea
-                  rows={2}
-                  value={editingService.description}
-                  onChange={(e) => setEditingService({ ...editingService, description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-gray-400 mb-1">Duration (Minutes) *</label>
-                  <input
-                    type="number"
-                    required
-                    min={10}
-                    step={5}
-                    value={editingService.duration_minutes}
-                    onChange={(e) => setEditingService({ ...editingService, duration_minutes: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-400 mb-1">Price (₹) *</label>
-                  <input
-                    type="number"
-                    required
-                    min={0}
-                    step={50}
-                    value={editingService.price}
-                    onChange={(e) => setEditingService({ ...editingService, price: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-gray-400 mb-1">Badge (Optional, e.g. &apos;Signature&apos;)</label>
-                <input
-                  type="text"
-                  value={editingService.badge || ""}
-                  onChange={(e) => setEditingService({ ...editingService, badge: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white"
-                />
-              </div>
-
-              <div className="flex items-center gap-2 pt-2">
-                <input
-                  type="checkbox"
-                  id="srv-active"
-                  checked={editingService.is_active}
-                  onChange={(e) => setEditingService({ ...editingService, is_active: e.target.checked })}
-                  className="rounded border-white/20"
-                />
-                <label htmlFor="srv-active" className="text-gray-300">
-                  Visible on public website menu
-                </label>
-              </div>
-
-              <div className="flex justify-end gap-2 pt-3">
-                <button
-                  type="button"
-                  onClick={() => setIsServiceModalOpen(false)}
-                  className="py-2 px-3.5 rounded-lg border border-white/10 text-gray-300"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="py-2 px-4 rounded-lg bg-[#c5a880] text-[#09090b] font-semibold"
-                >
-                  Save Service
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       )}
