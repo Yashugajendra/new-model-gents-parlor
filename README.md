@@ -7,13 +7,20 @@
 A modern, responsive barber shop website designed to bring convenient
 appointment booking and a better digital experience to local customers.
 
-**Built with Next.js · TypeScript · Tailwind CSS**
+Built with Next.js · React · TypeScript · Tailwind CSS
 
 <br />
 
-[🌐 Live Website](#live-demo) ·
-[✨ Features](#features) ·
-[🛠️ Installation](#getting-started)
+[🌐 Live Website](https://new-model-gents-parlor.vercel.app) ·
+[✨ Features](#-features) ·
+[📸 Screenshots](#-website-preview) ·
+[🛠️ Installation](#️-getting-started)
+
+<br />
+
+[![Live Website](https://img.shields.io/badge/Live-Website-c5a880?style=for-the-badge&logo=vercel&logoColor=black)](https://new-model-gents-parlor.vercel.app)
+[![Next.js](https://img.shields.io/badge/Next.js-Framework-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 
 </div>
 
@@ -22,34 +29,64 @@ appointment booking and a better digital experience to local customers.
 ## 📖 About the Project
 
 **New Model Gents Parlor** is a modern web project created for a local
-gents parlor in Thirthahalli, Shivamogga, Karnataka.
+gents parlor in Thirthahalli, Shivamogga, Karnataka, India.
 
-The goal is to make essential grooming information accessible online
-while providing customers with a convenient way to explore services
-and book appointments.
+The project aims to make essential grooming information accessible
+online while providing customers with a convenient way to explore
+services and book appointments.
 
-The project combines an elegant dark aesthetic, responsive layouts,
-interactive components, and a user-friendly interface.
+Combining an elegant dark aesthetic, gold accents, responsive layouts,
+and interactive components, the website offers a modern digital
+experience for both customers and shop management.
 
-Rather than being just a static business website, the project aims to
-provide a practical digital platform for both customers and shop owners.
+The goal is simple: connect a local grooming business with its
+customers through a convenient and user-friendly online experience.
+
+---
 
 ## ✨ Features
 
-- **Modern UI:** Elegant typography, dark styling, and gold accents.
-- **Responsive Design:** Layouts designed for desktop, tablet, and mobile.
-- **Appointment Booking:** A convenient interface for booking grooming services.
-- **Services Showcase:** Presenting available grooming services.
-- **Hairstyle Gallery:** Browse haircut styles and grooming inspiration.
-- **Shop Information:** Displaying location, contact details, and opening hours.
-- **Language Support:** English and Kannada interface options.
-- **Theme Switching:** Dark and light appearance options.
-- **Owner Dashboard:** Shop management functionality, where configured.
-- **WhatsApp Integration:** Convenient customer communication.
-- **Deployment:** Hosted using Vercel.
+- 🎨 **Modern UI:** Elegant typography, dark styling, and gold accents.
+- 📱 **Responsive Design:** Layouts designed for desktop, tablet, and mobile.
+- 📅 **Appointment Booking:** An interface for requesting grooming appointments.
+- ✂️ **Services Showcase:** Explore available grooming services.
+- 💈 **Hairstyle Gallery:** Browse haircut styles and grooming inspiration.
+- 📍 **Shop Information:** Location, contact details, and opening hours.
+- 🌐 **Language Support:** English and Kannada interface options.
+- 🌓 **Theme Switching:** Dark and light appearance options.
+- 🛠️ **Owner Dashboard:** Shop management interface.
+- 💬 **WhatsApp Integration:** Convenient customer communication.
+- 🚀 **Deployment:** Hosted on Vercel.
 
-> Note: Features that depend on database configuration or production
-> setup must be configured and tested before they are available to customers.
+> Note: Features that depend on database configuration, authentication,
+> or production setup must be configured and tested before being relied
+> upon by customers.
+
+---
+
+## 📸 Website Preview
+
+### 🏠 Homepage
+![New Model Gents Parlor Homepage](./public/images/Parlor_screenshots/Homepage.png)
+
+### ✂️ Services
+![Grooming Services](./public/images/Parlor_screenshots/Services.png)
+
+### 👔 About Us
+![About Us](./public/images/Parlor_screenshots/About-1.png)
+![About Us - More](./public/images/Parlor_screenshots/About-2.png)
+
+### 📅 Appointment Booking
+![Appointment Booking Interface](./public/images/Parlor_screenshots/Appointment_booking.png)
+
+### 📱 Mobile View
+![Phone sized screen](./public/images/Parlor_screenshots/Mobile-view.jpeg)
+
+### 🛠️  Shop Management
+![Shop Management](./public/images/Parlor_screenshots/Shop-management-1.png)
+![Shop Management - More](./public/images/Parlor_screenshots/Shop-management-2.png)
+
+---
 
 ## 🖥️ Tech Stack
 
@@ -61,67 +98,21 @@ provide a practical digital platform for both customers and shop owners.
 | Tailwind CSS | Responsive styling and layout |
 | Lucide React | Interface icons |
 | Motion | Animations and interactive transitions |
+| Supabase | Database and backend services, if configured |
 | Git & GitHub | Version control and source code hosting |
 | Vercel | Deployment and hosting |
 
-The application may use additional technologies for data storage,
-authentication, or booking management depending on the configured
-project environment.
+---
 
-## 🌐 Live
+## 🌐 Live Demo
 
-**Live Website:** 
+**Live Website:**  
 https://new-model-gents-parlor.vercel.app
 
 **GitHub Repository:**  
 https://github.com/Yashugajendra/new-model-gents-parlor
 
-## 📸 Website Highlights
-
-The website is designed around a premium, dark visual identity,
-with carefully styled typography, responsive layouts, and gold accents.
-
-Key areas include:
-
-- Home and welcome section
-- Grooming services
-- About the shop
-- Hairstyle gallery
-- Location and opening hours
-- Appointment booking
-- Shop management interface
-
-Added screenshots of the actual deployed website here to help visitors
-understand the project at a glance.
-
-## 📸 Website Preview
-
-### 🏠 Homepage
-
-![New Model Gents Parlor Homepage](Parlor_screenshots/Homepage.png)
-
-### ✂️ Services
-
-![Grooming Services](Parlor_screenshots/Services.png)
-
-### 💈 About Us
-
-<p align="center">
-  <img src="Parlor_screenshots/About-1.png" width="48%" alt="About_1" />
-  <img src="Parlor_screenshots/About-2.png" width="48%" alt="About_2" />
-</p>
-
-### 📅 Appointment Booking
-
-![Appointment Booking Interface](Parlor_screenshots/Appointment_booking.png)
-
-### 🔥 Shop management
-
-![Shop Management]
-<p align="center">
-  <img src="Parlor_screenshots/Shop-management-1.png" width="48%" alt="About_1" />
-  <img src="Parlor_screenshots/Shop-management-2.png" width="48%" alt="About_2" />
-</p>
+---
 
 ## ⚙️ Getting Started
 
@@ -131,7 +122,7 @@ Follow these instructions to run the project locally.
 
 Install the following:
 
-- Node.js (LTS version recommended)
+- [Node.js](https://nodejs.org/) — LTS version recommended
 - npm
 - Git
 
@@ -139,97 +130,3 @@ Install the following:
 
 ```bash
 git clone https://github.com/Yashugajendra/new-model-gents-parlor.git
-```
-
-### 2. Navigate to the project directory
-
-```bash
-cd new-model-gents-parlor
-```
-
-### 3. Install dependencies
-
-```bash
-npm install
-```
-
-### 4. Configure environment variables
-
-If the application uses environment variables, create a `.env.local`
-file in the project root.
-
-
-For example, a Supabase integration may require:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_publishable_or_anon_key
-```
-
-### 5. Start the development server
-
-```bash
-npm run dev
-```
-
-Open the following address in your browser:
-
-http://localhost:3000
-
-The application should now be available locally.
-
-## 🚀 Deployment
-
-This project is deployed using Vercel.
-
-To deploy your own instance:
-
-1. Import the GitHub repository into Vercel.
-2. Configure the required environment variables.
-3. Verify the project build settings.
-4. Deploy the application.
-5. Test the production website and its integrations.
-
-Official documentation:
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Vercel Documentation](https://vercel.com/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-
-## 🔐 Security
-
-- Keep environment files and private credentials out of Git.
-- Configure appropriate database access policies.
-- Validate appointment submissions on the server.
-- Protect owner-only management functionality.
-- Avoid exposing private server credentials to the browser.
-
-## 🗺️ Future Improvements
-
-Potential improvements for the project include:
-
-- Enhanced appointment management
-- Improved booking status notifications
-- Better customer and owner workflows
-- Performance and accessibility improvements
-- Custom domain integration
-- Additional automated testing
-
-## 👨‍💻 Developer
-
-**Yashwanth**
-
-GitHub: [@Yashugajendra](https://github.com/Yashugajendra)
-
-Built with a focus on modern web development, practical business
-needs, and a better digital experience for local customers.
-
----
-
-<div align="center">
-
-### Made with ❤️ for New Model Gents Parlor
-
-**Thirthahalli · Shivamogga · Karnataka, India**
-
-</div>
