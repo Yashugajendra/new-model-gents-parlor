@@ -202,7 +202,7 @@ https://github.com/Yashugajendra/new-model-gents-parlor
 
 ## 👨‍💻 Developer
 
-**Yashwanth**
+**Yashwanth G**
 
 - **GitHub:** [@Yashugajendra](https://github.com/Yashugajendra)
 - **Project Repository:** [New Model Gents Parlor](https://github.com/Yashugajendra/new-model-gents-parlor)
