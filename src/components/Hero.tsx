@@ -98,7 +98,7 @@ export function Hero({
             {t.hero.welcome}
           </span>
           <h1
-            className={`font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight max-w-5xl mx-auto leading-[1.08] ${
+            className={`font-serif text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight max-w-5xl mx-auto leading-[1.12] sm:leading-[1.08] ${
               theme === "light" ? "text-[#18181b]" : "text-white"
             }`}
             suppressHydrationWarning
@@ -112,9 +112,9 @@ export function Hero({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-6"
+          className="mb-4 sm:mb-6"
         >
-          <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl font-light tracking-wide">
+          <h2 className="font-serif text-xl sm:text-3xl md:text-5xl font-light tracking-wide">
             <span className="gold-shimmer-text italic font-medium inline-block">
               {t.hero.tagline}
             </span>
@@ -126,7 +126,7 @@ export function Hero({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className={`font-sans text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-10 ${
+          className={`font-sans text-sm sm:text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-8 sm:mb-12 ${
             theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
           }`}
         >
@@ -138,11 +138,11 @@ export function Hero({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto mb-16"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-lg mx-auto mb-12 sm:mb-16"
         >
           <button
             onClick={onOpenBooking}
-            className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-base shadow-lg shadow-[#c5a880]/20 hover:shadow-[#c5a880]/40 hover:scale-[1.03] active:scale-98 transition-all flex items-center justify-center gap-2 group"
+            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-sm sm:text-base shadow-lg shadow-[#c5a880]/20 hover:shadow-[#c5a880]/40 hover:scale-[1.03] active:scale-98 transition-all flex items-center justify-center gap-2 group"
           >
             <span>{t.hero.bookBtn}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
@@ -153,7 +153,7 @@ export function Hero({
             )}%2C%20I%20would%20like%20to%20enquire%20about%20booking%20an%20appointment.`}
             target="_blank"
             rel="noopener noreferrer"
-            className={`w-full sm:w-auto px-8 py-4 rounded-xl border font-medium text-base transition-all flex items-center justify-center gap-2 shadow-sm ${
+            className={`w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl border font-medium text-sm sm:text-base transition-all flex items-center justify-center gap-2 shadow-sm ${
               theme === "light"
                 ? "border-black/10 hover:border-[#25D366]/50 bg-white text-[#18181b] hover:text-[#25D366]"
                 : "border-white/10 hover:border-[#25D366]/50 bg-[#141417]/80 text-white hover:text-[#25D366]"
@@ -169,27 +169,27 @@ export function Hero({
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-          className={`grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8 border-t ${
+          className={`grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 max-w-4xl mx-auto pt-6 sm:pt-8 border-t ${
             theme === "light" ? "border-black/[0.08]" : "border-white/[0.07]"
           }`}
         >
           <div
-            className={`p-4 rounded-xl text-left transition-all group ${
+            className={`p-3 sm:p-4 rounded-xl text-left transition-all group ${
               theme === "light"
                 ? "bg-white border border-black/[0.08] shadow-sm hover:border-[#c5a880]"
                 : "bg-[#121215]/80 border border-white/[0.05] hover:border-[#c5a880]/30"
             }`}
           >
-            <Clock className="w-5 h-5 text-[#c5a880] mb-2 group-hover:scale-110 transition-transform" />
+            <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-[#c5a880] mb-1.5 sm:mb-2 group-hover:scale-110 transition-transform" />
             <h4
-              className={`text-sm font-semibold ${
+              className={`text-xs sm:text-sm font-semibold leading-snug ${
                 theme === "light" ? "text-[#18181b]" : "text-white"
               }`}
             >
               {t.hero.highlights.experience.title}
             </h4>
             <p
-              className={`text-xs mt-1 ${
+              className={`text-[11px] sm:text-xs mt-1 leading-relaxed ${
                 theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
               }`}
             >
@@ -197,22 +197,22 @@ export function Hero({
             </p>
           </div>
           <div
-            className={`p-4 rounded-xl text-left transition-all group ${
+            className={`p-3 sm:p-4 rounded-xl text-left transition-all group ${
               theme === "light"
                 ? "bg-white border border-black/[0.08] shadow-sm hover:border-[#c5a880]"
                 : "bg-[#121215]/80 border border-white/[0.05] hover:border-[#c5a880]/30"
             }`}
           >
-            <Scissors className="w-5 h-5 text-[#c5a880] mb-2 group-hover:scale-110 transition-transform" />
+            <Scissors className="w-4 h-4 sm:w-5 sm:h-5 text-[#c5a880] mb-1.5 sm:mb-2 group-hover:scale-110 transition-transform" />
             <h4
-              className={`text-sm font-semibold ${
+              className={`text-xs sm:text-sm font-semibold leading-snug ${
                 theme === "light" ? "text-[#18181b]" : "text-white"
               }`}
             >
               {t.hero.highlights.punctuality.title}
             </h4>
             <p
-              className={`text-xs mt-1 ${
+              className={`text-[11px] sm:text-xs mt-1 leading-relaxed ${
                 theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
               }`}
             >
@@ -220,22 +220,22 @@ export function Hero({
             </p>
           </div>
           <div
-            className={`p-4 rounded-xl text-left transition-all group ${
+            className={`p-3 sm:p-4 rounded-xl text-left transition-all group ${
               theme === "light"
                 ? "bg-white border border-black/[0.08] shadow-sm hover:border-[#c5a880]"
                 : "bg-[#121215]/80 border border-white/[0.05] hover:border-[#c5a880]/30"
             }`}
           >
-            <Sparkles className="w-5 h-5 text-[#c5a880] mb-2 group-hover:scale-110 transition-transform" />
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#c5a880] mb-1.5 sm:mb-2 group-hover:scale-110 transition-transform" />
             <h4
-              className={`text-sm font-semibold ${
+              className={`text-xs sm:text-sm font-semibold leading-snug ${
                 theme === "light" ? "text-[#18181b]" : "text-white"
               }`}
             >
               {t.hero.highlights.hygiene.title}
             </h4>
             <p
-              className={`text-xs mt-1 ${
+              className={`text-[11px] sm:text-xs mt-1 leading-relaxed ${
                 theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
               }`}
             >
@@ -243,22 +243,22 @@ export function Hero({
             </p>
           </div>
           <div
-            className={`p-4 rounded-xl text-left transition-all group ${
+            className={`p-3 sm:p-4 rounded-xl text-left transition-all group ${
               theme === "light"
                 ? "bg-white border border-black/[0.08] shadow-sm hover:border-[#c5a880]"
                 : "bg-[#121215]/80 border border-white/[0.05] hover:border-[#c5a880]/30"
             }`}
           >
-            <MapPin className="w-5 h-5 text-[#c5a880] mb-2 group-hover:scale-110 transition-transform" />
+            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#c5a880] mb-1.5 sm:mb-2 group-hover:scale-110 transition-transform" />
             <h4
-              className={`text-sm font-semibold ${
+              className={`text-xs sm:text-sm font-semibold leading-snug ${
                 theme === "light" ? "text-[#18181b]" : "text-white"
               }`}
             >
               {t.hero.highlights.location.title}
             </h4>
             <p
-              className={`text-xs mt-1 ${
+              className={`text-[11px] sm:text-xs mt-1 leading-relaxed ${
                 theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
               }`}
             >

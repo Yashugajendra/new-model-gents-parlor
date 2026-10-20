@@ -72,12 +72,12 @@ export default function HomePage() {
           <AlertTriangle className="w-4 h-4 shrink-0" />
           <span>
             {language === "kn"
-              ? `⚠ ${settings.closure_date || "ನಿಗದಿತ ದಿನಾಂಕ"}ದಂದು ${
+              ? ` ${settings.closure_date || "ನಿಗದಿತ ದಿನಾಂಕ"}ದಂದು ${
                   settings.closure_reason || "ವಿಶೇಷ ಕಾರಣ"
                 }ದಿಂದ ಅಂಗಡಿ ಮುಚ್ಚಿರುತ್ತದೆ. ${
                   settings.closure_reopen_date || "ಶೀಘ್ರದಲ್ಲೇ"
                 }ದಂದು ಮತ್ತೆ ತೆರೆಯುತ್ತದೆ. ಅನಾನುಕೂಲಕ್ಕಾಗಿ ಕ್ಷಮಿಸಿ.`
-              : `⚠ We are closed on ${settings.closure_date || "the specified date"} due to ${
+              : ` We are closed on ${settings.closure_date || "the specified date"} due to ${
                   settings.closure_reason || "scheduled maintenance"
                 }. We reopen on ${settings.closure_reopen_date || "soon"}. Sorry for the inconvenience.`}
           </span>

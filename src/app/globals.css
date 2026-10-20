@@ -142,6 +142,15 @@ body {
   background: #c5a880;
 }
 
+/* Hide scrollbar for clean horizontal mobile swipeable containers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* ==========================================================================
    Complete Light Theme Overrides (Rock-solid attribute & class targeting)
    ========================================================================== */

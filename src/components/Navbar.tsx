@@ -38,21 +38,21 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
           : "bg-[#09090b]/90 border-b border-white/[0.08]"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand Logo with NM Monogram */}
-        <Link href="/" className="flex items-center gap-3 group shrink-0">
+        <Link href="/" className="flex items-center gap-2 sm:gap-3 group min-w-0 flex-1 sm:flex-initial">
           <div
-            className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all shrink-0 ${
+            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center transition-all shrink-0 ${
               theme === "light"
                 ? "bg-[#f4efe6] border-[#c5a880]/60 text-[#9e7946] group-hover:border-[#9e7946] group-hover:shadow-[0_0_15px_rgba(158,121,70,0.25)]"
                 : "bg-gradient-to-br from-[#1a1a20] to-[#121215] border-[#c5a880]/40 text-[#c5a880] group-hover:border-[#c5a880] group-hover:shadow-[0_0_15px_rgba(197,168,128,0.25)]"
             } group-hover:scale-105`}
           >
-            <span className="font-serif font-bold text-sm tracking-wider">NM</span>
+            <span className="font-serif font-bold text-xs sm:text-sm tracking-wider">NM</span>
           </div>
-          <div>
+          <div className="min-w-0 truncate">
             <span
-              className={`font-serif text-base sm:text-lg lg:text-xl tracking-wider uppercase font-semibold transition-colors block leading-tight ${
+              className={`font-serif text-xs sm:text-base lg:text-xl tracking-wide uppercase font-semibold transition-colors block leading-tight truncate ${
                 theme === "light"
                   ? "text-[#18181b] group-hover:text-[#9e7946]"
                   : "text-white group-hover:text-[#c5a880]"
@@ -62,7 +62,7 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
               {shopName}
             </span>
             <span
-              className={`block text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-sans ${
+              className={`block text-[8px] sm:text-[10px] tracking-wider uppercase font-sans truncate ${
                 theme === "light" ? "text-[#71717a]" : "text-[#94a3b8]"
               }`}
             >
@@ -247,15 +247,16 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
         </div>
 
         {/* Mobile Controls & Hamburger */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Quick Language Toggle on Mobile */}
           <button
             onClick={() => setLanguage(language === "en" ? "kn" : "en")}
-            className={`px-2 py-1 rounded-md border font-bold text-xs ${
+            className={`px-2 py-1 rounded-md border font-bold text-[11px] transition-all shrink-0 ${
               theme === "light"
                 ? "border-[#c5a880]/50 bg-[#f4efe6] text-[#9e7946]"
                 : "border-[#c5a880]/30 bg-[#141418] text-[#c5a880]"
             }`}
+            title="Switch Language"
           >
             {language === "en" ? "ಕನ್ನಡ" : "EN"}
           </button>
@@ -263,31 +264,35 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
           {/* Quick Theme Toggle on Mobile */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className={`p-1.5 rounded-md border ${
+            className={`p-1.5 rounded-md border transition-all shrink-0 ${
               theme === "light"
                 ? "border-black/10 bg-[#f4efe6] text-[#52525b]"
                 : "border-white/10 bg-[#141418] text-[#94a3b8]"
             }`}
+            title="Toggle Theme"
           >
-            {theme === "dark" ? <Sun className="w-4 h-4 text-[#c5a880]" /> : <Moon className="w-4 h-4" />}
+            {theme === "dark" ? <Sun className="w-3.5 h-3.5 text-[#c5a880]" /> : <Moon className="w-3.5 h-3.5" />}
           </button>
 
+          {/* Book Now Button on Mobile */}
           <button
             onClick={onOpenBooking}
-            className="px-2.5 py-1 rounded-lg bg-[#c5a880] text-[#09090b] font-semibold text-xs"
+            className="px-2.5 py-1 rounded-lg bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-[11px] shadow-sm shrink-0 active:scale-95 transition-transform"
           >
             {t.nav.bookNow}
           </button>
 
+          {/* Hamburger Menu Toggle Button - Always Visible */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`p-1.5 transition-colors ${
+            aria-label="Toggle navigation menu"
+            className={`p-1.5 rounded-lg w-8 h-8 flex items-center justify-center transition-colors shrink-0 ${
               theme === "light"
-                ? "text-[#18181b] hover:text-[#9e7946]"
-                : "text-white hover:text-[#c5a880]"
+                ? "text-[#18181b] hover:text-[#9e7946] hover:bg-black/[0.04]"
+                : "text-white hover:text-[#c5a880] hover:bg-white/[0.06]"
             }`}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -429,6 +434,17 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
           >
             {t.nav.status}
           </Link>
+
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenBooking();
+            }}
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-[#c5a880] to-[#b38f5c] text-[#09090b] font-semibold text-xs tracking-wide shadow-md flex items-center justify-center gap-2 mt-4 active:scale-98 transition-transform"
+          >
+            <Scissors className="w-3.5 h-3.5" />
+            <span>{t.nav.bookNow}</span>
+          </button>
         </div>
       )}
     </header>

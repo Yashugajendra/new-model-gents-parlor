@@ -164,7 +164,7 @@ export function AboutSection({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* About Us Story Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-16 sm:mb-24">
           <div className="lg:col-span-7 space-y-6">
             <div
               className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-medium ${theme === "light"
@@ -185,7 +185,7 @@ export function AboutSection({
 
             {/* Who we are / ನಮ್ಮ ಬಗ್ಗೆ */}
             <div
-              className={`p-5 rounded-2xl border space-y-2 transition-colors ${theme === "light"
+              className={`p-4 sm:p-5 rounded-2xl border space-y-2 transition-colors ${theme === "light"
                   ? "bg-white border-black/[0.08] shadow-xs"
                   : "bg-[#121215]/90 border-white/[0.06]"
                 }`}
@@ -233,7 +233,7 @@ export function AboutSection({
               >
                 {t.about.whyChooseTitle}
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                 {t.about.whyPoints.map((point, i) => (
                   <div
                     key={i}
@@ -277,7 +277,7 @@ export function AboutSection({
           {/* Master Barber Signature Card */}
           <div className="lg:col-span-5">
             <div
-              className={`relative rounded-2xl overflow-hidden border p-7 space-y-6 transition-all ${theme === "light"
+              className={`relative rounded-2xl overflow-hidden border p-5 sm:p-7 space-y-5 sm:space-y-6 transition-all ${theme === "light"
                   ? "bg-white border-black/[0.09] shadow-xl"
                   : "bg-[#121215] border-white/[0.09] shadow-2xl"
                 }`}
@@ -372,12 +372,12 @@ export function AboutSection({
             </div>
 
             {/* Filter Tabs */}
-            <div className="flex flex-wrap gap-2 text-xs">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-xs overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap no-scrollbar">
               {filterTabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-3 py-1.5 rounded-lg font-medium transition-all ${activeTab === tab.id
+                  className={`px-3 py-1.5 rounded-lg font-medium transition-all shrink-0 ${activeTab === tab.id
                       ? "bg-[#c5a880] text-[#09090b] font-semibold shadow-md"
                       : theme === "light"
                         ? "bg-white text-[#52525b] hover:text-[#18181b] border border-black/10 hover:border-[#c5a880] shadow-xs"
@@ -391,7 +391,7 @@ export function AboutSection({
           </div>
 
           {/* Gallery Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             <AnimatePresence mode="popLayout">
               {filteredItems.map((item) => {
                 const itemTitle = language === "kn" ? item.title_kn : item.title;
@@ -410,36 +410,36 @@ export function AboutSection({
                     onClick={() => setPreviewImage(item)}
                   >
                     {/* Photo Container */}
-                    <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-black/60">
+                    <div className="relative h-48 xs:h-56 sm:h-72 md:h-80 w-full overflow-hidden bg-black/60">
                       <Image
                         src={item.imageSrc}
                         alt={itemTitle}
                         fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
 
                       {/* Category Pill */}
-                      <div className="absolute top-3 left-3">
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] uppercase font-bold tracking-wider bg-black/70 backdrop-blur-md text-[#c5a880] border border-[#c5a880]/30">
+                      <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
+                        <span className="px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] uppercase font-bold tracking-wider bg-black/70 backdrop-blur-md text-[#c5a880] border border-[#c5a880]/30">
                           {itemCategoryLabel}
                         </span>
                       </div>
 
                       {/* Expand Icon Button */}
-                      <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute top-2 right-2 sm:top-3 sm:right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                         <div className="w-8 h-8 rounded-lg bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:text-[#c5a880]">
                           <Maximize2 className="w-4 h-4" />
                         </div>
                       </div>
 
                       {/* Bottom Caption Overlay */}
-                      <div className="absolute bottom-0 inset-x-0 p-4">
-                        <h4 className="font-serif text-base sm:text-lg text-white group-hover:text-[#c5a880] transition-colors font-medium leading-snug">
+                      <div className="absolute bottom-0 inset-x-0 p-2.5 sm:p-4">
+                        <h4 className="font-serif text-xs sm:text-base lg:text-lg text-white group-hover:text-[#c5a880] transition-colors font-medium leading-snug line-clamp-1 sm:line-clamp-2">
                           {itemTitle}
                         </h4>
-                        <p className="text-xs text-[#94a3b8] line-clamp-2 mt-1 leading-relaxed">
+                        <p className="hidden sm:block text-xs text-[#94a3b8] line-clamp-2 mt-1 leading-relaxed">
                           {itemDescription}
                         </p>
                       </div>
@@ -447,19 +447,19 @@ export function AboutSection({
 
                     {/* Quick Card Footer */}
                     <div
-                      className={`px-4 py-2.5 border-t flex items-center justify-between text-xs transition-colors ${theme === "light"
+                      className={`px-2.5 sm:px-4 py-2 sm:py-2.5 border-t flex items-center justify-between text-[10px] sm:text-xs transition-colors ${theme === "light"
                           ? "bg-white border-black/[0.06]"
                           : "bg-[#141418] border-white/[0.05]"
                         }`}
                     >
                       <span
-                        className={`text-[11px] flex items-center gap-1.5 truncate ${theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                        className={`text-[10px] sm:text-[11px] flex items-center gap-1 sm:gap-1.5 truncate ${theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
                           }`}
                       >
                         <Scissors className="w-3 h-3 text-[#c5a880]" />
                         {t.gallery.authenticLabel}
                       </span>
-                      <span className="text-[#c5a880] text-[11px] font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform shrink-0">
+                      <span className="text-[#c5a880] text-[10px] sm:text-[11px] font-semibold flex items-center gap-0.5 sm:gap-1 group-hover:translate-x-1 transition-transform shrink-0">
                         {t.gallery.detailBtn} <ArrowRight className="w-3 h-3" />
                       </span>
                     </div>
@@ -474,11 +474,11 @@ export function AboutSection({
       {/* Lightbox Modal for Full View */}
       {previewImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-md animate-fadeIn"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md animate-fadeIn overflow-y-auto"
           onClick={() => setPreviewImage(null)}
         >
           <div
-            className={`relative max-w-3xl w-full border rounded-2xl overflow-hidden shadow-2xl transition-colors ${theme === "light"
+            className={`relative max-w-3xl w-full border rounded-2xl overflow-hidden shadow-2xl transition-colors max-h-[92vh] flex flex-col my-auto ${theme === "light"
                 ? "bg-white border-black/10"
                 : "bg-[#121215] border-white/[0.1]"
               }`}
@@ -493,7 +493,7 @@ export function AboutSection({
             </button>
 
             {/* High Res Image */}
-            <div className="relative h-[400px] sm:h-[480px] w-full bg-black">
+            <div className="relative h-64 sm:h-[420px] md:h-[480px] w-full bg-black shrink-0">
               <Image
                 src={previewImage.imageSrc}
                 alt={language === "kn" ? previewImage.title_kn : previewImage.title}
@@ -506,7 +506,7 @@ export function AboutSection({
 
             {/* Details Bar */}
             <div
-              className={`p-6 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-colors ${theme === "light"
+              className={`p-4 sm:p-6 border-t flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 overflow-y-auto ${theme === "light"
                   ? "bg-[#fbfaf8] border-black/[0.08]"
                   : "bg-[#16161b] border-white/[0.08]"
                 }`}

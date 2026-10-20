@@ -11,20 +11,20 @@ export function CraftSection() {
   return (
     <section
       id="craft"
-      className={`py-20 md:py-28 relative scroll-mt-12 border-y transition-colors duration-300 ${
+      className={`py-14 sm:py-20 md:py-28 relative scroll-mt-12 border-y transition-colors duration-300 ${
         theme === "light" ? "bg-[#fbfaf8] border-black/[0.08]" : "bg-[#0d0d10] border-white/[0.06]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 12-Column Balanced Grid: 7 cols for the 3 visual cards, 5 cols for craft text */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
-          {/* Visual Showcase (7 Columns) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
+          {/* Visual Showcase (7 Columns on desktop, 3-column responsive triptych on all screens) */}
           <div className="lg:col-span-7 w-full">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-3.5 lg:gap-4 relative items-center">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3.5 lg:gap-4 relative items-center">
               {/* Card 1: Barber Portrait (Left Wing) */}
-              <div className="space-y-3 sm:translate-y-3 transition-transform duration-500">
+              <div className="space-y-2 sm:space-y-3 sm:translate-y-3 transition-transform duration-500">
                 <div
-                  className={`relative h-80 sm:h-96 lg:h-[410px] rounded-2xl overflow-hidden border group shadow-2xl transition-all duration-500 ${
+                  className={`relative h-44 xs:h-48 sm:h-72 md:h-80 lg:h-[415px] rounded-xl sm:rounded-2xl overflow-hidden border group shadow-xl sm:shadow-2xl transition-all duration-500 ${
                     theme === "light"
                       ? "border-black/[0.08] bg-white hover:border-[#c5a880] hover:shadow-black/10"
                       : "border-white/10 bg-[#121215] hover:border-[#c5a880]/50"
@@ -34,12 +34,12 @@ export function CraftSection() {
                     src="/brand/card-dark.png"
                     alt="New Model Gents Beauty Parlor"
                     fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
+                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 33vw, 25vw"
                     className="object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end p-4">
-                    <span className="text-xs font-serif text-[#c5a880] tracking-wider uppercase font-semibold">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end p-2 sm:p-4">
+                    <span className="text-[8px] xs:text-[9px] sm:text-xs font-serif text-[#c5a880] tracking-tight sm:tracking-wider uppercase font-semibold leading-tight">
                       Signature Identity
                     </span>
                   </div>
@@ -47,9 +47,9 @@ export function CraftSection() {
               </div>
 
               {/* Card 2: Tools & Shears Emblem (Center Hero) */}
-              <div className="space-y-3 sm:-translate-y-3 transition-transform duration-500">
+              <div className="space-y-2 sm:space-y-3 sm:-translate-y-3 transition-transform duration-500">
                 <div
-                  className={`relative h-80 sm:h-96 lg:h-[410px] rounded-2xl overflow-hidden border group shadow-2xl transition-all duration-500 ${
+                  className={`relative h-44 xs:h-48 sm:h-72 md:h-80 lg:h-[415px] rounded-xl sm:rounded-2xl overflow-hidden border group shadow-xl sm:shadow-2xl transition-all duration-500 ${
                     theme === "light"
                       ? "border-black/[0.08] bg-white hover:border-[#c5a880] hover:shadow-black/10"
                       : "border-white/10 bg-[#121215] hover:border-[#c5a880]/50"
@@ -59,21 +59,21 @@ export function CraftSection() {
                     src="/brand/tools-darkk.jpg"
                     alt="Artisan Barbering Shears and Straight Razor"
                     fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
+                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 33vw, 25vw"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end p-4">
-                    <span className="text-xs font-serif text-[#c5a880] tracking-wider uppercase font-semibold">
-                      PRECISION IN EVERY DETAIL
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end p-2 sm:p-4">
+                    <span className="text-[8px] xs:text-[9px] sm:text-xs font-serif text-[#c5a880] tracking-tight sm:tracking-wider uppercase font-semibold leading-tight">
+                      Precision Detail
                     </span>
                   </div>
                 </div>
               </div>
 
               {/* Card 3: Barber Portrait (Right Wing) */}
-              <div className="space-y-3 sm:translate-y-3 transition-transform duration-500">
+              <div className="space-y-2 sm:space-y-3 sm:translate-y-3 transition-transform duration-500">
                 <div
-                  className={`relative h-80 sm:h-96 lg:h-[410px] rounded-2xl overflow-hidden border group shadow-2xl transition-all duration-500 ${
+                  className={`relative h-44 xs:h-48 sm:h-72 md:h-80 lg:h-[415px] rounded-xl sm:rounded-2xl overflow-hidden border group shadow-xl sm:shadow-2xl transition-all duration-500 ${
                     theme === "light"
                       ? "border-black/[0.08] bg-white hover:border-[#c5a880] hover:shadow-black/10"
                       : "border-white/10 bg-[#121215] hover:border-[#c5a880]/50"
@@ -83,12 +83,12 @@ export function CraftSection() {
                     src="/brand/card2-dark.jpeg"
                     alt="Master Barber Styling"
                     fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
-                    className="object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+                    sizes="(max-width: 640px) 33vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end p-4">
-                    <span className="text-xs font-serif text-[#c5a880] tracking-wider uppercase font-semibold">
-                     Style With Purpose 
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex items-end p-2 sm:p-4">
+                    <span className="text-[8px] xs:text-[9px] sm:text-xs font-serif text-[#c5a880] tracking-tight sm:tracking-wider uppercase font-semibold leading-tight">
+                      Style With Purpose
                     </span>
                   </div>
                 </div>

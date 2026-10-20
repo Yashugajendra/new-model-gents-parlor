@@ -202,9 +202,9 @@ export function BookingModal({
     : "#";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto">
       <div
-        className={`relative w-full max-w-2xl border rounded-2xl shadow-2xl overflow-hidden my-8 transition-colors ${
+        className={`relative w-full max-w-2xl border rounded-2xl shadow-2xl overflow-hidden my-4 sm:my-8 transition-colors max-h-[92vh] flex flex-col ${
           theme === "light"
             ? "bg-white border-black/10"
             : "bg-[#121215] border-white/[0.09]"
@@ -212,7 +212,7 @@ export function BookingModal({
       >
         {/* Modal Header */}
         <div
-          className={`px-6 py-5 border-b flex items-center justify-between transition-colors ${
+          className={`px-4 sm:px-6 py-3.5 sm:py-5 border-b flex items-center justify-between shrink-0 transition-colors ${
             theme === "light"
               ? "bg-[#f4efe6] border-black/[0.08]"
               : "bg-[#16161b] border-white/[0.07]"
@@ -223,7 +223,7 @@ export function BookingModal({
               {t.bookingModal.step} {step} {t.bookingModal.of} 4
             </span>
             <h3
-              className={`font-serif text-xl sm:text-2xl font-medium ${
+              className={`font-serif text-lg sm:text-2xl font-medium ${
                 theme === "light" ? "text-[#18181b]" : "text-white"
               }`}
             >
@@ -246,7 +246,7 @@ export function BookingModal({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1">
           {/* STEP 1: Select Service */}
           {step === 1 && (
             <div className="space-y-3">

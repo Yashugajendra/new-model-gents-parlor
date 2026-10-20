@@ -213,7 +213,7 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
 
           {/* Operating Hours Table */}
           <div
-            className={`p-8 rounded-2xl border shadow-xl transition-colors ${
+            className={`p-4 sm:p-8 rounded-2xl border shadow-xl transition-colors ${
               theme === "light"
                 ? "bg-white border-black/[0.08]"
                 : "bg-[#121215] border-white/[0.08]"
