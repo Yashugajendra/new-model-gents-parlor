@@ -27,6 +27,7 @@ body {
   overflow-x: hidden;
   selection-background-color: #c5a880;
   selection-color: #09090b;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom Gold Metallic Gradient */
@@ -142,77 +143,120 @@ body {
 }
 
 /* ==========================================================================
-   Light Mode Theme Styling
+   Complete Light Theme Overrides (Rock-solid attribute & class targeting)
    ========================================================================== */
-html.light {
-  --background: #fbfaf8;
-  --foreground: #18181b;
-  color-scheme: light;
-}
-
-html.light body {
+html.light,
+html[data-theme="light"],
+html.light body,
+html[data-theme="light"] body {
+  --background: #fbfaf8 !important;
+  --foreground: #18181b !important;
   background-color: #fbfaf8 !important;
   color: #18181b !important;
+  color-scheme: light !important;
 }
 
-/* Light Mode Structural Surface Overrides */
-html.light .bg-\[\#09090b\],
-html.light .bg-\[\#0a0a0d\],
-html.light .bg-\[\#0d0d10\] {
+/* Main background overrides */
+html.light [class*="bg-[#09090b]"],
+html[data-theme="light"] [class*="bg-[#09090b]"],
+html.light [class*="bg-[#0a0a0d]"],
+html[data-theme="light"] [class*="bg-[#0a0a0d]"],
+html.light [class*="bg-[#0d0d10]"],
+html[data-theme="light"] [class*="bg-[#0d0d10]"],
+html.light [class*="bg-[#070708]"],
+html[data-theme="light"] [class*="bg-[#070708]"],
+html.light section,
+html[data-theme="light"] section {
   background-color: #fbfaf8 !important;
 }
 
-html.light .bg-\[\#121215\],
-html.light .bg-\[\#141417\],
-html.light .bg-\[\#141418\],
-html.light .bg-\[\#16161b\],
-html.light .bg-\[\#1a1a20\],
-html.light .bg-\[\#1a1a1f\] {
+/* Surface / Card background overrides */
+html.light [class*="bg-[#121215]"],
+html[data-theme="light"] [class*="bg-[#121215]"],
+html.light [class*="bg-[#141417]"],
+html[data-theme="light"] [class*="bg-[#141417]"],
+html.light [class*="bg-[#141418]"],
+html[data-theme="light"] [class*="bg-[#141418]"],
+html.light [class*="bg-[#16161b]"],
+html[data-theme="light"] [class*="bg-[#16161b]"],
+html.light [class*="bg-[#18181d]"],
+html[data-theme="light"] [class*="bg-[#18181d]"],
+html.light [class*="bg-[#1a1a1f]"],
+html[data-theme="light"] [class*="bg-[#1a1a1f]"],
+html.light [class*="bg-[#1a1a20]"],
+html[data-theme="light"] [class*="bg-[#1a1a20]"],
+html.light .luxury-card,
+html[data-theme="light"] .luxury-card {
   background-color: #ffffff !important;
-}
-
-html.light .text-white {
-  color: #18181b !important;
-}
-
-html.light .text-\[\#94a3b8\],
-html.light .text-gray-300,
-html.light .text-gray-400 {
-  color: #52525b !important;
-}
-
-html.light .border-white\/\[0\.04\],
-html.light .border-white\/\[0\.05\],
-html.light .border-white\/\[0\.06\],
-html.light .border-white\/\[0\.07\],
-html.light .border-white\/\[0\.08\],
-html.light .border-white\/\[0\.09\],
-html.light .border-white\/\[0\.1\],
-html.light .border-white\/10 {
   border-color: rgba(0, 0, 0, 0.09) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
 }
 
-html.light .divide-white\/\[0\.04\] > * + * {
-  border-color: rgba(0, 0, 0, 0.06) !important;
-}
-
-html.light header {
-  background-color: rgba(251, 250, 248, 0.94) !important;
-  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-html.light .luxury-card {
-  background-color: #ffffff !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 4px 18px -3px rgba(0, 0, 0, 0.05);
-}
-
-html.light .luxury-card:hover {
+html.light .luxury-card:hover,
+html[data-theme="light"] .luxury-card:hover {
   border-color: rgba(158, 121, 70, 0.45) !important;
   box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.1), 0 0 18px -3px rgba(158, 121, 70, 0.2) !important;
 }
 
-html.light .gold-shimmer-text {
+/* Typography in light mode */
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light [class*="text-white"],
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] [class*="text-white"] {
+  color: #18181b !important;
+}
+
+html.light p,
+html.light [class*="text-[#94a3b8]"],
+html.light [class*="text-gray-300"],
+html.light [class*="text-gray-400"],
+html[data-theme="light"] p,
+html[data-theme="light"] [class*="text-[#94a3b8]"],
+html[data-theme="light"] [class*="text-gray-300"],
+html[data-theme="light"] [class*="text-gray-400"] {
+  color: #52525b !important;
+}
+
+/* Borders in light mode */
+html.light [class*="border-white"],
+html[data-theme="light"] [class*="border-white"],
+html.light [class*="divide-white"] > * + *,
+html[data-theme="light"] [class*="divide-white"] > * + * {
+  border-color: rgba(0, 0, 0, 0.09) !important;
+}
+
+/* Header in light mode */
+html.light header,
+html[data-theme="light"] header {
+  background-color: rgba(251, 250, 248, 0.95) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Hero vignette gradient in light mode */
+html.light [class*="bg-gradient-to-b from-[#09090b]"],
+html[data-theme="light"] [class*="bg-gradient-to-b from-[#09090b]"] {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(251, 250, 248, 0.88),
+    rgba(251, 250, 248, 0.78),
+    #fbfaf8
+  ) !important;
+}
+
+html.light [class*="bg-[#09090b]/30"],
+html[data-theme="light"] [class*="bg-[#09090b]/30"] {
+  background-color: rgba(251, 250, 248, 0.3) !important;
+}
+
+/* Shimmer text in light mode */
+html.light .gold-shimmer-text,
+html[data-theme="light"] .gold-shimmer-text {
   background: linear-gradient(
     90deg,
     #9e7946 0%,

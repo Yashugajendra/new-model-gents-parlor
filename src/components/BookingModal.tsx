@@ -32,7 +32,7 @@ export function BookingModal({
   preselectedService,
   onBookingCreated,
 }: BookingModalProps) {
-  const { language, t } = useLanguageTheme();
+  const { language, theme, t } = useLanguageTheme();
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1); // 1: Service, 2: Slot, 3: Details, 4: Confirmed
   const [services, setServices] = useState<Service[]>([]);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -203,14 +203,30 @@ export function BookingModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-[#121215] border border-white/[0.09] rounded-2xl shadow-2xl overflow-hidden my-8">
+      <div
+        className={`relative w-full max-w-2xl border rounded-2xl shadow-2xl overflow-hidden my-8 transition-colors ${
+          theme === "light"
+            ? "bg-white border-black/10"
+            : "bg-[#121215] border-white/[0.09]"
+        }`}
+      >
         {/* Modal Header */}
-        <div className="px-6 py-5 border-b border-white/[0.07] flex items-center justify-between bg-[#16161b]">
+        <div
+          className={`px-6 py-5 border-b flex items-center justify-between transition-colors ${
+            theme === "light"
+              ? "bg-[#f4efe6] border-black/[0.08]"
+              : "bg-[#16161b] border-white/[0.07]"
+          }`}
+        >
           <div>
             <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#c5a880]">
               {t.bookingModal.step} {step} {t.bookingModal.of} 4
             </span>
-            <h3 className="font-serif text-xl sm:text-2xl text-white font-medium">
+            <h3
+              className={`font-serif text-xl sm:text-2xl font-medium ${
+                theme === "light" ? "text-[#18181b]" : "text-white"
+              }`}
+            >
               {step === 1 && t.bookingModal.step1Title}
               {step === 2 && t.bookingModal.step2Title}
               {step === 3 && t.bookingModal.step3Title}
@@ -219,7 +235,11 @@ export function BookingModal({
           </div>
           <button
             onClick={handleClose}
-            className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/[0.05] transition-colors"
+            className={`p-2 rounded-lg transition-colors ${
+              theme === "light"
+                ? "text-gray-500 hover:text-black hover:bg-black/[0.05]"
+                : "text-gray-400 hover:text-white hover:bg-white/[0.05]"
+            }`}
           >
             <X className="w-5 h-5" />
           </button>
@@ -230,7 +250,11 @@ export function BookingModal({
           {/* STEP 1: Select Service */}
           {step === 1 && (
             <div className="space-y-3">
-              <p className="text-xs text-[#94a3b8] mb-4">
+              <p
+                className={`text-xs mb-4 ${
+                  theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                }`}
+              >
                 {t.bookingModal.step1Desc}
               </p>
               <div className="grid grid-cols-1 gap-3 max-h-[420px] overflow-y-auto pr-1">
@@ -248,11 +272,21 @@ export function BookingModal({
                     <button
                       key={service.id}
                       onClick={() => handleServiceSelect(service)}
-                      className="w-full p-4 rounded-xl text-left bg-[#18181d] border border-white/[0.06] hover:border-[#c5a880]/50 hover:bg-[#1d1d24] transition-all flex items-center justify-between group"
+                      className={`w-full p-4 rounded-xl text-left border transition-all flex items-center justify-between group ${
+                        theme === "light"
+                          ? "bg-white border-black/[0.08] hover:border-[#c5a880] hover:bg-[#fbfaf8] shadow-xs"
+                          : "bg-[#18181d] border-white/[0.06] hover:border-[#c5a880]/50 hover:bg-[#1d1d24]"
+                      }`}
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium text-white group-hover:text-[#c5a880] transition-colors">
+                          <span
+                            className={`font-medium transition-colors ${
+                              theme === "light"
+                                ? "text-[#18181b] group-hover:text-[#9e7946]"
+                                : "text-white group-hover:text-[#c5a880]"
+                            }`}
+                          >
                             {sName}
                           </span>
                           {sBadge && (
@@ -261,13 +295,21 @@ export function BookingModal({
                             </span>
                           )}
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-[#94a3b8]">
+                        <div
+                          className={`flex items-center gap-2 text-xs ${
+                            theme === "light" ? "text-[#71717a]" : "text-[#94a3b8]"
+                          }`}
+                        >
                           <Clock className="w-3.5 h-3.5 text-[#c5a880]" />
                           <span>{service.duration_minutes} {t.services.minutes}</span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="font-serif text-lg font-bold text-white">
+                        <div
+                          className={`font-serif text-lg font-bold ${
+                            theme === "light" ? "text-[#18181b]" : "text-white"
+                          }`}
+                        >
                           {sPrice}
                         </div>
                         <span className="text-[11px] text-[#c5a880] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
@@ -285,12 +327,26 @@ export function BookingModal({
           {step === 2 && selectedService && (
             <div className="space-y-6">
               {/* Selected Service Bar */}
-              <div className="p-3.5 rounded-xl bg-[#18181d] border border-white/[0.06] flex items-center justify-between">
+              <div
+                className={`p-3.5 rounded-xl border flex items-center justify-between ${
+                  theme === "light"
+                    ? "bg-[#f4efe6] border-black/[0.08]"
+                    : "bg-[#18181d] border-white/[0.06]"
+                }`}
+              >
                 <div>
-                  <span className="text-[10px] text-[#94a3b8] uppercase tracking-wider">
+                  <span
+                    className={`text-[10px] uppercase tracking-wider ${
+                      theme === "light" ? "text-[#71717a]" : "text-[#94a3b8]"
+                    }`}
+                  >
                     {language === "kn" ? "ಆಯ್ದ ಸೇವೆ" : "Selected Service"}
                   </span>
-                  <div className="text-sm font-semibold text-white">
+                  <div
+                    className={`text-sm font-semibold ${
+                      theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
+                  >
                     {language === "kn" && selectedService.name_kn
                       ? selectedService.name_kn
                       : selectedService.name}
@@ -302,7 +358,7 @@ export function BookingModal({
                   </div>
                   <button
                     onClick={() => setStep(1)}
-                    className="text-[11px] text-gray-400 hover:text-white underline mt-0.5"
+                    className="text-[11px] text-[#c5a880] hover:underline mt-0.5"
                   >
                     {language === "kn" ? "ಬದಲಾಯಿಸಿ" : "Change"}
                   </button>
@@ -311,7 +367,11 @@ export function BookingModal({
 
               {/* Day Selector */}
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-[#94a3b8] mb-3">
+                <label
+                  className={`block text-xs font-semibold uppercase tracking-wider mb-3 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   {t.bookingModal.dateLabel}
                 </label>
                 <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
@@ -328,6 +388,8 @@ export function BookingModal({
                         className={`p-2.5 rounded-xl border text-center transition-all ${
                           isSelected
                             ? "bg-[#c5a880] border-[#c5a880] text-[#09090b] font-bold shadow-md"
+                            : theme === "light"
+                            ? "bg-white border-black/10 text-[#27272a] hover:border-[#c5a880] shadow-xs"
                             : "bg-[#18181d] border-white/[0.06] text-gray-300 hover:border-[#c5a880]/40"
                         }`}
                       >
@@ -341,11 +403,21 @@ export function BookingModal({
 
               {/* Slot Selector */}
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-[#94a3b8] mb-3">
+                <label
+                  className={`block text-xs font-semibold uppercase tracking-wider mb-3 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   {t.bookingModal.timeLabel}
                 </label>
                 {slots.length === 0 ? (
-                  <div className="p-6 text-center text-xs text-gray-400 bg-[#18181d] rounded-xl border border-white/[0.06]">
+                  <div
+                    className={`p-6 text-center text-xs rounded-xl border ${
+                      theme === "light"
+                        ? "bg-[#fbfaf8] border-black/10 text-gray-500"
+                        : "bg-[#18181d] border-white/[0.06] text-gray-400"
+                    }`}
+                  >
                     {t.bookingModal.noSlots}
                   </div>
                 ) : (
@@ -357,9 +429,11 @@ export function BookingModal({
                         onClick={() => handleSlotSelect(slot)}
                         className={`p-2.5 rounded-xl border text-xs font-medium transition-all ${
                           !slot.isAvailable
-                            ? "opacity-35 bg-[#141417] border-white/[0.04] text-gray-500 cursor-not-allowed line-through"
+                            ? "opacity-35 border-transparent text-gray-400 cursor-not-allowed line-through"
                             : selectedSlot?.startISO === slot.startISO
                             ? "bg-[#c5a880] border-[#c5a880] text-[#09090b] font-bold shadow-md"
+                            : theme === "light"
+                            ? "bg-white border-black/10 text-[#18181b] hover:border-[#c5a880] shadow-xs"
                             : "bg-[#18181d] border-white/[0.06] text-white hover:border-[#c5a880]/50"
                         }`}
                       >
@@ -374,7 +448,11 @@ export function BookingModal({
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="px-4 py-2 rounded-lg border border-white/10 text-gray-300 hover:text-white text-xs font-medium"
+                  className={`px-4 py-2 rounded-lg border text-xs font-medium ${
+                    theme === "light"
+                      ? "border-black/15 text-[#52525b] hover:text-[#18181b]"
+                      : "border-white/10 text-gray-300 hover:text-white"
+                  }`}
                 >
                   {t.bookingModal.backBtn}
                 </button>
@@ -386,22 +464,48 @@ export function BookingModal({
           {step === 3 && selectedService && selectedSlot && (
             <form onSubmit={handleSubmitRequest} className="space-y-4">
               {/* Summary Card */}
-              <div className="p-4 rounded-xl bg-[#18181d] border border-white/[0.06] space-y-2">
-                <div className="flex justify-between text-xs text-[#94a3b8]">
+              <div
+                className={`p-4 rounded-xl border space-y-2 ${
+                  theme === "light"
+                    ? "bg-[#f4efe6] border-black/[0.08]"
+                    : "bg-[#18181d] border-white/[0.06]"
+                }`}
+              >
+                <div
+                  className={`flex justify-between text-xs ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <span>{language === "kn" ? "ಆಯ್ದ ಸೇವೆ:" : "Requested Service:"}</span>
-                  <span className="text-white font-medium">
+                  <span
+                    className={`font-medium ${
+                      theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
+                  >
                     {language === "kn" && selectedService.name_kn
                       ? selectedService.name_kn
                       : selectedService.name}
                   </span>
                 </div>
-                <div className="flex justify-between text-xs text-[#94a3b8]">
+                <div
+                  className={`flex justify-between text-xs ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <span>{language === "kn" ? "ದಿನಾಂಕ ಮತ್ತು ಸಮಯ:" : "Date & Time:"}</span>
-                  <span className="text-white font-medium">
+                  <span
+                    className={`font-medium ${
+                      theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
+                  >
                     {selectedDate ? formatDate(selectedDate) : ""} at {selectedSlot.startTime}
                   </span>
                 </div>
-                <div className="flex justify-between text-xs text-[#94a3b8]">
+                <div
+                  className={`flex justify-between text-xs ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <span>{language === "kn" ? "ದರ (ಅಂಗಡಿಯಲ್ಲಿ ಪಾವತಿಸಿ):" : "Price (Pay at shop):"}</span>
                   <span className="text-[#c5a880] font-bold">
                     {selectedService.price_display || `₹${selectedService.price}`}
@@ -417,7 +521,11 @@ export function BookingModal({
               )}
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1.5 flex items-center gap-1.5">
+                <label
+                  className={`block text-xs font-medium mb-1.5 flex items-center gap-1.5 ${
+                    theme === "light" ? "text-[#27272a]" : "text-gray-300"
+                  }`}
+                >
                   <User className="w-3.5 h-3.5 text-[#c5a880]" />
                   <span>{t.bookingModal.nameLabel} *</span>
                 </label>
@@ -427,12 +535,20 @@ export function BookingModal({
                   placeholder={t.bookingModal.namePlaceholder}
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-sm focus:outline-none focus:border-[#c5a880] placeholder-gray-500"
+                  className={`w-full px-3.5 py-2.5 rounded-lg border text-sm focus:outline-none focus:border-[#c5a880] transition-colors ${
+                    theme === "light"
+                      ? "bg-white border-black/15 text-[#18181b] placeholder-gray-400"
+                      : "bg-[#18181d] border-white/[0.1] text-white placeholder-gray-500"
+                  }`}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1.5 flex items-center gap-1.5">
+                <label
+                  className={`block text-xs font-medium mb-1.5 flex items-center gap-1.5 ${
+                    theme === "light" ? "text-[#27272a]" : "text-gray-300"
+                  }`}
+                >
                   <Phone className="w-3.5 h-3.5 text-[#c5a880]" />
                   <span>{t.bookingModal.phoneLabel} *</span>
                 </label>
@@ -442,12 +558,20 @@ export function BookingModal({
                   placeholder={t.bookingModal.phonePlaceholder}
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-sm focus:outline-none focus:border-[#c5a880] placeholder-gray-500"
+                  className={`w-full px-3.5 py-2.5 rounded-lg border text-sm focus:outline-none focus:border-[#c5a880] transition-colors ${
+                    theme === "light"
+                      ? "bg-white border-black/15 text-[#18181b] placeholder-gray-400"
+                      : "bg-[#18181d] border-white/[0.1] text-white placeholder-gray-500"
+                  }`}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1.5 flex items-center gap-1.5">
+                <label
+                  className={`block text-xs font-medium mb-1.5 flex items-center gap-1.5 ${
+                    theme === "light" ? "text-[#27272a]" : "text-gray-300"
+                  }`}
+                >
                   <MessageSquare className="w-3.5 h-3.5 text-[#c5a880]" />
                   <span>{t.bookingModal.notesLabel}</span>
                 </label>
@@ -456,7 +580,11 @@ export function BookingModal({
                   placeholder={t.bookingModal.notesPlaceholder}
                   value={customerNotes}
                   onChange={(e) => setCustomerNotes(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-sm focus:outline-none focus:border-[#c5a880] placeholder-gray-500"
+                  className={`w-full px-3.5 py-2 rounded-lg border text-sm focus:outline-none focus:border-[#c5a880] transition-colors ${
+                    theme === "light"
+                      ? "bg-white border-black/15 text-[#18181b] placeholder-gray-400"
+                      : "bg-[#18181d] border-white/[0.1] text-white placeholder-gray-500"
+                  }`}
                 />
               </div>
 
@@ -464,7 +592,11 @@ export function BookingModal({
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className="px-4 py-2.5 rounded-lg border border-white/10 text-gray-300 hover:text-white text-xs font-medium"
+                  className={`px-4 py-2.5 rounded-lg border text-xs font-medium ${
+                    theme === "light"
+                      ? "border-black/15 text-[#52525b] hover:text-[#18181b]"
+                      : "border-white/10 text-gray-300 hover:text-white"
+                  }`}
                 >
                   {t.bookingModal.backBtn}
                 </button>
@@ -487,26 +619,48 @@ export function BookingModal({
               </div>
 
               <div>
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30 mb-2">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 mb-2">
                   {t.bookingModal.statusPending}
                 </span>
-                <h3 className="font-serif text-2xl sm:text-3xl font-medium text-white">
+                <h3
+                  className={`font-serif text-2xl sm:text-3xl font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
                   {t.bookingModal.step4Title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#94a3b8] max-w-md mx-auto mt-2 leading-relaxed">
+                <p
+                  className={`text-xs sm:text-sm max-w-md mx-auto mt-2 leading-relaxed ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   {t.bookingModal.whatsappShareDesc}
                 </p>
               </div>
 
               {/* Message Language Switcher */}
-              <div className="inline-flex items-center gap-2 p-1 rounded-lg bg-[#18181d] border border-white/10 text-xs">
-                <span className="text-[#94a3b8] text-[11px] px-1">Message Language:</span>
+              <div
+                className={`inline-flex items-center gap-2 p-1 rounded-lg border text-xs ${
+                  theme === "light"
+                    ? "bg-[#f4efe6] border-black/10"
+                    : "bg-[#18181d] border-white/10"
+                }`}
+              >
+                <span
+                  className={`text-[11px] px-1 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
+                  Message Language:
+                </span>
                 <button
                   type="button"
                   onClick={() => setMessageLang("en")}
                   className={`px-2.5 py-1 rounded ${
                     messageLang === "en"
                       ? "bg-[#c5a880] text-black font-bold"
+                      : theme === "light"
+                      ? "text-[#52525b]"
                       : "text-gray-400 hover:text-white"
                   }`}
                 >
@@ -518,6 +672,8 @@ export function BookingModal({
                   className={`px-2.5 py-1 rounded ${
                     messageLang === "kn"
                       ? "bg-[#c5a880] text-black font-bold"
+                      : theme === "light"
+                      ? "text-[#52525b]"
                       : "text-gray-400 hover:text-white"
                   }`}
                 >
@@ -526,11 +682,23 @@ export function BookingModal({
               </div>
 
               {/* WhatsApp Message Preview Box */}
-              <div className="p-4 rounded-xl bg-[#16161b] border border-[#25D366]/30 max-w-md mx-auto text-left">
+              <div
+                className={`p-4 rounded-xl border max-w-md mx-auto text-left ${
+                  theme === "light"
+                    ? "bg-white border-[#25D366]/40 shadow-xs"
+                    : "bg-[#16161b] border-[#25D366]/30"
+                }`}
+              >
                 <span className="text-[10px] uppercase font-bold tracking-widest text-[#25D366] block mb-2">
                   WhatsApp Message Preview
                 </span>
-                <p className="font-mono text-xs text-gray-300 whitespace-pre-line leading-relaxed bg-[#09090b] p-3 rounded-lg border border-white/[0.04]">
+                <p
+                  className={`font-mono text-xs whitespace-pre-line leading-relaxed p-3 rounded-lg border ${
+                    theme === "light"
+                      ? "bg-[#fbfaf8] text-[#27272a] border-black/[0.06]"
+                      : "bg-[#09090b] text-gray-300 border-white/[0.04]"
+                  }`}
+                >
                   {whatsAppText}
                 </p>
               </div>
@@ -549,7 +717,11 @@ export function BookingModal({
 
                 <a
                   href={`/status/${createdAppointment.booking_reference}`}
-                  className="w-full py-2.5 px-4 rounded-xl border border-white/10 hover:border-white/20 bg-white/[0.04] text-white text-xs font-medium flex items-center justify-center gap-2 transition-all"
+                  className={`w-full py-2.5 px-4 rounded-xl border text-xs font-medium flex items-center justify-center gap-2 transition-all ${
+                    theme === "light"
+                      ? "border-black/15 bg-black/[0.03] text-[#18181b] hover:bg-black/[0.06]"
+                      : "border-white/10 hover:border-white/20 bg-white/[0.04] text-white"
+                  }`}
                 >
                   <CalendarIcon className="w-3.5 h-3.5 text-[#c5a880]" />
                   <span>{t.bookingModal.trackStatusBtn} ({createdAppointment.booking_reference})</span>
@@ -557,7 +729,11 @@ export function BookingModal({
 
                 <button
                   onClick={handleClose}
-                  className="w-full py-2 text-xs text-gray-400 hover:text-white"
+                  className={`w-full py-2 text-xs transition-colors ${
+                    theme === "light"
+                      ? "text-gray-500 hover:text-black"
+                      : "text-gray-400 hover:text-white"
+                  }`}
                 >
                   {t.bookingModal.closeBtn}
                 </button>

@@ -17,12 +17,14 @@ import {
 import { Appointment } from "@/types/database.types";
 import { NewModelData } from "@/lib/data";
 import { formatDate, formatTime, formatCurrency, generateWhatsAppLink } from "@/lib/utils";
+import { useLanguageTheme } from "@/context/LanguageThemeContext";
 
 interface StatusClientViewProps {
   reference: string;
 }
 
 export default function StatusClientView({ reference }: StatusClientViewProps) {
+  const { theme } = useLanguageTheme();
   const [appointment, setAppointment] = useState<Appointment | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -73,20 +75,44 @@ export default function StatusClientView({ reference }: StatusClientViewProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-[#f8fafc] flex flex-col">
-      <header className="border-b border-white/[0.08] bg-[#0d0d10] py-4 px-6">
+    <div
+      className={`min-h-screen flex flex-col transition-colors duration-300 ${
+        theme === "light" ? "bg-[#fbfaf8] text-[#18181b]" : "bg-[#09090b] text-[#f8fafc]"
+      }`}
+    >
+      <header
+        className={`border-b py-4 px-6 transition-colors ${
+          theme === "light"
+            ? "bg-[#f4efe6] border-black/[0.08]"
+            : "bg-[#0d0d10] border-white/[0.08]"
+        }`}
+      >
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1a1a20] to-[#121215] border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880]">
-              <span className="font-serif font-bold text-xs text-[#c5a880]">NM</span>
+            <div
+              className={`w-8 h-8 rounded-lg border flex items-center justify-center ${
+                theme === "light"
+                  ? "bg-[#f4efe6] border-[#c5a880]/60 text-[#9e7946]"
+                  : "bg-gradient-to-br from-[#1a1a20] to-[#121215] border-[#c5a880]/40 text-[#c5a880]"
+              }`}
+            >
+              <span className="font-serif font-bold text-xs">NM</span>
             </div>
-            <span className="font-serif text-lg font-bold tracking-wider text-white">
+            <span
+              className={`font-serif text-lg font-bold tracking-wider ${
+                theme === "light" ? "text-[#18181b]" : "text-white"
+              }`}
+            >
               NEW MODEL <span className="text-[#c5a880]">GENTS PARLOR</span>
             </span>
           </Link>
           <Link
             href="/"
-            className="text-xs text-[#94a3b8] hover:text-white flex items-center gap-1.5"
+            className={`text-xs flex items-center gap-1.5 transition-colors ${
+              theme === "light"
+                ? "text-[#52525b] hover:text-[#18181b]"
+                : "text-[#94a3b8] hover:text-white"
+            }`}
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Back to Home
@@ -96,14 +122,32 @@ export default function StatusClientView({ reference }: StatusClientViewProps) {
 
       <main className="flex-1 max-w-xl w-full mx-auto px-4 py-12">
         {!isLoaded ? (
-          <div className="text-center py-12 text-[#94a3b8] text-sm">
+          <div
+            className={`text-center py-12 text-sm ${
+              theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+            }`}
+          >
             Retrieving appointment details...
           </div>
         ) : appointment ? (
-          <div className="p-6 sm:p-8 rounded-2xl bg-[#121215] border border-white/[0.08] shadow-2xl space-y-6">
-            <div className="flex items-start justify-between border-b border-white/[0.07] pb-4">
+          <div
+            className={`p-6 sm:p-8 rounded-2xl border shadow-2xl space-y-6 transition-colors ${
+              theme === "light"
+                ? "bg-white border-black/[0.08]"
+                : "bg-[#121215] border-white/[0.08]"
+            }`}
+          >
+            <div
+              className={`flex items-start justify-between border-b pb-4 ${
+                theme === "light" ? "border-black/[0.08]" : "border-white/[0.07]"
+              }`}
+            >
               <div>
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#94a3b8] block">
+                <span
+                  className={`text-[10px] uppercase font-bold tracking-widest block ${
+                    theme === "light" ? "text-[#71717a]" : "text-[#94a3b8]"
+                  }`}
+                >
                   Reference Code
                 </span>
                 <span className="font-mono text-2xl font-bold text-[#c5a880]">
@@ -134,47 +178,115 @@ export default function StatusClientView({ reference }: StatusClientViewProps) {
             )}
 
             <div className="space-y-3 text-xs">
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <Scissors className="w-3.5 h-3.5 text-[#c5a880]" /> Service
                 </span>
-                <span className="text-white font-medium">
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
                   {appointment.service_name_snapshot} ({appointment.service_duration_snapshot} mins)
                 </span>
               </div>
 
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <Calendar className="w-3.5 h-3.5 text-[#c5a880]" /> Date
                 </span>
-                <span className="text-white font-medium">{formatDate(appointment.start_time)}</span>
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
+                  {formatDate(appointment.start_time)}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <Clock className="w-3.5 h-3.5 text-[#c5a880]" /> Time
                 </span>
-                <span className="text-white font-medium">
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
                   {formatTime(appointment.start_time)} – {formatTime(appointment.end_time)}
                 </span>
               </div>
 
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <User className="w-3.5 h-3.5 text-[#c5a880]" /> Customer
                 </span>
-                <span className="text-white font-medium">{appointment.customer_name}</span>
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
+                  {appointment.customer_name}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <Phone className="w-3.5 h-3.5 text-[#c5a880]" /> Contact
                 </span>
-                <span className="text-white font-medium">{appointment.customer_phone}</span>
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
+                  {appointment.customer_phone}
+                </span>
               </div>
 
               <div className="flex items-center justify-between pt-2">
-                <span className="text-[#94a3b8]">Estimated Price:</span>
+                <span className={theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"}>
+                  Estimated Price:
+                </span>
                 <span className="text-lg font-bold text-[#c5a880]">
                   {formatCurrency(appointment.service_price_snapshot)}
                 </span>
@@ -197,22 +309,42 @@ export default function StatusClientView({ reference }: StatusClientViewProps) {
 
               <Link
                 href="/status"
-                className="w-full py-2.5 px-4 rounded-xl border border-white/10 hover:border-white/20 bg-white/[0.04] text-white text-xs font-medium flex items-center justify-center transition-all"
+                className={`w-full py-2.5 px-4 rounded-xl border text-xs font-medium flex items-center justify-center transition-all ${
+                  theme === "light"
+                    ? "border-black/15 bg-black/[0.03] text-[#18181b] hover:bg-black/[0.06]"
+                    : "border-white/10 hover:border-white/20 bg-white/[0.04] text-white"
+                }`}
               >
                 Search Another Booking
               </Link>
             </div>
           </div>
         ) : (
-          <div className="p-8 rounded-2xl bg-[#121215] border border-white/[0.08] text-center space-y-4">
+          <div
+            className={`p-8 rounded-2xl border text-center space-y-4 transition-colors ${
+              theme === "light"
+                ? "bg-white border-black/[0.08]"
+                : "bg-[#121215] border-white/[0.08]"
+            }`}
+          >
             <AlertCircle className="w-8 h-8 text-amber-500 mx-auto" />
-            <h3 className="font-serif text-lg text-white">Booking Not Found</h3>
-            <p className="text-xs text-[#94a3b8] max-w-sm mx-auto">
+            <h3
+              className={`font-serif text-lg ${
+                theme === "light" ? "text-[#18181b]" : "text-white"
+              }`}
+            >
+              Booking Not Found
+            </h3>
+            <p
+              className={`text-xs max-w-sm mx-auto ${
+                theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+              }`}
+            >
               No appointment exists with booking reference &ldquo;{reference}&rdquo;.
             </p>
             <Link
               href="/status"
-              className="inline-block py-2 px-5 rounded-lg bg-[#c5a880] text-[#09090b] font-medium text-xs"
+              className="inline-block py-2 px-5 rounded-lg bg-[#c5a880] text-[#09090b] font-medium text-xs shadow-sm"
             >
               Back to Lookup Form
             </Link>

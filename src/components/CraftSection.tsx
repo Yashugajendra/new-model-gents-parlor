@@ -3,10 +3,18 @@
 import React from "react";
 import Image from "next/image";
 import { Scissors, Flame, Sparkles } from "lucide-react";
+import { useLanguageTheme } from "@/context/LanguageThemeContext";
 
 export function CraftSection() {
+  const { theme, language } = useLanguageTheme();
+
   return (
-    <section id="craft" className="py-24 bg-[#0d0d10] border-y border-white/[0.06] relative scroll-mt-12">
+    <section
+      id="craft"
+      className={`py-24 relative scroll-mt-12 border-y transition-colors duration-300 ${
+        theme === "light" ? "bg-[#fbfaf8] border-black/[0.08]" : "bg-[#0d0d10] border-white/[0.06]"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Visual Showcase */}
@@ -51,48 +59,129 @@ export function CraftSection() {
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c5a880]">
               The Craft & Technique
             </p>
-            <h2 className="font-serif text-3xl sm:text-5xl font-medium text-white leading-tight">
+            <h2
+              className={`font-serif text-3xl sm:text-5xl font-medium leading-tight ${
+                theme === "light" ? "text-[#18181b]" : "text-white"
+              }`}
+            >
               More than a haircut. <br />
               <span className="italic font-normal gold-gradient-text">A discipline of craft.</span>
             </h2>
-            <p className="text-sm sm:text-base text-[#94a3b8] leading-relaxed">
-              At <strong className="text-white font-medium">New Model Gents Beauty Parlor</strong>,
-              we focus on individual style, hair whorls, and facial structure. Every cut is sculpted
+            <p
+              className={`text-sm sm:text-base leading-relaxed ${
+                theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+              }`}
+            >
+              At{" "}
+              <strong
+                className={`font-medium ${
+                  theme === "light" ? "text-[#18181b]" : "text-white"
+                }`}
+              >
+                New Model Gents Beauty Parlor
+              </strong>
+              , we focus on individual style, hair whorls, and facial structure. Every cut is sculpted
               with razor-honed shears, heated herbal compress, and artisan finishing products.
             </p>
 
             <div className="space-y-4 pt-4">
-              <div className="flex gap-4 items-start p-3 rounded-xl bg-[#141418] border border-white/[0.04] hover:border-[#c5a880]/30 transition-all">
-                <div className="w-9 h-9 rounded-lg bg-[#1a1a20] border border-[#c5a880]/30 flex items-center justify-center shrink-0 text-[#c5a880]">
+              <div
+                className={`flex gap-4 items-start p-3 rounded-xl border transition-all ${
+                  theme === "light"
+                    ? "bg-white border-black/[0.06] hover:border-[#c5a880] shadow-xs"
+                    : "bg-[#141418] border-white/[0.04] hover:border-[#c5a880]/30"
+                }`}
+              >
+                <div
+                  className={`w-9 h-9 rounded-lg border flex items-center justify-center shrink-0 ${
+                    theme === "light"
+                      ? "bg-[#f4efe6] border-[#c5a880]/50 text-[#9e7946]"
+                      : "bg-[#1a1a20] border-[#c5a880]/30 text-[#c5a880]"
+                  }`}
+                >
                   <Scissors className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-white text-base font-medium">1. Structural Consultation</h4>
-                  <p className="text-xs text-[#94a3b8] mt-0.5">
+                  <h4
+                    className={`text-base font-medium ${
+                      theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
+                  >
+                    1. Structural Consultation
+                  </h4>
+                  <p
+                    className={`text-xs mt-0.5 ${
+                      theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                    }`}
+                  >
                     We analyze bone structure, hair growth directions, and lifestyle before water touches your hair.
                   </p>
                 </div>
               </div>
 
-              <div className="flex gap-4 items-start p-3 rounded-xl bg-[#141418] border border-white/[0.04] hover:border-[#c5a880]/30 transition-all">
-                <div className="w-9 h-9 rounded-lg bg-[#1a1a20] border border-[#c5a880]/30 flex items-center justify-center shrink-0 text-[#c5a880]">
+              <div
+                className={`flex gap-4 items-start p-3 rounded-xl border transition-all ${
+                  theme === "light"
+                    ? "bg-white border-black/[0.06] hover:border-[#c5a880] shadow-xs"
+                    : "bg-[#141418] border-white/[0.04] hover:border-[#c5a880]/30"
+                }`}
+              >
+                <div
+                  className={`w-9 h-9 rounded-lg border flex items-center justify-center shrink-0 ${
+                    theme === "light"
+                      ? "bg-[#f4efe6] border-[#c5a880]/50 text-[#9e7946]"
+                      : "bg-[#1a1a20] border-[#c5a880]/30 text-[#c5a880]"
+                  }`}
+                >
                   <Flame className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-white text-base font-medium">2. Steamed Botanical Towels</h4>
-                  <p className="text-xs text-[#94a3b8] mt-0.5">
+                  <h4
+                    className={`text-base font-medium ${
+                      theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
+                  >
+                    2. Steamed Botanical Towels
+                  </h4>
+                  <p
+                    className={`text-xs mt-0.5 ${
+                      theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                    }`}
+                  >
                     Infused with natural herbal tonics to relax facial muscles and prepare follicles for a smooth razor finish.
                   </p>
                 </div>
               </div>
 
-              <div className="flex gap-4 items-start p-3 rounded-xl bg-[#141418] border border-white/[0.04] hover:border-[#c5a880]/30 transition-all">
-                <div className="w-9 h-9 rounded-lg bg-[#1a1a20] border border-[#c5a880]/30 flex items-center justify-center shrink-0 text-[#c5a880]">
+              <div
+                className={`flex gap-4 items-start p-3 rounded-xl border transition-all ${
+                  theme === "light"
+                    ? "bg-white border-black/[0.06] hover:border-[#c5a880] shadow-xs"
+                    : "bg-[#141418] border-white/[0.04] hover:border-[#c5a880]/30"
+                }`}
+              >
+                <div
+                  className={`w-9 h-9 rounded-lg border flex items-center justify-center shrink-0 ${
+                    theme === "light"
+                      ? "bg-[#f4efe6] border-[#c5a880]/50 text-[#9e7946]"
+                      : "bg-[#1a1a20] border-[#c5a880]/30 text-[#c5a880]"
+                  }`}
+                >
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-white text-base font-medium">3. Cold Compression & Styling</h4>
-                  <p className="text-xs text-[#94a3b8] mt-0.5">
+                  <h4
+                    className={`text-base font-medium ${
+                      theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
+                  >
+                    3. Cold Compression & Styling
+                  </h4>
+                  <p
+                    className={`text-xs mt-0.5 ${
+                      theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                    }`}
+                  >
                     Pore-toning cold compress followed by lightweight, residue-free matte pastes crafted for all-day sharpness.
                   </p>
                 </div>

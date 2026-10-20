@@ -17,7 +17,7 @@ import { useLanguageTheme } from "@/context/LanguageThemeContext";
 import { AlertTriangle } from "lucide-react";
 
 export default function HomePage() {
-  const { language } = useLanguageTheme();
+  const { language, theme } = useLanguageTheme();
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
 
@@ -61,7 +61,11 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex flex-col selection:bg-[#c5a880] selection:text-[#09090b]">
+    <div
+      className={`min-h-screen flex flex-col transition-colors duration-300 ${
+        theme === "light" ? "bg-[#fbfaf8] text-[#18181b]" : "bg-[#09090b] text-[#f8fafc]"
+      } selection:bg-[#c5a880] selection:text-[#09090b]`}
+    >
       {/* Dynamic Closure Notice Banner across top of site if closed */}
       {settings.is_closed && (
         <div className="bg-[#ef4444] text-white text-xs sm:text-sm px-4 py-2.5 text-center font-medium shadow-md flex items-center justify-center gap-2">

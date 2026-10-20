@@ -32,46 +32,97 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
   const cleanWhatsapp = (settings?.whatsapp_number || "917338076977").replace(/\D/g, "");
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-[#09090b]/90 border-b border-white/[0.08] transition-all">
+    <header
+      className={`sticky top-0 z-40 w-full backdrop-blur-md transition-colors duration-300 ${
+        theme === "light"
+          ? "bg-[#fbfaf8]/95 border-b border-black/[0.08]"
+          : "bg-[#09090b]/90 border-b border-white/[0.08]"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
         {/* Brand Logo with NM Monogram */}
         <Link href="/" className="flex items-center gap-3 group shrink-0">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1a1a20] to-[#121215] border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880] group-hover:border-[#c5a880] group-hover:shadow-[0_0_15px_rgba(197,168,128,0.25)] group-hover:scale-105 transition-all shrink-0">
-            <span className="font-serif font-bold text-sm tracking-wider text-[#c5a880]">NM</span>
+          <div
+            className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all shrink-0 ${
+              theme === "light"
+                ? "bg-[#f4efe6] border-[#c5a880]/60 text-[#9e7946] group-hover:border-[#9e7946] group-hover:shadow-[0_0_15px_rgba(158,121,70,0.25)]"
+                : "bg-gradient-to-br from-[#1a1a20] to-[#121215] border-[#c5a880]/40 text-[#c5a880] group-hover:border-[#c5a880] group-hover:shadow-[0_0_15px_rgba(197,168,128,0.25)]"
+            } group-hover:scale-105`}
+          >
+            <span className="font-serif font-bold text-sm tracking-wider">NM</span>
           </div>
           <div>
             <span
-              className="font-serif text-base sm:text-lg lg:text-xl tracking-wider uppercase font-semibold text-white group-hover:text-[#c5a880] transition-colors block leading-tight"
+              className={`font-serif text-base sm:text-lg lg:text-xl tracking-wider uppercase font-semibold transition-colors block leading-tight ${
+                theme === "light"
+                  ? "text-[#18181b] group-hover:text-[#9e7946]"
+                  : "text-white group-hover:text-[#c5a880]"
+              }`}
               suppressHydrationWarning
             >
               {shopName}
             </span>
-            <span className="block text-[9px] sm:text-[10px] tracking-[0.2em] text-[#94a3b8] uppercase font-sans">
+            <span
+              className={`block text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-sans ${
+                theme === "light" ? "text-[#71717a]" : "text-[#94a3b8]"
+              }`}
+            >
               {t.nav.taglineSub}
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links: Home · About Us · Services · Hairstyles · Hours & Location */}
-        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-[#94a3b8]">
-          <a href="#home" className="hover:text-white transition-colors py-1 hover-gold-line">
+        <nav
+          className={`hidden lg:flex items-center gap-6 text-sm font-medium ${
+            theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+          }`}
+        >
+          <a
+            href="#home"
+            className={`transition-colors py-1 hover-gold-line ${
+              theme === "light" ? "hover:text-[#18181b]" : "hover:text-white"
+            }`}
+          >
             {t.nav.home}
           </a>
-          <a href="#about" className="hover:text-white transition-colors py-1 hover-gold-line">
+          <a
+            href="#about"
+            className={`transition-colors py-1 hover-gold-line ${
+              theme === "light" ? "hover:text-[#18181b]" : "hover:text-white"
+            }`}
+          >
             {t.nav.about}
           </a>
-          <a href="#services" className="hover:text-white transition-colors py-1 hover-gold-line">
+          <a
+            href="#services"
+            className={`transition-colors py-1 hover-gold-line ${
+              theme === "light" ? "hover:text-[#18181b]" : "hover:text-white"
+            }`}
+          >
             {t.nav.services}
           </a>
-          <a href="#gallery" className="hover:text-white transition-colors py-1 hover-gold-line">
+          <a
+            href="#gallery"
+            className={`transition-colors py-1 hover-gold-line ${
+              theme === "light" ? "hover:text-[#18181b]" : "hover:text-white"
+            }`}
+          >
             {t.nav.hairstyles}
           </a>
-          <a href="#hours" className="hover:text-white transition-colors py-1 hover-gold-line">
+          <a
+            href="#hours"
+            className={`transition-colors py-1 hover-gold-line ${
+              theme === "light" ? "hover:text-[#18181b]" : "hover:text-white"
+            }`}
+          >
             {t.nav.hours}
           </a>
           <Link
             href="/status"
-            className="hover:text-white transition-colors py-1 hover-gold-line flex items-center gap-1.5"
+            className={`transition-colors py-1 hover-gold-line flex items-center gap-1.5 ${
+              theme === "light" ? "hover:text-[#18181b]" : "hover:text-white"
+            }`}
           >
             <Calendar className="w-3.5 h-3.5 text-[#c5a880]" />
             <span>{t.nav.status}</span>
@@ -82,7 +133,11 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
         <div className="hidden md:flex items-center gap-3 shrink-0">
           {/* Top Bar Control 1: Language toggle (EN | ಕನ್ನಡ) */}
           <div
-            className="flex items-center p-0.5 rounded-lg border border-white/10 bg-[#141418] text-xs font-semibold shadow-inner"
+            className={`flex items-center p-0.5 rounded-lg border text-xs font-semibold shadow-inner ${
+              theme === "light"
+                ? "bg-[#eee8dd] border-black/10"
+                : "bg-[#141418] border-white/10"
+            }`}
             title={language === "en" ? "Switch to Kannada" : "Switch to English"}
           >
             <button
@@ -90,17 +145,27 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
               className={`px-2.5 py-1 rounded-md transition-all ${
                 language === "en"
                   ? "bg-[#c5a880] text-[#09090b] shadow-sm font-bold"
+                  : theme === "light"
+                  ? "text-[#52525b] hover:text-[#18181b]"
                   : "text-[#94a3b8] hover:text-white"
               }`}
             >
               EN
             </button>
-            <span className="text-white/20 text-[10px] select-none px-0.5">|</span>
+            <span
+              className={`text-[10px] select-none px-0.5 ${
+                theme === "light" ? "text-black/30" : "text-white/20"
+              }`}
+            >
+              |
+            </span>
             <button
               onClick={() => setLanguage("kn")}
               className={`px-2.5 py-1 rounded-md transition-all ${
                 language === "kn"
                   ? "bg-[#c5a880] text-[#09090b] shadow-sm font-bold"
+                  : theme === "light"
+                  ? "text-[#52525b] hover:text-[#18181b]"
                   : "text-[#94a3b8] hover:text-white"
               }`}
             >
@@ -110,7 +175,11 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
 
           {/* Top Bar Control 2: Theme toggle (☀️ Light / 🌙 Dark) */}
           <div
-            className="flex items-center p-0.5 rounded-lg border border-white/10 bg-[#141418] text-xs font-semibold shadow-inner"
+            className={`flex items-center p-0.5 rounded-lg border text-xs font-semibold shadow-inner ${
+              theme === "light"
+                ? "bg-[#eee8dd] border-black/10"
+                : "bg-[#141418] border-white/10"
+            }`}
             title="Toggle Light / Dark mode"
           >
             <button
@@ -127,12 +196,20 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
                 {language === "kn" ? "ಲೈಟ್" : "Light"}
               </span>
             </button>
-            <span className="text-white/20 text-[10px] select-none px-0.5">|</span>
+            <span
+              className={`text-[10px] select-none px-0.5 ${
+                theme === "light" ? "text-black/30" : "text-white/20"
+              }`}
+            >
+              |
+            </span>
             <button
               onClick={() => setTheme("dark")}
               className={`px-2 py-1 rounded-md flex items-center gap-1 transition-all ${
                 theme === "dark"
                   ? "bg-[#c5a880] text-[#09090b] shadow-sm font-bold"
+                  : theme === "light"
+                  ? "text-[#52525b] hover:text-[#18181b]"
                   : "text-[#94a3b8] hover:text-white"
               }`}
               title={language === "kn" ? "ಡಾರ್ಕ್ ಮೋಡ್" : "Dark Mode"}
@@ -148,7 +225,11 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
           <Link
             href="/admin"
             title={t.nav.ownerDashboard}
-            className="p-2 text-[#94a3b8] hover:text-[#c5a880] transition-colors rounded-lg hover:bg-white/[0.04]"
+            className={`p-2 transition-colors rounded-lg ${
+              theme === "light"
+                ? "text-[#52525b] hover:text-[#9e7946] hover:bg-black/[0.04]"
+                : "text-[#94a3b8] hover:text-[#c5a880] hover:bg-white/[0.04]"
+            }`}
           >
             <ShieldCheck className="w-5 h-5" />
           </Link>
@@ -160,7 +241,11 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
             )}%2C%20I%20would%20like%20to%20enquire%20about%20booking%20an%20appointment.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 text-[#94a3b8] hover:text-[#25D366] transition-colors rounded-lg hover:bg-white/[0.04]"
+            className={`p-2 transition-colors rounded-lg ${
+              theme === "light"
+                ? "text-[#52525b] hover:text-[#25D366] hover:bg-black/[0.04]"
+                : "text-[#94a3b8] hover:text-[#25D366] hover:bg-white/[0.04]"
+            }`}
             title="Chat on WhatsApp"
           >
             <MessageCircle className="w-5 h-5" />
@@ -180,7 +265,11 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
           {/* Quick Language Toggle on Mobile */}
           <button
             onClick={() => setLanguage(language === "en" ? "kn" : "en")}
-            className="px-2 py-1 rounded-md border border-[#c5a880]/30 bg-[#141418] text-[#c5a880] font-bold text-xs"
+            className={`px-2 py-1 rounded-md border font-bold text-xs ${
+              theme === "light"
+                ? "border-[#c5a880]/50 bg-[#f4efe6] text-[#9e7946]"
+                : "border-[#c5a880]/30 bg-[#141418] text-[#c5a880]"
+            }`}
           >
             {language === "en" ? "ಕನ್ನಡ" : "EN"}
           </button>
@@ -188,7 +277,11 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
           {/* Quick Theme Toggle on Mobile */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-1.5 rounded-md border border-white/10 bg-[#141418] text-[#94a3b8]"
+            className={`p-1.5 rounded-md border ${
+              theme === "light"
+                ? "border-black/10 bg-[#f4efe6] text-[#52525b]"
+                : "border-white/10 bg-[#141418] text-[#94a3b8]"
+            }`}
           >
             {theme === "dark" ? <Sun className="w-4 h-4 text-[#c5a880]" /> : <Moon className="w-4 h-4" />}
           </button>
@@ -202,7 +295,11 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 text-white hover:text-[#c5a880] transition-colors"
+            className={`p-1.5 transition-colors ${
+              theme === "light"
+                ? "text-[#18181b] hover:text-[#9e7946]"
+                : "text-white hover:text-[#c5a880]"
+            }`}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -211,20 +308,44 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
 
       {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-white/[0.08] bg-[#0d0d10] px-4 pt-3 pb-6 space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+        <div
+          className={`md:hidden border-b px-4 pt-3 pb-6 space-y-4 transition-colors ${
+            theme === "light"
+              ? "bg-[#fbfaf8] border-black/[0.08]"
+              : "bg-[#0d0d10] border-white/[0.08]"
+          }`}
+        >
+          <div
+            className={`flex items-center justify-between pb-3 border-b ${
+              theme === "light" ? "border-black/[0.06]" : "border-white/[0.06]"
+            }`}
+          >
             {/* Mobile Language switch */}
             <div className="flex items-center gap-1 text-xs">
-              <span className="text-[#94a3b8]">Lang:</span>
+              <span className={theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"}>
+                Lang:
+              </span>
               <button
                 onClick={() => setLanguage("en")}
-                className={`px-2 py-0.5 rounded ${language === "en" ? "bg-[#c5a880] text-black font-bold" : "text-gray-400"}`}
+                className={`px-2 py-0.5 rounded ${
+                  language === "en"
+                    ? "bg-[#c5a880] text-black font-bold"
+                    : theme === "light"
+                    ? "text-[#71717a]"
+                    : "text-gray-400"
+                }`}
               >
                 EN
               </button>
               <button
                 onClick={() => setLanguage("kn")}
-                className={`px-2 py-0.5 rounded ${language === "kn" ? "bg-[#c5a880] text-black font-bold" : "text-gray-400"}`}
+                className={`px-2 py-0.5 rounded ${
+                  language === "kn"
+                    ? "bg-[#c5a880] text-black font-bold"
+                    : theme === "light"
+                    ? "text-[#71717a]"
+                    : "text-gray-400"
+                }`}
               >
                 ಕನ್ನಡ
               </button>
@@ -232,16 +353,28 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
 
             {/* Mobile Theme switch */}
             <div className="flex items-center gap-1 text-xs">
-              <span className="text-[#94a3b8]">Theme:</span>
+              <span className={theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"}>
+                Theme:
+              </span>
               <button
                 onClick={() => setTheme("light")}
-                className={`px-2 py-0.5 rounded ${theme === "light" ? "bg-[#c5a880] text-black font-bold" : "text-gray-400"}`}
+                className={`px-2 py-0.5 rounded ${
+                  theme === "light"
+                    ? "bg-[#c5a880] text-black font-bold"
+                    : "text-gray-400"
+                }`}
               >
                 ☀️ {t.nav.lightText}
               </button>
               <button
                 onClick={() => setTheme("dark")}
-                className={`px-2 py-0.5 rounded ${theme === "dark" ? "bg-[#c5a880] text-black font-bold" : "text-gray-400"}`}
+                className={`px-2 py-0.5 rounded ${
+                  theme === "dark"
+                    ? "bg-[#c5a880] text-black font-bold"
+                    : theme === "light"
+                    ? "text-[#71717a]"
+                    : "text-gray-400"
+                }`}
               >
                 🌙 {t.nav.darkText}
               </button>
@@ -251,35 +384,55 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
           <a
             href="#home"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-gray-300 hover:text-[#c5a880]"
+            className={`block text-sm font-medium ${
+              theme === "light"
+                ? "text-[#27272a] hover:text-[#9e7946]"
+                : "text-gray-300 hover:text-[#c5a880]"
+            }`}
           >
             {t.nav.home}
           </a>
           <a
             href="#about"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-gray-300 hover:text-[#c5a880]"
+            className={`block text-sm font-medium ${
+              theme === "light"
+                ? "text-[#27272a] hover:text-[#9e7946]"
+                : "text-gray-300 hover:text-[#c5a880]"
+            }`}
           >
             {t.nav.about}
           </a>
           <a
             href="#services"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-gray-300 hover:text-[#c5a880]"
+            className={`block text-sm font-medium ${
+              theme === "light"
+                ? "text-[#27272a] hover:text-[#9e7946]"
+                : "text-gray-300 hover:text-[#c5a880]"
+            }`}
           >
             {t.nav.services}
           </a>
           <a
             href="#gallery"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-gray-300 hover:text-[#c5a880]"
+            className={`block text-sm font-medium ${
+              theme === "light"
+                ? "text-[#27272a] hover:text-[#9e7946]"
+                : "text-gray-300 hover:text-[#c5a880]"
+            }`}
           >
             {t.nav.hairstyles}
           </a>
           <a
             href="#hours"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-gray-300 hover:text-[#c5a880]"
+            className={`block text-sm font-medium ${
+              theme === "light"
+                ? "text-[#27272a] hover:text-[#9e7946]"
+                : "text-gray-300 hover:text-[#c5a880]"
+            }`}
           >
             {t.nav.hours}
           </a>
@@ -293,7 +446,11 @@ export function Navbar({ onOpenBooking, settings }: NavbarProps) {
           <Link
             href="/admin"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-gray-400 hover:text-white"
+            className={`block text-sm font-medium ${
+              theme === "light"
+                ? "text-[#71717a] hover:text-[#18181b]"
+                : "text-gray-400 hover:text-white"
+            }`}
           >
             {t.nav.ownerDashboard}
           </Link>

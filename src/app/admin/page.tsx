@@ -191,31 +191,61 @@ export default function AdminDashboardPage() {
   // If not logged in, render PIN prompt
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#09090b] text-white flex items-center justify-center p-4">
-        <div className="w-full max-w-md p-8 rounded-2xl bg-[#121215] border border-white/[0.08] shadow-2xl space-y-6">
+      <div
+        className={`min-h-screen flex items-center justify-center p-4 transition-colors duration-300 ${
+          theme === "light" ? "bg-[#fbfaf8] text-[#18181b]" : "bg-[#09090b] text-white"
+        }`}
+      >
+        <div
+          className={`w-full max-w-md p-8 rounded-2xl border shadow-2xl space-y-6 transition-colors ${
+            theme === "light" ? "bg-white border-black/[0.08]" : "bg-[#121215] border-white/[0.08]"
+          }`}
+        >
           <div className="flex justify-end gap-2 text-xs">
             <button
               onClick={() => setLanguage(language === "en" ? "kn" : "en")}
-              className="px-2.5 py-1 rounded bg-[#18181d] border border-white/10 text-[#c5a880] font-bold"
+              className={`px-2.5 py-1 rounded border font-bold ${
+                theme === "light"
+                  ? "bg-[#f4efe6] border-black/10 text-[#9e7946]"
+                  : "bg-[#18181d] border-white/10 text-[#c5a880]"
+              }`}
             >
               {language === "en" ? "ಕನ್ನಡ" : "English"}
             </button>
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-1 rounded bg-[#18181d] border border-white/10 text-gray-400"
+              className={`p-1 rounded border ${
+                theme === "light"
+                  ? "bg-[#f4efe6] border-black/10 text-[#52525b]"
+                  : "bg-[#18181d] border-white/10 text-gray-400"
+              }`}
             >
               {theme === "dark" ? <Sun className="w-4 h-4 text-[#c5a880]" /> : <Moon className="w-4 h-4" />}
             </button>
           </div>
 
           <div className="text-center space-y-2">
-            <div className="w-12 h-12 rounded-xl bg-[#1a1a1f] border border-[#c5a880]/30 flex items-center justify-center text-[#c5a880] mx-auto shadow-md">
+            <div
+              className={`w-12 h-12 rounded-xl border flex items-center justify-center mx-auto shadow-md ${
+                theme === "light"
+                  ? "bg-[#f4efe6] border-[#c5a880]/50 text-[#9e7946]"
+                  : "bg-[#1a1a1f] border-[#c5a880]/30 text-[#c5a880]"
+              }`}
+            >
               <Lock className="w-6 h-6" />
             </div>
-            <h2 className="font-serif text-2xl font-bold">
+            <h2
+              className={`font-serif text-2xl font-bold ${
+                theme === "light" ? "text-[#18181b]" : "text-white"
+              }`}
+            >
               {language === "kn" ? "ಮಾಲೀಕರಿಗೆ ಮಾತ್ರ ಸುರಕ್ಷಿತ ಲಾಗಿನ್" : "Secure Owner Login"}
             </h2>
-            <p className="text-xs text-[#94a3b8]">
+            <p
+              className={`text-xs ${
+                theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+              }`}
+            >
               {language === "kn"
                 ? "ಅಪಾಯಿಂಟ್ಮೆಂಟ್ಗಳು, ಸೇವೆಗಳು ಹಾಗೂ ಲಭ್ಯತೆ ನಿರ್ವಹಿಸಲು ಪಾಸ್ಕೋಡ್ ನಮೂದಿಸಿ."
                 : "Enter master passcode to manage appointments, services, and availability."}
@@ -229,7 +259,11 @@ export default function AdminDashboardPage() {
               </div>
             )}
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5">
+              <label
+                className={`block text-xs font-medium mb-1.5 ${
+                  theme === "light" ? "text-[#52525b]" : "text-gray-400"
+                }`}
+              >
                 {language === "kn" ? "ಮಾಸ್ಟರ್ ಪಾಸ್ಕೋಡ್ (ಡೆಮೊ: 1234)" : "Master Passcode (Demo: 1234)"}
               </label>
               <input
@@ -239,7 +273,11 @@ export default function AdminDashboardPage() {
                 placeholder="••••"
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-center text-lg tracking-widest font-mono focus:outline-none focus:border-[#c5a880]"
+                className={`w-full px-4 py-2.5 rounded-lg border text-center text-lg tracking-widest font-mono focus:outline-none focus:border-[#c5a880] transition-colors ${
+                  theme === "light"
+                    ? "bg-[#fbfaf8] border-black/15 text-[#18181b] placeholder-gray-400"
+                    : "bg-[#18181d] border-white/[0.1] text-white placeholder-gray-500"
+                }`}
               />
             </div>
             <button
@@ -249,7 +287,14 @@ export default function AdminDashboardPage() {
               {language === "kn" ? "ಡ್ಯಾಶ್ಬೋರ್ಡ್ ಪ್ರವೇಶಿಸಿ" : "Access Owner Dashboard"}
             </button>
             <div className="text-center">
-              <Link href="/" className="text-xs text-gray-500 hover:text-white inline-flex items-center gap-1">
+              <Link
+                href="/"
+                className={`text-xs inline-flex items-center gap-1 transition-colors ${
+                  theme === "light"
+                    ? "text-[#52525b] hover:text-[#18181b]"
+                    : "text-gray-500 hover:text-white"
+                }`}
+              >
                 <ArrowLeft className="w-3 h-3" />
                 <span>{language === "kn" ? "ವೆಬ್ಸೈಟ್ಗೆ ಹಿಂತಿರುಗಿ" : "Back to Website"}</span>
               </Link>
@@ -261,7 +306,11 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-[#f8fafc] flex flex-col">
+    <div
+      className={`min-h-screen flex flex-col transition-colors duration-300 ${
+        theme === "light" ? "bg-[#fbfaf8] text-[#18181b]" : "bg-[#09090b] text-[#f8fafc]"
+      }`}
+    >
       {/* Toast Alert */}
       {toastMessage && (
         <div className="fixed top-5 right-5 z-50 bg-[#16161b] border border-[#c5a880] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-xs">
@@ -271,7 +320,13 @@ export default function AdminDashboardPage() {
       )}
 
       {/* Top Header */}
-      <header className="border-b border-white/[0.08] bg-[#0d0d10] py-4 px-6 sticky top-0 z-30">
+      <header
+        className={`border-b py-4 px-6 sticky top-0 z-30 transition-colors ${
+          theme === "light"
+            ? "bg-[#f4efe6] border-black/[0.08]"
+            : "bg-[#0d0d10] border-white/[0.08]"
+        }`}
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1a1a20] to-[#121215] border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880]">

@@ -10,7 +10,7 @@ interface LocationHoursSectionProps {
 }
 
 export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
-  const { language, t } = useLanguageTheme();
+  const { language, theme, t } = useLanguageTheme();
   const [todayIndex, setTodayIndex] = useState<number>(0);
 
   useEffect(() => {
@@ -40,7 +40,12 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
     "https://www.google.com/maps/search/?api=1&query=Katte+Complex%2C+Thirthahalli%2C+Shivamogga";
 
   return (
-    <section id="hours" className="py-24 bg-[#09090b] relative scroll-mt-12 border-t border-white/[0.06]">
+    <section
+      id="hours"
+      className={`py-24 relative scroll-mt-12 border-t transition-colors duration-300 ${
+        theme === "light" ? "bg-[#fbfaf8] border-black/[0.08]" : "bg-[#09090b] border-white/[0.06]"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Closure Notice (Auto-shown when owner marks shop closed) */}
         {settings.is_closed && (
@@ -71,20 +76,45 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c5a880]">
               {t.hours.badge}
             </p>
-            <h2 className="font-serif text-3xl sm:text-5xl font-medium text-white">
+            <h2
+              className={`font-serif text-3xl sm:text-5xl font-medium ${
+                theme === "light" ? "text-[#18181b]" : "text-white"
+              }`}
+            >
               {t.hours.title}
             </h2>
-            <p className="text-[#94a3b8] text-sm sm:text-base leading-relaxed">
+            <p
+              className={`text-sm sm:text-base leading-relaxed ${
+                theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+              }`}
+            >
               {t.hours.subtitle}
             </p>
 
             <div className="space-y-4 pt-2">
               {/* Full Address */}
-              <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#121215] border border-white/[0.06]">
+              <div
+                className={`flex items-start gap-3.5 p-4 rounded-xl border transition-colors ${
+                  theme === "light"
+                    ? "bg-white border-black/[0.08] shadow-xs"
+                    : "bg-[#121215] border-white/[0.06]"
+                }`}
+              >
                 <MapPin className="w-5 h-5 text-[#c5a880] shrink-0 mt-0.5" />
                 <div className="flex-1">
-                  <h4 className="text-white text-sm font-semibold">{t.hours.addressTitle}</h4>
-                  <p className="text-xs sm:text-sm text-[#94a3b8] mt-0.5 leading-relaxed" suppressHydrationWarning>
+                  <h4
+                    className={`text-sm font-semibold ${
+                      theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
+                  >
+                    {t.hours.addressTitle}
+                  </h4>
+                  <p
+                    className={`text-xs sm:text-sm mt-0.5 leading-relaxed ${
+                      theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                    }`}
+                    suppressHydrationWarning
+                  >
                     {addressText}
                   </p>
                   <a
@@ -101,11 +131,27 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
               </div>
 
               {/* Phone / WhatsApp */}
-              <div className="flex items-start gap-3.5 p-4 rounded-xl bg-[#121215] border border-white/[0.06]">
+              <div
+                className={`flex items-start gap-3.5 p-4 rounded-xl border transition-colors ${
+                  theme === "light"
+                    ? "bg-white border-black/[0.08] shadow-xs"
+                    : "bg-[#121215] border-white/[0.06]"
+                }`}
+              >
                 <Phone className="w-5 h-5 text-[#c5a880] shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-white text-sm font-semibold">{t.hours.phoneTitle}</h4>
-                  <p className="text-xs sm:text-sm text-[#94a3b8] mt-0.5">
+                  <h4
+                    className={`text-sm font-semibold ${
+                      theme === "light" ? "text-[#18181b]" : "text-white"
+                    }`}
+                  >
+                    {t.hours.phoneTitle}
+                  </h4>
+                  <p
+                    className={`text-xs sm:text-sm mt-0.5 ${
+                      theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                    }`}
+                  >
                     {settings.phone_number || "+91 73380 76977"}
                   </p>
                   <div className="flex items-center gap-3 mt-2">
@@ -118,7 +164,7 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                       <MessageSquare className="w-3.5 h-3.5" />
                       <span>WhatsApp Chat</span>
                     </a>
-                    <span className="text-white/20 text-xs">•</span>
+                    <span className={theme === "light" ? "text-black/20 text-xs" : "text-white/20 text-xs"}>•</span>
                     <a
                       href={`tel:${settings.phone_number || "+917338076977"}`}
                       className="text-xs text-[#c5a880] hover:underline font-medium"
@@ -130,11 +176,21 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
               </div>
 
               {/* Embedded Google Maps Box */}
-              <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-[#121215] h-52 relative shadow-lg">
+              <div
+                className={`rounded-xl overflow-hidden border h-52 relative shadow-lg ${
+                  theme === "light"
+                    ? "bg-white border-black/[0.08]"
+                    : "bg-[#121215] border-white/[0.08]"
+                }`}
+              >
                 <iframe
                   title="New Model Gents Parlor Location Map"
                   src="https://maps.google.com/maps?q=Katte+Complex,+Thirthahalli,+Karnataka+577432&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  className="w-full h-full border-0 filter invert-[90%] hue-rotate-180 opacity-80 hover:opacity-100 transition-opacity"
+                  className={`w-full h-full border-0 transition-opacity ${
+                    theme === "dark"
+                      ? "filter invert-[90%] hue-rotate-180 opacity-80 hover:opacity-100"
+                      : "opacity-95 hover:opacity-100"
+                  }`}
                   loading="lazy"
                   allowFullScreen
                 />
@@ -142,7 +198,11 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                   href={googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-[#09090b]/90 border border-white/20 text-[11px] font-semibold text-[#c5a880] backdrop-blur-md flex items-center gap-1.5 hover:scale-105 transition-transform"
+                  className={`absolute bottom-3 right-3 px-3 py-1.5 rounded-lg border text-[11px] font-semibold backdrop-blur-md flex items-center gap-1.5 hover:scale-105 transition-transform ${
+                    theme === "light"
+                      ? "bg-white/95 border-black/15 text-[#9e7946] shadow-sm"
+                      : "bg-[#09090b]/90 border-white/20 text-[#c5a880]"
+                  }`}
                 >
                   <ExternalLink className="w-3 h-3" />
                   <span>{t.hours.getDirectionsMap}</span>
@@ -152,16 +212,42 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
           </div>
 
           {/* Operating Hours Table */}
-          <div className="p-8 rounded-2xl bg-[#121215] border border-white/[0.08] shadow-xl">
-            <div className="flex items-center gap-3 pb-6 border-b border-white/[0.08] mb-6">
+          <div
+            className={`p-8 rounded-2xl border shadow-xl transition-colors ${
+              theme === "light"
+                ? "bg-white border-black/[0.08]"
+                : "bg-[#121215] border-white/[0.08]"
+            }`}
+          >
+            <div
+              className={`flex items-center gap-3 pb-6 border-b mb-6 ${
+                theme === "light" ? "border-black/[0.08]" : "border-white/[0.08]"
+              }`}
+            >
               <Clock className="w-6 h-6 text-[#c5a880]" />
               <div>
-                <h3 className="font-serif text-2xl text-white">{t.hours.openingHoursTitle}</h3>
-                <p className="text-xs text-[#94a3b8] mt-0.5">{t.hours.exclusivityNote}</p>
+                <h3
+                  className={`font-serif text-2xl ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
+                  {t.hours.openingHoursTitle}
+                </h3>
+                <p
+                  className={`text-xs mt-0.5 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
+                  {t.hours.exclusivityNote}
+                </p>
               </div>
             </div>
 
-            <div className="divide-y divide-white/[0.04]">
+            <div
+              className={`divide-y ${
+                theme === "light" ? "divide-black/[0.05]" : "divide-white/[0.04]"
+              }`}
+            >
               {weeklyHours.map((item) => {
                 const isToday = item.dayIdx === todayIndex;
                 const dayLabel = language === "kn" ? item.dayKn : item.dayEn;
@@ -171,7 +257,11 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                     key={item.dayEn}
                     className={`py-3.5 flex items-center justify-between text-sm transition-colors ${
                       isToday
-                        ? "text-[#c5a880] font-semibold bg-[#c5a880]/10 px-3.5 rounded-xl border border-[#c5a880]/20"
+                        ? theme === "light"
+                          ? "text-[#9e7946] font-semibold bg-[#f4efe6] px-3.5 rounded-xl border border-[#c5a880]/30"
+                          : "text-[#c5a880] font-semibold bg-[#c5a880]/10 px-3.5 rounded-xl border border-[#c5a880]/20"
+                        : theme === "light"
+                        ? "text-[#52525b] hover:text-[#18181b]"
                         : "text-[#94a3b8] hover:text-white"
                     }`}
                   >
@@ -183,7 +273,17 @@ export function LocationHoursSection({ settings }: LocationHoursSectionProps) {
                         </span>
                       )}
                     </div>
-                    <span className={isToday ? "text-white font-semibold" : "text-gray-300"}>
+                    <span
+                      className={
+                        isToday
+                          ? theme === "light"
+                            ? "text-[#18181b] font-semibold"
+                            : "text-white font-semibold"
+                          : theme === "light"
+                          ? "text-[#27272a]"
+                          : "text-gray-300"
+                      }
+                    >
                       {item.time}
                     </span>
                   </div>

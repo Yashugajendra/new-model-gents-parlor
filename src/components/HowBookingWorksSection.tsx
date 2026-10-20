@@ -9,7 +9,7 @@ interface HowBookingWorksProps {
 }
 
 export function HowBookingWorksSection({ onOpenBooking }: HowBookingWorksProps) {
-  const { language, t } = useLanguageTheme();
+  const { language, theme, t } = useLanguageTheme();
 
   const stepIcons = [
     <CheckCircle2 key="1" className="w-5 h-5 text-[#c5a880]" />,
@@ -20,16 +20,28 @@ export function HowBookingWorksSection({ onOpenBooking }: HowBookingWorksProps) 
   ];
 
   return (
-    <section className="py-20 bg-[#0d0d10] border-t border-white/[0.06] relative scroll-mt-12">
+    <section
+      className={`py-20 relative scroll-mt-12 border-t transition-colors duration-300 ${
+        theme === "light" ? "bg-[#fbfaf8] border-black/[0.08]" : "bg-[#0d0d10] border-white/[0.06]"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c5a880] mb-2">
             {t.howItWorks.badge}
           </p>
-          <h2 className="font-serif text-3xl sm:text-5xl font-medium text-white mb-3">
+          <h2
+            className={`font-serif text-3xl sm:text-5xl font-medium mb-3 ${
+              theme === "light" ? "text-[#18181b]" : "text-white"
+            }`}
+          >
             {t.howItWorks.title}
           </h2>
-          <p className="text-xs sm:text-sm text-[#94a3b8]">
+          <p
+            className={`text-xs sm:text-sm ${
+              theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+            }`}
+          >
             {t.howItWorks.subtitle}
           </p>
         </div>
@@ -39,27 +51,57 @@ export function HowBookingWorksSection({ onOpenBooking }: HowBookingWorksProps) 
           {t.howItWorks.steps.map((step, idx) => (
             <div
               key={step.num}
-              className="luxury-card p-6 flex flex-col justify-between border border-white/[0.06] hover:border-[#c5a880]/40 transition-all relative group"
+              className={`luxury-card p-6 flex flex-col justify-between border transition-all relative group ${
+                theme === "light"
+                  ? "bg-white border-black/[0.08] shadow-xs hover:border-[#c5a880]"
+                  : "border-white/[0.06] hover:border-[#c5a880]/40"
+              }`}
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#1a1a20] border border-white/10 flex items-center justify-center group-hover:border-[#c5a880]/40 transition-colors">
+                  <div
+                    className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-colors ${
+                      theme === "light"
+                        ? "bg-[#f4efe6] border-black/10 group-hover:border-[#c5a880]"
+                        : "bg-[#1a1a20] border-white/10 group-hover:border-[#c5a880]/40"
+                    }`}
+                  >
                     {stepIcons[idx]}
                   </div>
-                  <span className="font-serif text-2xl font-bold text-white/20 group-hover:text-[#c5a880]/40 transition-colors">
+                  <span
+                    className={`font-serif text-2xl font-bold transition-colors ${
+                      theme === "light"
+                        ? "text-black/15 group-hover:text-[#9e7946]"
+                        : "text-white/20 group-hover:text-[#c5a880]/40"
+                    }`}
+                  >
                     0{step.num}
                   </span>
                 </div>
-                <h3 className="font-serif text-base sm:text-lg text-white font-medium mb-1.5 group-hover:text-[#c5a880] transition-colors">
+                <h3
+                  className={`font-serif text-base sm:text-lg font-medium mb-1.5 transition-colors ${
+                    theme === "light"
+                      ? "text-[#18181b] group-hover:text-[#9e7946]"
+                      : "text-white group-hover:text-[#c5a880]"
+                  }`}
+                >
                   {step.title}
                 </h3>
-                <p className="text-xs text-[#94a3b8] leading-relaxed">
+                <p
+                  className={`text-xs leading-relaxed ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   {step.desc}
                 </p>
               </div>
 
               {idx < 4 && (
-                <div className="hidden md:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 text-white/20">
+                <div
+                  className={`hidden md:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 ${
+                    theme === "light" ? "text-black/20" : "text-white/20"
+                  }`}
+                >
                   <ArrowRight className="w-4 h-4" />
                 </div>
               )}
@@ -68,14 +110,30 @@ export function HowBookingWorksSection({ onOpenBooking }: HowBookingWorksProps) 
         </div>
 
         {/* WhatsApp Preview Card */}
-        <div className="mt-12 p-6 rounded-2xl bg-[#121215] border border-white/[0.08] max-w-2xl mx-auto shadow-xl">
-          <div className="flex items-center gap-3 pb-3 border-b border-white/[0.06] mb-4">
+        <div
+          className={`mt-12 p-6 rounded-2xl border max-w-2xl mx-auto shadow-xl transition-colors ${
+            theme === "light"
+              ? "bg-white border-black/[0.08]"
+              : "bg-[#121215] border-white/[0.08]"
+          }`}
+        >
+          <div
+            className={`flex items-center gap-3 pb-3 border-b mb-4 ${
+              theme === "light" ? "border-black/[0.06]" : "border-white/[0.06]"
+            }`}
+          >
             <MessageCircle className="w-5 h-5 text-[#25D366]" />
             <h4 className="text-xs uppercase font-bold tracking-widest text-[#25D366]">
               {language === "kn" ? "ಸ್ವಯಂಚಾಲಿತ ವಾಟ್ಸಾಪ್ ಸಂದೇಶದ ಮುನ್ನೋಟ" : "Pre-filled WhatsApp Message Preview"}
             </h4>
           </div>
-          <div className="p-4 rounded-xl bg-[#09090b] border border-white/[0.05] font-mono text-xs text-[#94a3b8] leading-relaxed select-none">
+          <div
+            className={`p-4 rounded-xl border font-mono text-xs leading-relaxed select-none transition-colors ${
+              theme === "light"
+                ? "bg-[#f4efe6] border-black/[0.06] text-[#27272a]"
+                : "bg-[#09090b] border-white/[0.05] text-[#94a3b8]"
+            }`}
+          >
             {language === "kn" ? (
               <>
                 ನಮಸ್ಕಾರ ನ್ಯೂ ಮಾಡೆಲ್ ಜೆಂಟ್ಸ್ ಪಾರ್ಲರ್, ನಾನು ಅಪಾಯಿಂಟ್ಮೆಂಟ್ ಬುಕ್ ಮಾಡಲು ಬಯಸುತ್ತೇನೆ.

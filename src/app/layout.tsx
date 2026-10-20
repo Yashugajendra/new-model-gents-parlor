@@ -40,8 +40,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} dark`} suppressHydrationWarning>
-      <body className="min-h-screen bg-[#09090b] text-[#f8fafc] font-sans antialiased selection:bg-[#c5a880] selection:text-[#09090b] flex flex-col">
+    <html lang="en" className={`${cormorant.variable} ${jakarta.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){
+              try {
+                var t = localStorage.getItem("newmodel_theme");
+                if (t === "light") {
+                  document.documentElement.classList.remove("dark");
+                  document.documentElement.classList.add("light");
+                  document.documentElement.setAttribute("data-theme", "light");
+                } else {
+                  document.documentElement.classList.remove("light");
+                  document.documentElement.classList.add("dark");
+                  document.documentElement.setAttribute("data-theme", "dark");
+                }
+              } catch (e) {}
+            })();`,
+          }}
+        />
+      </head>
+      <body className="min-h-screen font-sans antialiased selection:bg-[#c5a880] selection:text-[#09090b] flex flex-col transition-colors duration-300">
         <LanguageThemeProvider>
           <CustomCursor />
           {children}

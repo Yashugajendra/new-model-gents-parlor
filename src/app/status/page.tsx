@@ -18,8 +18,10 @@ import {
 import { Appointment } from "@/types/database.types";
 import { NewModelData } from "@/lib/data";
 import { formatDate, formatTime, formatCurrency, generateWhatsAppLink } from "@/lib/utils";
+import { useLanguageTheme } from "@/context/LanguageThemeContext";
 
 export default function StatusLookupPage() {
+  const { theme } = useLanguageTheme();
   const [reference, setReference] = useState("");
   const [phone, setPhone] = useState("");
   const [appointment, setAppointment] = useState<Appointment | null>(null);
@@ -82,21 +84,45 @@ export default function StatusLookupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-[#f8fafc] flex flex-col">
+    <div
+      className={`min-h-screen flex flex-col transition-colors duration-300 ${
+        theme === "light" ? "bg-[#fbfaf8] text-[#18181b]" : "bg-[#09090b] text-[#f8fafc]"
+      }`}
+    >
       {/* Header */}
-      <header className="border-b border-white/[0.08] bg-[#0d0d10] py-4 px-6">
+      <header
+        className={`border-b py-4 px-6 transition-colors ${
+          theme === "light"
+            ? "bg-[#f4efe6] border-black/[0.08]"
+            : "bg-[#0d0d10] border-white/[0.08]"
+        }`}
+      >
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1a1a20] to-[#121215] border border-[#c5a880]/40 flex items-center justify-center text-[#c5a880]">
-              <span className="font-serif font-bold text-xs text-[#c5a880]">NM</span>
+            <div
+              className={`w-8 h-8 rounded-lg border flex items-center justify-center ${
+                theme === "light"
+                  ? "bg-[#f4efe6] border-[#c5a880]/60 text-[#9e7946]"
+                  : "bg-gradient-to-br from-[#1a1a20] to-[#121215] border-[#c5a880]/40 text-[#c5a880]"
+              }`}
+            >
+              <span className="font-serif font-bold text-xs">NM</span>
             </div>
-            <span className="font-serif text-lg font-bold tracking-wider text-white">
+            <span
+              className={`font-serif text-lg font-bold tracking-wider ${
+                theme === "light" ? "text-[#18181b]" : "text-white"
+              }`}
+            >
               NEW MODEL <span className="text-[#c5a880]">GENTS PARLOR</span>
             </span>
           </Link>
           <Link
             href="/"
-            className="text-xs text-[#94a3b8] hover:text-white flex items-center gap-1.5"
+            className={`text-xs flex items-center gap-1.5 transition-colors ${
+              theme === "light"
+                ? "text-[#52525b] hover:text-[#18181b]"
+                : "text-[#94a3b8] hover:text-white"
+            }`}
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Back to Home
@@ -110,11 +136,19 @@ export default function StatusLookupPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c5a880] mb-2">
             Self-Service Status
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl font-medium text-white">
+          <h1
+            className={`font-serif text-3xl sm:text-4xl font-medium ${
+              theme === "light" ? "text-[#18181b]" : "text-white"
+            }`}
+          >
             Check Booking Status
           </h1>
-          <p className="text-xs sm:text-sm text-[#94a3b8] mt-2">
-            Enter your booking reference code (e.g. <span className="font-mono text-gray-300">NM-84920</span>)
+          <p
+            className={`text-xs sm:text-sm mt-2 ${
+              theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+            }`}
+          >
+            Enter your booking reference code (e.g. <span className="font-mono font-medium">NM-84920</span>)
             and phone number to view live appointment status.
           </p>
         </div>
@@ -122,7 +156,11 @@ export default function StatusLookupPage() {
         {/* Lookup Form */}
         <form
           onSubmit={handleLookup}
-          className="p-6 rounded-2xl bg-[#121215] border border-white/[0.08] shadow-xl space-y-4 mb-8"
+          className={`p-6 rounded-2xl border shadow-xl space-y-4 mb-8 transition-colors ${
+            theme === "light"
+              ? "bg-white border-black/[0.08]"
+              : "bg-[#121215] border-white/[0.08]"
+          }`}
         >
           {error && (
             <div className="p-3 rounded-lg bg-red-950/60 border border-red-800 text-red-200 text-xs flex items-center gap-2">
@@ -132,7 +170,11 @@ export default function StatusLookupPage() {
           )}
 
           <div>
-            <label className="block text-xs font-medium text-gray-300 mb-1.5">
+            <label
+              className={`block text-xs font-medium mb-1.5 ${
+                theme === "light" ? "text-[#27272a]" : "text-gray-300"
+              }`}
+            >
               Booking Reference Code
             </label>
             <input
@@ -141,12 +183,20 @@ export default function StatusLookupPage() {
               placeholder="e.g. NM-84920"
               value={reference}
               onChange={(e) => setReference(e.target.value.toUpperCase())}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-sm focus:outline-none focus:border-[#c5a880] uppercase tracking-wider font-mono placeholder-gray-500"
+              className={`w-full px-3.5 py-2.5 rounded-lg border text-sm focus:outline-none focus:border-[#c5a880] uppercase tracking-wider font-mono transition-colors ${
+                theme === "light"
+                  ? "bg-[#fbfaf8] border-black/15 text-[#18181b] placeholder-gray-400"
+                  : "bg-[#18181d] border-white/[0.1] text-white placeholder-gray-500"
+              }`}
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-300 mb-1.5">
+            <label
+              className={`block text-xs font-medium mb-1.5 ${
+                theme === "light" ? "text-[#27272a]" : "text-gray-300"
+              }`}
+            >
               Customer Phone Number
             </label>
             <input
@@ -155,7 +205,11 @@ export default function StatusLookupPage() {
               placeholder="Phone number used during booking"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#18181d] border border-white/[0.1] text-white text-sm focus:outline-none focus:border-[#c5a880] placeholder-gray-500"
+              className={`w-full px-3.5 py-2.5 rounded-lg border text-sm focus:outline-none focus:border-[#c5a880] transition-colors ${
+                theme === "light"
+                  ? "bg-[#fbfaf8] border-black/15 text-[#18181b] placeholder-gray-400"
+                  : "bg-[#18181d] border-white/[0.1] text-white placeholder-gray-500"
+              }`}
             />
           </div>
 
@@ -170,13 +224,31 @@ export default function StatusLookupPage() {
 
         {/* Results Card */}
         {hasSearched && appointment && (
-          <div className="p-6 rounded-2xl bg-[#121215] border border-white/[0.08] shadow-2xl space-y-6">
-            <div className="flex items-start justify-between border-b border-white/[0.07] pb-4">
+          <div
+            className={`p-6 rounded-2xl border shadow-2xl space-y-6 transition-colors ${
+              theme === "light"
+                ? "bg-white border-black/[0.08]"
+                : "bg-[#121215] border-white/[0.08]"
+            }`}
+          >
+            <div
+              className={`flex items-start justify-between border-b pb-4 ${
+                theme === "light" ? "border-black/[0.08]" : "border-white/[0.07]"
+              }`}
+            >
               <div>
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#94a3b8] block">
+                <span
+                  className={`text-[10px] uppercase font-bold tracking-widest block ${
+                    theme === "light" ? "text-[#71717a]" : "text-[#94a3b8]"
+                  }`}
+                >
                   Reference
                 </span>
-                <span className="font-mono text-xl font-bold text-white">
+                <span
+                  className={`font-mono text-xl font-bold ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
                   {appointment.booking_reference}
                 </span>
               </div>
@@ -206,43 +278,109 @@ export default function StatusLookupPage() {
 
             {/* Appointment Details */}
             <div className="space-y-3 text-xs">
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <Scissors className="w-3.5 h-3.5 text-[#c5a880]" /> Service
                 </span>
-                <span className="text-white font-medium">
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
                   {appointment.service_name_snapshot} ({appointment.service_duration_snapshot} mins)
                 </span>
               </div>
 
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <Calendar className="w-3.5 h-3.5 text-[#c5a880]" /> Date
                 </span>
-                <span className="text-white font-medium">{formatDate(appointment.start_time)}</span>
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
+                  {formatDate(appointment.start_time)}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <Clock className="w-3.5 h-3.5 text-[#c5a880]" /> Time
                 </span>
-                <span className="text-white font-medium">
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
                   {formatTime(appointment.start_time)} – {formatTime(appointment.end_time)}
                 </span>
               </div>
 
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <User className="w-3.5 h-3.5 text-[#c5a880]" /> Customer
                 </span>
-                <span className="text-white font-medium">{appointment.customer_name}</span>
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
+                  {appointment.customer_name}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between py-2 border-b border-white/[0.04]">
-                <span className="text-[#94a3b8] flex items-center gap-2">
+              <div
+                className={`flex items-center justify-between py-2 border-b ${
+                  theme === "light" ? "border-black/[0.06]" : "border-white/[0.04]"
+                }`}
+              >
+                <span
+                  className={`flex items-center gap-2 ${
+                    theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+                  }`}
+                >
                   <Phone className="w-3.5 h-3.5 text-[#c5a880]" /> Phone
                 </span>
-                <span className="text-white font-medium">{appointment.customer_phone}</span>
+                <span
+                  className={`font-medium ${
+                    theme === "light" ? "text-[#18181b]" : "text-white"
+                  }`}
+                >
+                  {appointment.customer_phone}
+                </span>
               </div>
 
               <div className="flex items-center justify-between pt-2">
@@ -270,10 +408,26 @@ export default function StatusLookupPage() {
         )}
 
         {hasSearched && !appointment && (
-          <div className="p-8 rounded-2xl bg-[#121215] border border-white/[0.08] text-center space-y-3">
+          <div
+            className={`p-8 rounded-2xl border text-center space-y-3 transition-colors ${
+              theme === "light"
+                ? "bg-white border-black/[0.08]"
+                : "bg-[#121215] border-white/[0.08]"
+            }`}
+          >
             <AlertCircle className="w-8 h-8 text-amber-500 mx-auto" />
-            <h3 className="font-serif text-lg text-white">No Appointment Found</h3>
-            <p className="text-xs text-[#94a3b8] max-w-sm mx-auto">
+            <h3
+              className={`font-serif text-lg ${
+                theme === "light" ? "text-[#18181b]" : "text-white"
+              }`}
+            >
+              No Appointment Found
+            </h3>
+            <p
+              className={`text-xs max-w-sm mx-auto ${
+                theme === "light" ? "text-[#52525b]" : "text-[#94a3b8]"
+              }`}
+            >
               We couldn&apos;t find an appointment matching reference &ldquo;{reference}&rdquo; and phone &ldquo;{phone}&rdquo;.
               Please verify the details or contact the barbershop directly.
             </p>
